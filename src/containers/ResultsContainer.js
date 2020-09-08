@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { array } from 'prop-types';
+import { arrayOf, shape, string } from 'prop-types';
 import DisplayCard from '../components/DisplayCard';
 
 const ResultsContainer = ({ filteredResults }) => {
@@ -29,8 +29,15 @@ const StyledResultsContainer = styled.div`
   padding: 1em;
 `;
 
-// ResultsContainer.propTypes = {
-//   filteredResults: array.isRequired,
-// };
+ResultsContainer.propTypes = {
+  filteredResults: arrayOf(shape({
+    id: string.isRequired,
+    aNum: string.isRequired,
+    title: string.isRequired,
+    tombstone: string.isRequired,
+    creatorRole: string,
+    creatorDescription: string,
+  })).isRequired,
+};
 
 export default ResultsContainer;

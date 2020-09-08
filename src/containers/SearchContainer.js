@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-fallthrough */
 /* eslint-disable default-case */
 import React, { useState, useEffect } from 'react';
@@ -71,5 +72,4 @@ const SearchWrapper = styled.div`
 
 SearchContainer.propTypes = {
   updateSearchResults: func.isRequired,
-  clearSearch: func.isRequired,
 };
