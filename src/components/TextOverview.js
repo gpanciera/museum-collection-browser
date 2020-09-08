@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
 
-function TextOverview({ title, creator_description }) {
+function TextOverview({ title, creatorDescription }) {
   return (
     <TextOverviewWrapper>
       <TitleText>{title}</TitleText>
-      <CreatorText>{creator_description}</CreatorText>
+      <CreatorText>{creatorDescription}</CreatorText>
     </TextOverviewWrapper>
   );
 }
@@ -31,9 +31,13 @@ const TextOverviewWrapper = styled.div`
   max-width: 100%;
 `;
 
+TextOverview.defaultProps = {
+  creatorDescription: null,
+};
+
 TextOverview.propTypes = {
   title: string.isRequired,
-  creator_description: string.isRequired,
+  creatorDescription: string,
 };
 
 export default TextOverview;

@@ -1,13 +1,7 @@
 import React from 'react';
-import NavBar from './containers/NavBar';
-import SearchContainer from './containers/SearchContainer';
-import ResultsContainer from './containers/ResultsContainer';
+import MainContainer from './containers/MainContainer';
 
 const App = () => (
-  <>
-    <NavBar />
-    <SearchContainer />
-    <ResultsContainer />
-  </>
+  <MainContainer />
 );
 export default App;

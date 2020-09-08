@@ -1,22 +1,22 @@
 /* eslint-disable arrow-body-style */
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { array } from 'prop-types';
 import DisplayCard from '../components/DisplayCard';
-// import PropTypes from 'prop-types';
-import db from '../../db/cma-artworks-export';
 
-const ResultsContainer = () => {
-  const results = db.map((val, i) => (
+const ResultsContainer = ({ filteredResults }) => {
+  const results = filteredResults.map((val, i) => (
     <DisplayCard
       key={val.id + i.toString()}
       id={val.id}
-      accession_number={val.accession_number}
+      aNum={val.accession_number}
       title={val.title}
       tombstone={val.tombstone}
-      creator_role={val.creator_role}
-      creator_description={val.creator_description}
+      creatorRole={val.creator_role}
+      creatorDescription={val.creator_description}
     />
   ));
+  console.log('ResultsContainer -> results', results);
   return (
     <StyledResultsContainer>{results}</StyledResultsContainer>
   );
@@ -27,12 +27,10 @@ const StyledResultsContainer = styled.div`
   flex-wrap: wrap;
   margin: 1em;
   padding: 1em;
-  ${'' /* width: 1vw; */}
-  ${'' /* height: 10vh; */}
 `;
 
 // ResultsContainer.propTypes = {
-
+//   filteredResults: array.isRequired,
 // };
 
 export default ResultsContainer;
