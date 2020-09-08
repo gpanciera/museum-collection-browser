@@ -1,0 +1,30 @@
+module.exports = {
+  extends: ['airbnb', 'airbnb/hooks'],
+  env: {
+    browser: true,
+    node: true,
+    es6: true,
+    jest: true,
+  },
+  plugins: [
+    'react-hooks',
+  ],
+  rules: {
+    'no-console': 'off',
+    'no-plusplus': 'off',
+    'brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
+    'object-curly-newline': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    'react/jsx-filename-extension': 'off',
+    'react/jsx-boolean-value': 'off',
+    // curly: 'off',
+    // 'consistent-return': 'off',
+    // 'func-names': 'off',
+    // 'react/destructuring-assignment': 'off',
+    // 'react/prop-types': 'off',
+    // 'react/jsx-wrap-multilines': 'off',
+    // 'react/jsx-one-expression-per-line': 'off',
+    // 'react/jsx-closing-tag-location': 'off',
+  },
+};

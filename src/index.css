@@ -1,0 +1,50 @@
+:root {
+  --cma-green: rgb(39,121,105);
+  --cma-purple: rgb(142,98,165);
+  
+  --cma-gray1: rgb(233,233,233);
+  --cma-gray2: rgb(164,166,167);
+  --cma-gray3: rgb(123,124,125);
+  
+  --cma-text1: rgb(136,136,136);
+  --cma-text2: rgb(68,68,68);
+  --cma-text3: rgb(0,0,0);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%; 
+}
+
+body {
+  font-family: objektiv-mk3, sans-serif;
+  font-weight: 400;
+  color: var(--cma-text3);
+  /* background-color: rgb(253,253,253); */
+  /* font-style: normal;  color: #F1F0F0; */
+}
+
+/* Mobile */
+@media screen and (max-width: 600px) { 
+
+}
+
+/* Tablet */
+@media screen and (min-width: 601px) and (max-width: 900px) {
+
+}
+
+/* Normal */
+@media screen and (min-width: 901px) and (max-width: 1200px) {
+
+}
+
+/* Lg Screen */
+@media screen and (min-width: 1201px) {
+
+}
