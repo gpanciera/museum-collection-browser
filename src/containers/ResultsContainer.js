@@ -12,8 +12,7 @@ const ResultsContainer = ({ filteredResults }) => {
       aNum={val.accession_number}
       title={val.title}
       tombstone={val.tombstone}
-      creatorRole={val.creator_role}
-      creatorDescription={val.creator_description}
+      creator={val.creator}
     />
   ));
   console.log('ResultsContainer -> results', results);
@@ -29,15 +28,21 @@ const StyledResultsContainer = styled.div`
   padding: 1em;
 `;
 
+ResultsContainer.defaultProps = {
+  filteredResults: [],
+};
+
 ResultsContainer.propTypes = {
   filteredResults: arrayOf(shape({
     id: string.isRequired,
     aNum: string.isRequired,
     title: string.isRequired,
     tombstone: string.isRequired,
-    creatorRole: string,
-    creatorDescription: string,
-  })).isRequired,
+    creator: arrayOf(shape({
+      creatorRole: string,
+      creatorDescription: string,
+    })).isRequired,
+  })),
 };
 
 export default ResultsContainer;
