@@ -35,7 +35,7 @@ ResultsContainer.defaultProps = {
 ResultsContainer.propTypes = {
   filteredResults: arrayOf(shape({
     id: string.isRequired,
-    aNum: string.isRequired,
+    accession_number: string.isRequired,
     title: string.isRequired,
     tombstone: string.isRequired,
     creator: arrayOf(shape({

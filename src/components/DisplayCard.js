@@ -14,17 +14,9 @@ const DisplayCard = ({ id, aNum, title, tombstone, creator }) => (
   </Card>
 );
 
-// const ThumbContainer = styled.div`
-//   width: 100%;
-//   ${'' /* height: 10vh; */}
-//   max-height: 20vh;
-// `;
-
 const Card = styled.div`
   padding: 1em;
   margin: 0.5em;
-  ${'' /* min-width: 10em;
-  max-width: 25em; */}
   min-width: 350px;
   max-width: 25vw;
 
@@ -35,11 +27,6 @@ const Card = styled.div`
 `;
 
 export default DisplayCard;
-
-// DisplayCard.defaultProps = {
-//   creatorRole: null,
-//   creatorDescription: null,
-// };
 
 DisplayCard.propTypes = {
   id: string.isRequired,
