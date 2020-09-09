@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string } from 'prop-types';
+import { arrayOf, shape, string } from 'prop-types';
 import ImageThumbnail from './ImageThumbnail';
 import TextOverview from './TextOverview';
 
-const DisplayCard = ({ id, aNum, title, tombstone, creatorRole, creatorDescription }) => (
+const DisplayCard = ({ id, aNum, title, tombstone, creator }) => (
   <Card>
     <ImageThumbnail aNum={aNum} />
     <TextOverview
       title={title}
-      creatorDescription={creatorDescription}
+      creator={creator}
     />
   </Card>
 );
@@ -23,7 +23,9 @@ const DisplayCard = ({ id, aNum, title, tombstone, creatorRole, creatorDescripti
 const Card = styled.div`
   padding: 1em;
   margin: 0.5em;
-  min-width: 300px;
+  ${'' /* min-width: 10em;
+  max-width: 25em; */}
+  min-width: 350px;
   max-width: 25vw;
 
   background-color: white;
@@ -34,16 +36,18 @@ const Card = styled.div`
 
 export default DisplayCard;
 
-DisplayCard.defaultProps = {
-  creatorRole: null,
-  creatorDescription: null,
-};
+// DisplayCard.defaultProps = {
+//   creatorRole: null,
+//   creatorDescription: null,
+// };
 
 DisplayCard.propTypes = {
   id: string.isRequired,
   aNum: string.isRequired,
   title: string.isRequired,
   tombstone: string.isRequired,
-  creatorRole: string,
-  creatorDescription: string,
+  creator: arrayOf(shape({
+    creatorRole: string,
+    creatorDescription: string,
+  })).isRequired,
 };

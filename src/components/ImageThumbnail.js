@@ -4,7 +4,7 @@ import { string } from 'prop-types';
 
 function ImageThumbnail({ aNum }) {
   return (
-    <Thumbnail src={`./images/${aNum}_reduced.jpg`} alt="petmatch style" />
+    <Thumbnail src={`./images/${aNum}_reduced.jpg`} alt="thumbnail" />
   );
 }
 
