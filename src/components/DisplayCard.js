@@ -23,6 +23,8 @@ const DisplayCard = ({ id, aNum, title, tombstone, creator }) => (
 const Card = styled.div`
   padding: 1em;
   margin: 0.5em;
+  ${'' /* min-width: 10em;
+  max-width: 25em; */}
   min-width: 350px;
   max-width: 25vw;
 
