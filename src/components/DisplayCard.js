@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { arrayOf, shape, string } from 'prop-types';
+import { arrayOf, shape, string, func } from 'prop-types';
 import ImageThumbnail from './ImageThumbnail';
 import TextOverview from './TextOverview';
 
-const DisplayCard = ({ id, aNum, title, tombstone, creator }) => (
-  <Card>
+const DisplayCard = ({ id, aNum, title, creatorsAll, handleModalOpen }) => (
+  <Card onClick={() => handleModalOpen(aNum)}>
     <ImageThumbnail aNum={aNum} />
     <TextOverview
       title={title}
-      creator={creator}
+      creatorsAll={creatorsAll}
     />
   </Card>
 );
@@ -32,9 +32,9 @@ DisplayCard.propTypes = {
   id: string.isRequired,
   aNum: string.isRequired,
   title: string.isRequired,
-  tombstone: string.isRequired,
-  creator: arrayOf(shape({
+  creatorsAll: arrayOf(shape({
     creatorRole: string,
     creatorDescription: string,
   })).isRequired,
+  handleModalOpen: func.isRequired,
 };

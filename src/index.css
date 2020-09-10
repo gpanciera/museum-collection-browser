@@ -1,3 +1,6 @@
+/* @import url("https://use.typekit.net/wbf5xcz.css"); */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;1,100&display=swap');
+
 :root {
   --cma-green: rgb(39,121,105);
   --cma-purple: rgb(142,98,165);
@@ -22,8 +25,11 @@ html {
 }
 
 body {
-  font-family: objektiv-mk3, sans-serif;
+  /* font-family: objektiv-mk3,sans-serif; */
+  /* font-family: sans-serif; */
+  font-family: 'Roboto', sans-serif;
   font-weight: 400;
+  font-style: normal;
   color: var(--cma-text3);
   /* background-color: rgb(253,253,253); */
   /* font-style: normal;  color: #F1F0F0; */

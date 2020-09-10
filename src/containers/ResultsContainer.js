@@ -1,21 +1,20 @@
 /* eslint-disable arrow-body-style */
 import React from 'react';
 import styled from 'styled-components';
-import { arrayOf, shape, string } from 'prop-types';
+import { arrayOf, shape, string, func } from 'prop-types';
 import DisplayCard from '../components/DisplayCard';
 
-const ResultsContainer = ({ filteredResults }) => {
-  const results = filteredResults.map((val, i) => (
+const ResultsContainer = ({ filteredResults, handleModalOpen }) => {
+  const results = filteredResults.map((val) => (
     <DisplayCard
-      key={val.id + i.toString()}
+      key={val.id}
       id={val.id}
       aNum={val.accession_number}
       title={val.title}
-      tombstone={val.tombstone}
-      creator={val.creator}
+      creatorsAll={val.creator}
+      handleModalOpen={handleModalOpen}
     />
   ));
-  console.log('ResultsContainer -> results', results);
   return (
     <StyledResultsContainer>{results}</StyledResultsContainer>
   );
@@ -43,6 +42,7 @@ ResultsContainer.propTypes = {
       creatorDescription: string,
     })).isRequired,
   })),
+  handleModalOpen: func.isRequired,
 };
 
 export default ResultsContainer;

@@ -39,6 +39,5 @@ export default function filterResults(dbCleaned, searchText, tagFilter = 'All') 
       }
       return false;
     }
-    // return false;
   });
 }

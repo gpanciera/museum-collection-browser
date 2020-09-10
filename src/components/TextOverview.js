@@ -2,77 +2,47 @@
 import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, shape, string } from 'prop-types';
+import CreatorsText from './CreatorsText';
 
-const capitalizeString = (s) => (
-  s
-    ? s.split(' ').map((el) => el.replace(el.charAt(0), el.charAt(0).toUpperCase())).join(' ')
-    : null
-);
+const MAX_CREATORS_TO_RENDER = 3;
 
-function TextOverview({ title, creator }) {
-  // console.log('TextOverview -> creator', creator);
-  const creators = creator.map((val, i) => {
-    let role = capitalizeString(val.creatorRole);
-    if (role) { role += ': '; }
-
-    return (
-      <CreatorWrapper key={i}>
-        { role && <CreatorRole>{role}</CreatorRole> }
-        <CreatorDesc>{val.creatorDescription}</CreatorDesc>
-      </CreatorWrapper>
-    );
-  });
-
+function TextOverview({ title, creatorsAll }) {
   return (
     <TextOverviewWrapper>
       <TitleText>{title}</TitleText>
-      {creators}
+      <CreatorsWrapper>
+        <CreatorsText creatorsAll={creatorsAll} maxToRender={MAX_CREATORS_TO_RENDER} />
+      </CreatorsWrapper>
     </TextOverviewWrapper>
   );
 }
-
 const TextOverviewWrapper = styled.div`
   display: block;
   margin-top: 0.5em;
-  ${'' /* margin: auto; */}
+  ${'' /* max-height: 10vh; */}
+  max-width: 100%;
+`;
+
+const CreatorsWrapper = styled.div`
+  display: block;
+  margin-top: 0.5em;
+  font-size: 1.05em;
+  color: rgb(100,100,100);
   max-height: 10vh;
   max-width: 100%;
 `;
 
 const TitleText = styled.div`
   display: block;
-  margin-top: 0.8em;
-  font-weight: 500;
-`;
-
-const CreatorWrapper = styled.div`
-  display: block;
-  margin-top: 0.5em;
-  font-size: 0.85em;
-  ${'' /* margin: auto; */}
-  max-height: 10vh;
-  max-width: 100%;
-`;
-
-const CreatorRole = styled.div`
-  display: inline;
-  ${'' /* margin-top: 0.3em; */}
+  margin-top: 1.2em;
+  font-size: 1.25em;
   font-weight: 400;
+  color: rgb(30,30,30);
 `;
-
-const CreatorDesc = styled.div`
-  display: inline;
-  ${'' /* margin-top: 0.2em; */}
-  font-weight: 300;
-`;
-
-// TextOverview.defaultProps = {
-//   creatorDescription: null,
-// };
 
 TextOverview.propTypes = {
   title: string.isRequired,
-  creator: arrayOf(shape({
+  creatorsAll: arrayOf(shape({
     creatorRole: string,
     creatorDescription: string,
   })).isRequired,

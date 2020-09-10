@@ -5,8 +5,9 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 import { func } from 'prop-types';
+import DOMPurify from 'dompurify';
 
-const TAGS_TO_DISPLAY = 9;
+const TAGS_TO_DISPLAY = 20;
 
 export default function SearchContainer({ updateSearchResults, deptMap }) {
   const [searchText, setSearchText] = useState('');
@@ -14,7 +15,7 @@ export default function SearchContainer({ updateSearchResults, deptMap }) {
   const [deptTags, setDeptTags] = useState(null);
   const [selectedTagName, setSelectedTagName] = useState('All');
 
-  // Lay out popular department tags
+  // Set up department tags, ordered by number of works
   useEffect(() => {
     if (deptMap) {
       const tags = Array.from(deptMap.keys())
@@ -60,7 +61,8 @@ export default function SearchContainer({ updateSearchResults, deptMap }) {
   };
   useEffect(() => {
     if (shouldUpdateResults || searchText.length === 0) {
-      updateSearchResults(searchText, selectedTagName);
+      const clean = DOMPurify.sanitize(searchText);
+      updateSearchResults(clean, selectedTagName);
     }
     setShouldUpdateResults(false);
   }, [searchText, shouldUpdateResults]);

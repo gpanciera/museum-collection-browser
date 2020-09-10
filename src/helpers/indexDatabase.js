@@ -11,8 +11,8 @@ export default function indexDatabase(db) {
     deptMap.set(department_name, deptWorksCount + 1);
 
     // If this work is already in artworkMap, add the additional creator to that
-    if (id && artworkMap.has(id)) {
-      const prevObj = artworkMap.get(id);
+    if (accession_number && artworkMap.has(accession_number)) {
+      const prevObj = artworkMap.get(accession_number);
       const newCreator = {
         creatorRole: creator_role,
         creatorDescription: creator_description,
@@ -29,7 +29,7 @@ export default function indexDatabase(db) {
         ],
       };
 
-      artworkMap.set(id, newObj);
+      artworkMap.set(accession_number, newObj);
     }
     // We haven't added this work to artworkMap yet
     else {
@@ -50,7 +50,7 @@ export default function indexDatabase(db) {
         newObj.creatorRole = null;
         newObj.creatorDescription = null;
       }
-      artworkMap.set(id, newObj);
+      artworkMap.set(accession_number, newObj);
     }
   });
 

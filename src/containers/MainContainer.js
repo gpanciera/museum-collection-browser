@@ -1,21 +1,17 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-restricted-syntax */
 import React, { useState, useEffect, useRef } from 'react';
-import Modal from '@material-ui/core/Modal';
-// import { makeStyles } from '@material-ui/core/styles';
+import Modal from 'react-modal';
 import db from '../../db/cma-artworks-export';
 import NavBar from './NavBar';
 import SearchContainer from './SearchContainer';
 import ResultsContainer from './ResultsContainer';
+import ModalContent from '../components/ModalContent';
 import indexDatabase from '../helpers/indexDatabase';
 import filterResults from '../helpers/filterResults';
 
-const modalStyle = {
-  // position: 'absolute',
-  // margin: 'auto',
-  // width: '100%',
-  // backgroundColor: 'rgb(68,68,68)',
-  // border: '2px solid #000',
-};
+// WAI-ARIA standard to hide other content from screenreaders when a modal is open
+Modal.setAppElement('#root');
 
 const MainContainer = () => {
   const [filteredResults, setFilteredResults] = useState([]);
@@ -25,6 +21,7 @@ const MainContainer = () => {
   // const [modalStyle] = useState(getModalStyle);
   // const classes = useStyles();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const aNumForModal = useRef('-1');
 
   // Set dbCleaned by removing duplicates and adding all creators under a single artwork record
   // Then set initial filtered results to show all. This runs only once on app startup
@@ -39,7 +36,8 @@ const MainContainer = () => {
     setFilteredResults(filterResults(dbCleaned, searchText, tagFilter));
   };
 
-  const handleModalOpen = () => {
+  const handleModalOpen = (aNum) => {
+    aNumForModal.current = aNum;
     setIsModalOpen(true);
   };
 
@@ -47,34 +45,44 @@ const MainContainer = () => {
     setIsModalOpen(false);
   };
 
-  const modalContent = (
-    <div style={modalStyle} className="modal">
-      <img src="./images/1914.726_reduced.jpg" alt="flask" />
-      {/* <img src={`./images/${aNum}_reduced.jpg`} alt="image" /> */}
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
-    </div>
-  );
+  // const afterOpenModal = () => {
+  //   // references are now sync'd and can be accessed.
+  //   subtitle.style.color = '#f00';
+  // };
+
+  // useEffect(() => {
+  // }, []);
 
   return (
     <>
       <NavBar />
       <SearchContainer updateSearchResults={updateSearchResults} deptMap={deptMap.current} />
-      <button type="button" onClick={handleModalOpen}>
-        Open Modal
-      </button>
       <Modal
-        open={isModalOpen}
-        onClose={handleModalClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        isOpen={isModalOpen}
+        onRequestClose={handleModalClose}
+        style={modalStyle}
+        contentLabel="modal label"
       >
-        {modalContent}
+        <ModalContent aNum={aNumForModal.current} artworkMap={artworkMap} />
       </Modal>
-      <ResultsContainer filteredResults={filteredResults} />
+      <ResultsContainer filteredResults={filteredResults} handleModalOpen={handleModalOpen} />
     </>
   );
 };
 export default MainContainer;
+
+const modalStyle = {
+  content: {
+    top: '20%',
+    // left: '50%',
+    // right: 'auto',
+    bottom: 'auto',
+    // marginRight: '-50%',
+    // transform: 'translate(-50%, -50%)',
+    backgroundColor: 'rgb(233,233,233)',
+    borderStyle: 'none',
+  },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+  },
+};
