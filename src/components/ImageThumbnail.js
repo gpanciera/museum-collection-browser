@@ -11,9 +11,39 @@ function ImageThumbnail({ aNum }) {
 const Thumbnail = styled.img`
   display: block;
   margin: auto;
-  max-height: 25vh;
+  max-height: 50vh;
   max-width: 100%;
 `;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ImageThumbnail.propTypes = {
   aNum: string.isRequired,
