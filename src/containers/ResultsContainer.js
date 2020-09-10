@@ -23,6 +23,7 @@ const ResultsContainer = ({ filteredResults, handleModalOpen }) => {
 const StyledResultsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
   margin: 1em;
   padding: 1em;
 `;

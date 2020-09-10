@@ -4,7 +4,7 @@ import { arrayOf, shape, string, func } from 'prop-types';
 import ImageThumbnail from './ImageThumbnail';
 import TextOverview from './TextOverview';
 
-const DisplayCard = ({ id, aNum, title, creatorsAll, handleModalOpen }) => (
+const DisplayCard = ({ aNum, title, creatorsAll, handleModalOpen }) => (
   <Card onClick={() => handleModalOpen(aNum)}>
     <ImageThumbnail aNum={aNum} />
     <TextOverview
@@ -18,15 +18,11 @@ const Card = styled.div`
   padding: 1em;
   margin: 0.5em;
   min-width: 350px;
-  max-width: 25vw;
-
   background-color: white;
   border: 1px solid #DAE1E;
   border-radius: 4px;
   box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
 `;
-
-export default DisplayCard;
 
 DisplayCard.propTypes = {
   id: string.isRequired,
@@ -38,3 +34,5 @@ DisplayCard.propTypes = {
   })).isRequired,
   handleModalOpen: func.isRequired,
 };
+
+export default DisplayCard;

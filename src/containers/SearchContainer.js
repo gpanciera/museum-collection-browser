@@ -73,7 +73,7 @@ export default function SearchContainer({ updateSearchResults, deptMap }) {
         <TextField
           fullWidth
           value={searchText}
-          label="Search by title, artist, country of origin, department etc..."
+          label="Search by title, artist, country, department etc..."
           margin="normal"
           variant="outlined"
           type="search"
@@ -95,7 +95,7 @@ const SearchWrapper = styled.div`
 `;
 
 const TagContainer = styled.div`
-  width: 100%;
+  width: 85%;
   display: flex;
   flex-wrap: wrap;
   padding: 0.8em 0em 0em 2.5em;
@@ -121,6 +121,7 @@ const TagButton = styled.button`
   :hover {
     color: #311e00;
   }
+
 `;
 
 SearchContainer.propTypes = {

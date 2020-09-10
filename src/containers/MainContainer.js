@@ -45,14 +45,6 @@ const MainContainer = () => {
     setIsModalOpen(false);
   };
 
-  // const afterOpenModal = () => {
-  //   // references are now sync'd and can be accessed.
-  //   subtitle.style.color = '#f00';
-  // };
-
-  // useEffect(() => {
-  // }, []);
-
   return (
     <>
       <NavBar />
@@ -73,16 +65,14 @@ export default MainContainer;
 
 const modalStyle = {
   content: {
-    top: '20%',
-    // left: '50%',
-    // right: 'auto',
+    top: '10vh',
     bottom: 'auto',
-    // marginRight: '-50%',
-    // transform: 'translate(-50%, -50%)',
     backgroundColor: 'rgb(233,233,233)',
     borderStyle: 'none',
+    zIndex: '2',
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    zIndex: '1',
   },
 };
