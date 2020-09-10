@@ -73,12 +73,20 @@ export default MainContainer;
 
 const modalStyle = {
   content: {
+<<<<<<< HEAD
     top: '15%',
+=======
+    top: '10vh',
+    // left: '50%',
+    // right: 'auto',
+>>>>>>> 88d206247b439a9e176c4f72088f5493f157cb7d
     bottom: 'auto',
     backgroundColor: 'rgb(233,233,233)',
     borderStyle: 'none',
+    zIndex: '2',
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    zIndex: '1',
   },
 };

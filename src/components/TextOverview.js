@@ -16,16 +16,17 @@ function TextOverview({ title, creatorsAll }) {
     </TextOverviewWrapper>
   );
 }
+
 const TextOverviewWrapper = styled.div`
   display: block;
-  margin-top: 0.5em;
+  margin-top: 0.7em;
   ${'' /* max-height: 10vh; */}
   max-width: 100%;
 `;
 
 const CreatorsWrapper = styled.div`
   display: block;
-  margin-top: 0.5em;
+  ${'' /* margin-top: 0.5em; */}
   font-size: 1.05em;
   color: rgb(100,100,100);
   max-height: 10vh;
@@ -34,11 +35,26 @@ const CreatorsWrapper = styled.div`
 
 const TitleText = styled.div`
   display: block;
-  margin-top: 1.2em;
+  ${'' /* margin-top: 1.2em; */}
   font-size: 1.25em;
   font-weight: 400;
   color: rgb(30,30,30);
 `;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 TextOverview.propTypes = {
   title: string.isRequired,

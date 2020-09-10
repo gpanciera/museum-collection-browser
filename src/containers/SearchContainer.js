@@ -95,7 +95,7 @@ const SearchWrapper = styled.div`
 `;
 
 const TagContainer = styled.div`
-  width: 100%;
+  width: 85%;
   display: flex;
   flex-wrap: wrap;
   padding: 0.8em 0em 0em 2.5em;
