@@ -20,7 +20,7 @@
 }
 
 html {
-  font-size: 100%; 
+  font-size: 18px; 
 }
 
 body {
@@ -30,9 +30,17 @@ body {
   color: var(--cma-text3);
 }
 
-/* 
-@media screen and (max-width: 600px) { 
+/* @media screen and (min-width: 400px) {
+  html {
+    font-size: 28px;
+  }
 }
+@media screen and (min-width: 1000px) {
+  html {
+    font-size: 16px;
+  }
+} */
+/* 
 @media screen and (min-width: 601px) and (max-width: 900px) {
 }
 @media screen and (min-width: 901px) and (max-width: 1200px) {

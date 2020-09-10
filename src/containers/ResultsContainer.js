@@ -24,13 +24,8 @@ const StyledResultsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  ${'' /* justify-content: center; */}
   margin: 1em;
   padding: 1em;
-  ${'' /* @media (max-width: 600px) {
-    flex-direction: column;
-    font-size: 30px;
-  } */}
 `;
 
 ResultsContainer.defaultProps = {

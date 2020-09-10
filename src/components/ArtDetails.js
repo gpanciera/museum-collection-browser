@@ -41,15 +41,18 @@ const Title = styled.div`
   font-weight: 700;
   font-size: 1.2em;
 `;
+
 const Department = styled.div`
   margin: 13px 0px;
 `;
+
 const Tombstone = styled.div`
   color: rgb(100,100,100);
   font-size: 0.9em;
   font-family: 'Lora';
   margin: 13px 0px;
 `;
+
 const ANum = styled.div`
   color: rgb(100,100,100);
   margin: 13px 0px;

@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import { arrayOf, shape, string, func } from 'prop-types';
 import ImageThumbnail from './ImageThumbnail';
 import TextOverview from './TextOverview';
-import { mediaQueries } from '../styles/mediaQueries';
 
-const DisplayCard = ({ id, aNum, title, creatorsAll, handleModalOpen }) => (
+const DisplayCard = ({ aNum, title, creatorsAll, handleModalOpen }) => (
   <Card onClick={() => handleModalOpen(aNum)}>
     <ImageThumbnail aNum={aNum} />
     <TextOverview
@@ -25,29 +24,6 @@ const Card = styled.div`
   box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
 `;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 DisplayCard.propTypes = {
   id: string.isRequired,
   aNum: string.isRequired,
@@ -57,7 +33,6 @@ DisplayCard.propTypes = {
     creatorDescription: string,
   })).isRequired,
   handleModalOpen: func.isRequired,
-};``
+};
 
 export default DisplayCard;
-

@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable max-len */
 /* eslint-disable no-unneeded-ternary */
 /* eslint-disable no-restricted-syntax */

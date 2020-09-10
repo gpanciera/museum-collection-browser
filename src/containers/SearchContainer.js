@@ -121,6 +121,7 @@ const TagButton = styled.button`
   :hover {
     color: #311e00;
   }
+
 `;
 
 SearchContainer.propTypes = {

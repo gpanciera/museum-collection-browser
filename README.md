@@ -2,14 +2,14 @@
 Dev take-home
 
 ## Description
-Allows users to search and view collection
+Allows users to search, filter and view works in the collection
 
 ### Installing
 - npm install
 - npm run dev
 
 ### Instructions
-- Point browser at localhost:8080
+- Point browser to localhost:8080
 
 ## Author
 - Greg Panciera
