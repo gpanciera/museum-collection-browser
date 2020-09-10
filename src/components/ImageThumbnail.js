@@ -12,7 +12,7 @@ const Thumbnail = styled.img`
   display: block;
   margin: auto;
   max-height: 40vh;
-  ${'' /* max-width: 100%; */}
+  max-width: 100%;
 `;
 
 ImageThumbnail.propTypes = {

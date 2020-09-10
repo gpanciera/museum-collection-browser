@@ -15,9 +15,12 @@ const DisplayCard = ({ aNum, title, creatorsAll, handleModalOpen }) => (
 );
 
 const Card = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 1em;
   margin: 0.5em;
   min-width: 350px;
+  max-width: 600px;
   background-color: white;
   border: 1px solid #DAE1E;
   border-radius: 4px;
