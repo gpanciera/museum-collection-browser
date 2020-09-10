@@ -73,7 +73,7 @@ export default function SearchContainer({ updateSearchResults, deptMap }) {
         <TextField
           fullWidth
           value={searchText}
-          label="Search by title, artist, country of origin, department etc..."
+          label="Search by title, artist, country, department etc..."
           margin="normal"
           variant="outlined"
           type="search"

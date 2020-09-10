@@ -73,12 +73,8 @@ export default MainContainer;
 
 const modalStyle = {
   content: {
-    top: '20%',
-    // left: '50%',
-    // right: 'auto',
+    top: '15%',
     bottom: 'auto',
-    // marginRight: '-50%',
-    // transform: 'translate(-50%, -50%)',
     backgroundColor: 'rgb(233,233,233)',
     borderStyle: 'none',
   },
