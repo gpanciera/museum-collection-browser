@@ -38,7 +38,7 @@ const CreatorsWrapper = styled.div`
   display: block;
   font-size: 1.05em;
   color: rgb(100,100,100);
-  max-height: 10vh;
+  ${'' /* max-height: 10vh; */}
   max-width: 100%;
 `;
 
