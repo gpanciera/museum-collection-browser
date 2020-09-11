@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 import DOMPurify from 'dompurify';
+import mediaQueries from '../styles/mediaQueries';
 
 const TAGS_TO_DISPLAY = 20;
 
@@ -73,7 +74,7 @@ export default function SearchContainer({ updateSearchResults, deptMap }) {
         <TextField
           fullWidth
           value={searchText}
-          label="Search by title, artist, country, department etc..."
+          label="Search by title, artist, country, dept. etc..."
           margin="normal"
           variant="outlined"
           type="search"
@@ -89,16 +90,23 @@ export default function SearchContainer({ updateSearchResults, deptMap }) {
 }
 
 const SearchWrapper = styled.div`
-  width: 60%;
-  min-width: 600px;
-  padding: 1em 0em 0em 2.5em;
+  ${'' /* width: 60%; */}
+  ${'' /* min-width: 600px; */}
+
+  padding: 0.6em 1em 0em 1em;
+  ${mediaQueries('md')`
+    padding: 1em 2.5em 0em 2.5em;
+  `};
 `;
 
 const TagContainer = styled.div`
-  width: 85%;
   display: flex;
   flex-wrap: wrap;
-  padding: 0.8em 0em 0em 2.5em;
+  padding: 0.8em 1em 0em 1em;
+  ${mediaQueries('md')`
+    width: 100%;
+    padding: 0.8em 2.5em 0em 2.5em;
+  `};
 `;
 
 const TagButton = styled.button`
@@ -111,7 +119,7 @@ const TagButton = styled.button`
   text-decoration: none;  
   display: block;
   background-color: ${(prop) => (prop.isSelected ? 'rgb(220,220,220)' : 'white')};
-  font-size: 0.85em;
+  font-size: 0.8em;
   color: rgb(110,110,110);
   cursor: pointer;
   transition: background 250ms ease-in-out, 
@@ -121,7 +129,9 @@ const TagButton = styled.button`
   :hover {
     color: #311e00;
   }
-
+  ${mediaQueries('md')`
+    font-size: 0.85em;
+  `};
 `;
 
 SearchContainer.propTypes = {

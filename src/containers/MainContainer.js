@@ -9,6 +9,7 @@ import ResultsContainer from './ResultsContainer';
 import ModalContent from '../components/ModalContent';
 import indexDatabase from '../helpers/indexDatabase';
 import filterResults from '../helpers/filterResults';
+import mediaQueries from '../styles/mediaQueries';
 
 // WAI-ARIA standard to hide other content from screenreaders when a modal is open
 Modal.setAppElement('#root');

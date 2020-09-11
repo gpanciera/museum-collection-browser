@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
+import mediaQueries from '../styles/mediaQueries';
 
 function ImageThumbnail({ aNum }) {
   return (
@@ -11,8 +12,12 @@ function ImageThumbnail({ aNum }) {
 const Thumbnail = styled.img`
   display: block;
   margin: auto;
-  max-height: 40vh;
+  max-height: 60vh;
   max-width: 100%;
+  ${mediaQueries('md')`
+    max-width: 30vw;
+    max-height: 30vh;
+  `};
 `;
 
 ImageThumbnail.propTypes = {

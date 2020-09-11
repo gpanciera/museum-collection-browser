@@ -6,6 +6,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CreatorsText from './CreatorsText';
+import mediaQueries from '../styles/mediaQueries';
 
 const MAX_CREATORS_TO_RENDER = 8;
 
@@ -32,9 +33,11 @@ export default function ArtDetails({ details: { accession_number, creator, depar
 const CreatorsWrapper = styled.div`
   display: block;
   margin-top: 0.5em;
-  font-size: 1.8em;
   color: rgb(100,100,100);
   max-width: 100%;
+  ${mediaQueries('md')`
+    font-size: 1.8em;
+  `};
 `;
 
 const Title = styled.div`

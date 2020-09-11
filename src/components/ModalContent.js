@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
 import ArtDetails from './ArtDetails';
+import mediaQueries from '../styles/mediaQueries';
 
 export default function ModalContent({ aNum, artworkMap }) {
   const details = artworkMap.current.get(aNum);
@@ -19,17 +20,28 @@ export default function ModalContent({ aNum, artworkMap }) {
 
 const ModalWrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  ${mediaQueries('md')`
+    flex-direction: row;
+  `};
 `;
 
 const Image = styled.img`
-  display: block;
-  margin: auto;
-  max-height: 70vh;
-  max-width: 70vw;
+  display: none;
+  ${mediaQueries('md')`
+    display: block;
+    margin: auto;
+    max-height: 60vh;
+    max-width: 60vw;
+  `};
 `;
 
 const InfoContainer = styled.div`
-  padding-left: 20px;
+  min-width: 30%;
+  ${mediaQueries('md')`
+    padding-left: 20px;
+  `};
 `;
 
 ModalContent.propTypes = {
