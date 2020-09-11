@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const px2vw = (size, width = 1440) => `${(size / width) * 100}vw`;
 
@@ -21,7 +21,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   :root {
-    font-size: ${px2vw(24)};
+    ${'' /* font-size: ${px2vw(24)};
 
     @media (min-width: 768px) {
       font-size: ${px2vw(18)};
@@ -29,7 +29,7 @@ export const GlobalStyles = createGlobalStyle`
 
     @media (min-width: 1024px) {
       font-size: ${px2vw(16)};
-    }
+    } */}
     --cma-green: rgb(39,121,105);
     --cma-purple: rgb(142,98,165);
     
