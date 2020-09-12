@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-fallthrough */
 /* eslint-disable default-case */
@@ -92,10 +93,9 @@ export default function SearchContainer({ updateSearchResults, deptMap }) {
 const SearchWrapper = styled.div`
   ${'' /* width: 60%; */}
   ${'' /* min-width: 600px; */}
-
   padding: 0.6em 1em 0em 1em;
   ${mediaQueries('md')`
-    padding: 1em 2.5em 0em 2.5em;
+    padding: 0.8em 2.5em 0em 2.5em;
   `};
 `;
 
@@ -103,6 +103,7 @@ const TagContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 0.8em 1em 0em 1em;
+  margin-bottom: 1em;
   ${mediaQueries('md')`
     width: 100%;
     padding: 0.8em 2.5em 0em 2.5em;

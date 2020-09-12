@@ -1,41 +1,30 @@
-/* eslint-disable arrow-body-style */
+/* eslint-disable react/require-default-props */
 import React from 'react';
-import styled from 'styled-components';
 import { arrayOf, shape, string, func } from 'prop-types';
+import styled from 'styled-components';
 import DisplayCard from '../components/DisplayCard';
-import mediaQueries from '../styles/mediaQueries';
+import Masonry from '../components/Masonry';
 
-const ResultsContainer = ({ filteredResults, handleModalOpen }) => {
-  const results = filteredResults.map((val) => (
-    <DisplayCard
-      key={val.id}
-      id={val.id}
-      aNum={val.accession_number}
-      title={val.title}
-      creatorsAll={val.creator}
-      handleModalOpen={handleModalOpen}
-    />
-  ));
-  return (
-    <StyledResultsContainer>{results}</StyledResultsContainer>
-  );
-};
+const ResultsContainer = ({ filteredResults = [], handleModalOpen }) => (
+  <ResultsWrapper>
+    <Masonry minWidth={400} gap="0em" css="margin: 0em;">
+      {filteredResults.map((val) => (
+        <DisplayCard
+          key={val.id}
+          id={val.id}
+          aNum={val.accession_number}
+          title={val.title}
+          creatorsAll={val.creator}
+          handleModalOpen={handleModalOpen}
+        />
+      ))}
+    </Masonry>
+  </ResultsWrapper>
+);
 
-const StyledResultsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  ${mediaQueries('md')`
-    margin: 1em;
-    padding: 1em;
-    align-content: flex-start;
-    flex-direction: row;
-    flex-wrap: wrap;
-  `};
+const ResultsWrapper = styled.div`
+  border-top: 1px solid #EBEBEB;
 `;
-
-ResultsContainer.defaultProps = {
-  filteredResults: [],
-};
 
 ResultsContainer.propTypes = {
   filteredResults: arrayOf(shape({

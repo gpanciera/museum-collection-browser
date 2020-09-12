@@ -14,10 +14,10 @@ const Thumbnail = styled.img`
   margin: auto;
   max-height: 60vh;
   max-width: 100%;
-  ${mediaQueries('md')`
+  ${'' /* ${mediaQueries('md')`
     max-width: 30vw;
     max-height: 30vh;
-  `};
+  `}; */}
 `;
 
 ImageThumbnail.propTypes = {
