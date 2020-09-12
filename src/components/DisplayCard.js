@@ -27,7 +27,6 @@ const Card = styled.div`
 `;
 
 DisplayCard.propTypes = {
-  id: string.isRequired,
   aNum: string.isRequired,
   title: string.isRequired,
   creatorsAll: arrayOf(shape({
