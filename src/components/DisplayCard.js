@@ -6,23 +6,29 @@ import TextOverview from './TextOverview';
 import mediaQueries from '../styles/mediaQueries';
 
 const DisplayCard = ({ aNum, title, creatorsAll, handleModalOpen }) => (
-  <Card onClick={() => handleModalOpen(aNum)}>
-    <ImageThumbnail aNum={aNum} />
-    <TextOverview
-      title={title}
-      creatorsAll={creatorsAll}
-    />
-  </Card>
+  <>
+    <Card onClick={() => handleModalOpen(aNum)}>
+      <ImageThumbnail aNum={aNum} />
+      <TextOverview
+        title={title}
+        creatorsAll={creatorsAll}
+      />
+    </Card>
+  </>
 );
 
+// const TopLine = styled.hr`
+//   ${'' /* margin: 0em 2em; */}
+//   color: #dfdfdf;
+// `;
+
 const Card = styled.div`
-  padding: 1em;
-  background-color: white;
-  border: 1px solid #DAE1E;
+  padding: 1.3em 1.3em 0em 1.3em;
+  &:first-child {
+    border-top: none;
+  } */}
   ${mediaQueries('md')`
-    border-radius: 4px;
-    margin: 0.5em;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+
   `};
 `;
 
