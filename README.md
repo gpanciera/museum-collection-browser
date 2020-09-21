@@ -1,6 +1,6 @@
 # Museum Collection Interface
 
-Front-end app to search, sort and view details for 150 items from The Cleveland Museum of Art's Collection
+Front-end app to search, sort and view details for a selection of items from The Cleveland Museum of Art's Collection
 
 ### Installing
 
