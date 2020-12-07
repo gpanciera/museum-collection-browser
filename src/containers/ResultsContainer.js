@@ -8,7 +8,7 @@ import Masonry from '../components/Masonry';
 const ResultsContainer = ({ filteredResults = [], handleModalOpen, isLoading, isError }) => (
   <ResultsWrapper>
     <Masonry minWidth={400} gap="0em" css="margin: 0em;">
-      { isLoading && (<span>Loading...</span>) }
+      {/* { isLoading && (<span>Loading...</span>) } */}
       { !isLoading && filteredResults.map((item) => (
         <DisplayCard
           key={item.id}

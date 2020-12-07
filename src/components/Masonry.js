@@ -7,6 +7,8 @@ import { number, string } from 'prop-types';
 import useEventListener from '../hooks/useEventListener';
 
 const fillCols = (children, cols) => {
+  console.log('fillCols ~ cols', cols);
+  console.log('fillCols ~ children', children);
   children.forEach((child, i) => cols[i % cols.length].push(child));
 };
 
@@ -16,6 +18,7 @@ export default function Masonry({ children, gap = '1em', minWidth = 500, ...rest
 
   const cols = [...Array(numCols)].map(() => []);
   fillCols(children, cols);
+  console.log('Masonry ~ cols', cols);
 
   // UseEffect calculates columns on first render only. Thereafter, event listener catches changes
   // to offsetWidth in MasonryDiv ref, firing resizeHandler which updates state via setNumCols

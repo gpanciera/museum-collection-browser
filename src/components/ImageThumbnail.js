@@ -13,9 +13,9 @@ function ImageThumbnail({ imgUrl }) {
 const Thumbnail = styled.img`
   display: block;
   margin: auto;
-  max-height: 60vh;
+  ${'' /* max-height: 60vh; */}
+  max-height: 300px;
   max-width: 100%;
-  ${'' /* max-height: 150px; */}
   ${'' /* height: 100%; */}
   ${'' /* ${mediaQueries('md')`
     max-width: 30vw;
