@@ -19,6 +19,7 @@ module.exports = {
     publicPath: '/',
     inline: true,
     hot: true,
+    port: 3000, // to check: why getting cors error on 8080 and not 3000
     // stats: 'errors-only',
   },
 

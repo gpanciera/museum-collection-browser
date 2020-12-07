@@ -5,10 +5,10 @@ import ImageThumbnail from './ImageThumbnail';
 import TextOverview from './TextOverview';
 import mediaQueries from '../styles/mediaQueries';
 
-const DisplayCard = ({ aNum, title, creatorsAll, handleModalOpen }) => (
+const DisplayCard = ({ aNum, title, imgUrl, creatorsAll, handleModalOpen }) => (
   <>
     <Card onClick={() => handleModalOpen(aNum)}>
-      <ImageThumbnail aNum={aNum} />
+      <ImageThumbnail imgUrl={imgUrl} />
       <TextOverview
         title={title}
         creatorsAll={creatorsAll}
@@ -24,6 +24,7 @@ const DisplayCard = ({ aNum, title, creatorsAll, handleModalOpen }) => (
 
 const Card = styled.div`
   padding: 1.3em 1.3em 0em 1.3em;
+  ${'' /* border: 1px solid red; */}
   &:first-child {
     border-top: none;
   } */}

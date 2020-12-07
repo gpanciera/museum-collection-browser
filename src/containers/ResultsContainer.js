@@ -5,16 +5,18 @@ import styled from 'styled-components';
 import DisplayCard from '../components/DisplayCard';
 import Masonry from '../components/Masonry';
 
-const ResultsContainer = ({ filteredResults = [], handleModalOpen }) => (
+const ResultsContainer = ({ filteredResults = [], handleModalOpen, isLoading, isError }) => (
   <ResultsWrapper>
     <Masonry minWidth={400} gap="0em" css="margin: 0em;">
-      {filteredResults.map((val) => (
+      { isLoading && (<span>Loading...</span>) }
+      { !isLoading && filteredResults.map((item) => (
         <DisplayCard
-          key={val.id}
-          id={val.id}
-          aNum={val.accession_number}
-          title={val.title}
-          creatorsAll={val.creator}
+          key={item.id}
+          id={item.id}
+          aNum={item.accession_number}
+          imgUrl={item.images.web.url}
+          title={item.title}
+          creatorsAll={item.creators}
           handleModalOpen={handleModalOpen}
         />
       ))}
