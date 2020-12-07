@@ -5,12 +5,14 @@ import { string } from 'prop-types';
 import ArtDetails from './ArtDetails';
 import mediaQueries from '../styles/mediaQueries';
 
-export default function ModalContent({ aNum, artworkMap }) {
+export default function ModalContent({ aNum, imgUrl, artworkMap }) {
+  console.log('🚀 ~ file: ModalContent.js ~ line 20 ~ ModalContent ~ aNum', aNum);
+
   const details = artworkMap.current.get(aNum);
 
   return (
     <ModalWrapper>
-      <Image src={`./images/${aNum}_reduced.jpg`} alt="picture" />
+      <Image src={imgUrl} alt="picture" />
       <InfoContainer>
         <ArtDetails details={details} />
       </InfoContainer>

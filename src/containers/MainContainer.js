@@ -77,6 +77,14 @@ const MainContainer = () => {
   return (
     <>
       <NavBar />
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={handleModalClose}
+        style={modalStyle}
+        contentLabel="modal label"
+      >
+        <ModalContent aNum={aNumForModal.current} artworkMap={artworkMap} />
+      </Modal>
       <ResultsContainer
         filteredResults={results}
         handleModalOpen={handleModalOpen}
@@ -89,14 +97,6 @@ const MainContainer = () => {
 export default MainContainer;
 
 // <SearchContainer updateSearchResults={updateSearchResults} deptMap={deptMap.current} />
-// <Modal
-//   isOpen={isModalOpen}
-//   onRequestClose={handleModalClose}
-//   style={modalStyle}
-//   contentLabel="modal label"
-// >
-//   <ModalContent aNum={aNumForModal.current} artworkMap={artworkMap} />
-// </Modal>
 
 const modalStyle = {
   content: {
