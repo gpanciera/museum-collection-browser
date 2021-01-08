@@ -11,7 +11,9 @@ import indexDatabase from '../helpers/indexDatabase';
 import filterResults from '../helpers/filterResults';
 
 const ENDPOINT = 'https://openaccess-api.clevelandart.org/api/artworks/';
-const OPTIONS = '?has_image=1&limit=100';
+// const OPTIONS = '?has_image=1&limit=4';
+const OPTIONS = '?has_image=1&limit=10';
+const RESULTS_PER_PAGE = 20;
 
 // WAI-ARIA standard to hide other content from screenreaders when a modal is open
 Modal.setAppElement('#root');
@@ -19,6 +21,10 @@ Modal.setAppElement('#root');
 const MainContainer = () => {
   const [url, setUrl] = useState(ENDPOINT + OPTIONS);
   const [results, setResults] = useState([]);
+
+  const [numResults, setNumResults] = useState(0);
+  const [curPage, setCurPage] = useState(0);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -34,10 +40,15 @@ const MainContainer = () => {
   useEffect(() => {
     setIsLoading(true);
     setIsError(false);
+
+    const offset = (RESULTS_PER_PAGE * curPage).toString();
+    console.log('MainContainer.js ~ line 45 ~ useEffect ~ offset', offset);
+    setUrl(`${ENDPOINT + OPTIONS}&skip=${offset}`);
     fetch(url)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result.data);
+        console.log(result);
+        setNumResults(result.info.total);
         setResults(result.data);
       })
       .catch((e) => {
@@ -45,7 +56,7 @@ const MainContainer = () => {
         setIsError(true);
         setIsLoading(false);
       });
-  }, [url]);
+  }, [url, curPage]);
 
   useEffect(() => setIsLoading(false), [results]);
 
@@ -74,6 +85,10 @@ const MainContainer = () => {
     setIsModalOpen(false);
   };
 
+  const handlePageChange = (num) => {
+    setCurPage(num);
+  };
+
   return (
     <>
       <NavBar />
@@ -86,6 +101,8 @@ const MainContainer = () => {
         <ModalContent aNum={aNumForModal.current} artworkMap={artworkMap} />
       </Modal>
       <ResultsContainer
+        handlePageChange={handlePageChange}
+        numPages={Math.floor(numResults / RESULTS_PER_PAGE)}
         filteredResults={results}
         handleModalOpen={handleModalOpen}
         isLoading={isLoading}
