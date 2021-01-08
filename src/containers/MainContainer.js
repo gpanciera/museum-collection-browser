@@ -41,9 +41,6 @@ const MainContainer = () => {
     setIsLoading(true);
     setIsError(false);
 
-    const offset = (RESULTS_PER_PAGE * curPage).toString();
-    console.log('MainContainer.js ~ line 45 ~ useEffect ~ offset', offset);
-    setUrl(`${ENDPOINT + OPTIONS}&skip=${offset}`);
     fetch(url)
       .then((response) => response.json())
       .then((result) => {
@@ -56,7 +53,7 @@ const MainContainer = () => {
         setIsError(true);
         setIsLoading(false);
       });
-  }, [url, curPage]);
+  }, [url]);
 
   useEffect(() => setIsLoading(false), [results]);
 
@@ -73,7 +70,11 @@ const MainContainer = () => {
 
   // Update filtered (displayed) results using new searchText and tags
   const updateSearchResults = (searchText, tagFilter) => {
-    setFilteredResults(filterResults(dbCleaned, searchText, tagFilter));
+    console.log('updateSearchResults ~ searchText', searchText);
+    // setFilteredResults(filterResults(dbCleaned, searchText, tagFilter));
+    setCurPage(0);
+    const SEARCH_STRING = searchText.length > 0 ? `&artists=${searchText}` : '';
+    setUrl(`${ENDPOINT + OPTIONS + SEARCH_STRING}`);
   };
 
   const handleModalOpen = (aNum) => {
@@ -86,7 +87,10 @@ const MainContainer = () => {
   };
 
   const handlePageChange = (num) => {
+    const offset = (RESULTS_PER_PAGE * curPage).toString();
+    // console.log('offset', offset);
     setCurPage(num);
+    setUrl(`${ENDPOINT + OPTIONS}&skip=${offset}`);
   };
 
   return (
@@ -100,6 +104,7 @@ const MainContainer = () => {
       >
         <ModalContent aNum={aNumForModal.current} artworkMap={artworkMap} />
       </Modal>
+      <SearchContainer updateSearchResults={updateSearchResults} deptMap={deptMap.current} />
       <ResultsContainer
         handlePageChange={handlePageChange}
         numPages={Math.floor(numResults / RESULTS_PER_PAGE)}
@@ -112,8 +117,6 @@ const MainContainer = () => {
   );
 };
 export default MainContainer;
-
-// <SearchContainer updateSearchResults={updateSearchResults} deptMap={deptMap.current} />
 
 const modalStyle = {
   content: {

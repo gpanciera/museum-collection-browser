@@ -14,28 +14,31 @@ const ResultsContainer = ({
     pageButtons.push(<button key={i} type="button" onClick={() => handlePageChange(i)}>{i + 1}</button>);
   }
 
-  if (isLoading) return null;
-
   return (
-    <>
-      {pageButtons}
-      <ResultsWrapper>
-        <Masonry minWidth={400} gap="0em" css="margin: 0em;">
-          {/* { isLoading && (<span>Loading...</span>) } */}
-          { !isLoading && filteredResults.map((item) => (
-            <DisplayCard
-              key={item.id}
-              id={item.id}
-              aNum={item.accession_number}
-              imgUrl={item.images.web.url}
-              title={item.title}
-              creatorsAll={item.creators}
-              handleModalOpen={handleModalOpen}
-            />
-          ))}
-        </Masonry>
-      </ResultsWrapper>
-    </>
+    <div className="results">
+      {isError && <div>Something went wrong...</div>}
+
+      {isLoading ? (<div>Loading...</div>) : (
+        <div>
+          {pageButtons}
+          <ResultsWrapper>
+            <Masonry minWidth={400} gap="0em" css="margin: 0em;">
+              { filteredResults.map((item) => (
+                <DisplayCard
+                  key={item.id}
+                  id={item.id}
+                  aNum={item.accession_number}
+                  imgUrl={item.images.web.url}
+                  title={item.title}
+                  creatorsAll={item.creators}
+                  handleModalOpen={handleModalOpen}
+                />
+              ))}
+            </Masonry>
+          </ResultsWrapper>
+        </div>
+      )}
+    </div>
   );
 };
 
