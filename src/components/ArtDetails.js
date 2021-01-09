@@ -10,16 +10,18 @@ import mediaQueries from '../styles/mediaQueries';
 
 const MAX_CREATORS_TO_RENDER = 8;
 
-export default function ArtDetails({ details: { accession_number, creator, departmentName, id, title, tombstone } }) {
+export default function ArtDetails({
+  details: { accession_number, department, id, title, tombstone, creators },
+}) {
   let filteredTombstone = tombstone.replace(title, '').trimStart();
   filteredTombstone = filteredTombstone.replace(/(^,)|(,$)/g, '');
   return (
     <>
       <Title>{title}</Title>
       <CreatorsWrapper>
-        <CreatorsText creatorsAll={creator} maxToRender={MAX_CREATORS_TO_RENDER} />
+        <CreatorsText creatorsAll={creators} maxToRender={MAX_CREATORS_TO_RENDER} />
       </CreatorsWrapper>
-      <Department>{departmentName}</Department>
+      <Department>{department}</Department>
       <Tombstone>{filteredTombstone}</Tombstone>
       <ANum>
         Accession Number:

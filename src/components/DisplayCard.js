@@ -5,9 +5,9 @@ import ImageThumbnail from './ImageThumbnail';
 import TextOverview from './TextOverview';
 import mediaQueries from '../styles/mediaQueries';
 
-const DisplayCard = ({ aNum, title, imgUrl, creatorsAll, handleModalOpen }) => (
+const DisplayCard = ({ id, aNum, imgUrl, title, creatorsAll, handleModalOpen }) => (
   <>
-    <Card onClick={() => handleModalOpen(aNum)}>
+    <Card onClick={() => handleModalOpen(id)}>
       <ImageThumbnail imgUrl={imgUrl} />
       <TextOverview
         title={title}

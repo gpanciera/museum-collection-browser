@@ -5,11 +5,9 @@ import { string } from 'prop-types';
 import ArtDetails from './ArtDetails';
 import mediaQueries from '../styles/mediaQueries';
 
-export default function ModalContent({ aNum, imgUrl, artworkMap }) {
-  console.log('🚀 ~ file: ModalContent.js ~ line 20 ~ ModalContent ~ aNum', aNum);
-
-  const details = artworkMap.current.get(aNum);
-
+export default function ModalContent({ id, artworkMap }) {
+  const details = artworkMap.current.get(id);
+  const imgUrl = details.images.web.url;
   return (
     <ModalWrapper>
       <Image src={imgUrl} alt="picture" />

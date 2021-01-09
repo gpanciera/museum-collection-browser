@@ -11,7 +11,7 @@ import mediaQueries from '../styles/mediaQueries';
 
 const TAGS_TO_DISPLAY = 20;
 
-export default function SearchContainer({ updateSearchResults, deptMap }) {
+export default function SearchContainer({ updateSearchResults, deptMap = null }) {
   const [searchText, setSearchText] = useState('');
   const [shouldUpdateResults, setShouldUpdateResults] = useState(false);
   const [deptTags, setDeptTags] = useState(null);
