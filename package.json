@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server",
     "build": "cross-env NODE_ENV=production webpack",
-    "start": "cross-env NODE_ENV=production node server/server.js",
+    "start": "node server.js",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
@@ -45,9 +45,9 @@
     "@material-ui/core": "^4.11.0",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "dompurify": "^2.0.15",
+    "express": "^4.17.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-autosuggest": "^10.0.2",
     "react-dom": "^16.13.1",
     "react-modal": "^3.11.2",
     "styled-components": "^5.2.0"
