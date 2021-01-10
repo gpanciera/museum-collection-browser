@@ -30,21 +30,6 @@ body {
   color: var(--cma-text3);
 }
 
-button:hover,
-button:focus {
-    background: lightblue;
-}
-
-button {
-  padding: 0.5rem;
-  border: none;
-  outline: none;
-  font: inherit;
-  color: inherit;
-  background: none;
-  cursor: pointer;
-}
-
 /* @media screen and (min-width: 400px) {
   html {
     font-size: 28px;

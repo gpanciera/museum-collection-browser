@@ -3,15 +3,29 @@
 import React from 'react';
 import { arrayOf, shape, string, func } from 'prop-types';
 import styled from 'styled-components';
+import { Pagination } from '@material-ui/lab';
 import DisplayCard from '../components/DisplayCard';
 import Masonry from '../components/Masonry';
 
 const ResultsContainer = ({
-  filteredResults = [], handleModalOpen, handlePageChange, numPages, isLoading, isError }) => {
+  filteredResults = [],
+  handleModalOpen,
+  handlePageChange, numPages, curPage,
+  isLoading, isError }) => {
   const pageButtons = [];
   const pageButtonsToDisplay = Math.min(10, numPages);
+  const random = (Math.random() * 100).toFixed(0).toString();
   for (let i = 0; i < pageButtonsToDisplay; i++) {
-    pageButtons.push(<button key={i} type="button" onClick={() => handlePageChange(i)}>{i + 1}</button>);
+    pageButtons.push(
+      <PageButton
+        key={random + i.toString()}
+        type="button"
+        onClick={() => handlePageChange(i)}
+        curPage={curPage === i}
+      >
+        {i + 1}
+      </PageButton>,
+    );
   }
 
   return (
@@ -20,7 +34,9 @@ const ResultsContainer = ({
 
       {isLoading ? (<div>Loading...</div>) : (
         <div>
-          {pageButtons}
+          <PaginationWrapper>
+            {pageButtons}
+          </PaginationWrapper>
           <ResultsWrapper>
             <Masonry minWidth={400} gap="0em" css="margin: 0em;">
               { filteredResults.map((item) => (
@@ -41,6 +57,23 @@ const ResultsContainer = ({
     </div>
   );
 };
+
+const PageButton = styled.button`
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  font: inherit;
+  color: inherit;
+  background: ${(props) => (props.curPage ? 'lightgrey' : 'none')};
+  cursor: pointer;
+  &:focus, &:hover {
+    background: lightblue;
+  }
+`;
+
+const PaginationWrapper = styled.div`
+  margin: 0 0 0.5rem 2.5rem;
+`;
 
 const ResultsWrapper = styled.div`
   border-top: 1px solid #EBEBEB;

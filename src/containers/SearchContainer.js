@@ -11,7 +11,7 @@ import mediaQueries from '../styles/mediaQueries';
 
 const TAGS_TO_DISPLAY = 20;
 
-export default function SearchContainer({ updateSearchResults, deptMap = null }) {
+export default function SearchContainer({ updateSearchQuery, deptMap = null }) {
   const [searchText, setSearchText] = useState('');
   const [shouldUpdateResults, setShouldUpdateResults] = useState(false);
   const [deptTags, setDeptTags] = useState(null);
@@ -28,7 +28,7 @@ export default function SearchContainer({ updateSearchResults, deptMap = null })
             isSelected={val === selectedTagName}
             onClick={() => {
               setSelectedTagName(val);
-              updateSearchResults(searchText, val);
+              updateSearchQuery(searchText, val);
             }}
           >
             {val}
@@ -40,7 +40,7 @@ export default function SearchContainer({ updateSearchResults, deptMap = null })
           isSelected={selectedTagName === 'All'}
           onClick={() => {
             setSelectedTagName('All');
-            updateSearchResults(searchText, 'All');
+            updateSearchQuery(searchText, 'All');
           }}
         >
           All
@@ -64,7 +64,7 @@ export default function SearchContainer({ updateSearchResults, deptMap = null })
   useEffect(() => {
     if (shouldUpdateResults || searchText.length === 0) {
       const clean = DOMPurify.sanitize(searchText);
-      updateSearchResults(clean, selectedTagName);
+      updateSearchQuery(clean, selectedTagName);
     }
     setShouldUpdateResults(false);
   }, [searchText, shouldUpdateResults]);
@@ -136,5 +136,5 @@ const TagButton = styled.button`
 `;
 
 SearchContainer.propTypes = {
-  updateSearchResults: func.isRequired,
+  updateSearchQuery: func.isRequired,
 };
