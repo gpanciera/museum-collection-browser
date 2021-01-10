@@ -44,6 +44,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/lab": "^4.0.0-alpha.56",
+    "cors": "^2.8.5",
     "dompurify": "^2.0.15",
     "express": "^4.17.1",
     "prop-types": "^15.7.2",
