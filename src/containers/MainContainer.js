@@ -11,7 +11,6 @@ import ModalContent from '../components/ModalContent';
 // import filterResults from '../helpers/filterResults';
 
 const ENDPOINT = 'https://openaccess-api.clevelandart.org/api/artworks/';
-// const OPTIONS = '?has_image=1&limit=4';
 const OPTIONS = '?has_image=1&limit=20';
 const RESULTS_PER_PAGE = 20;
 
@@ -20,6 +19,8 @@ Modal.setAppElement('#root');
 
 const MainContainer = () => {
   const [url, setUrl] = useState(ENDPOINT + OPTIONS);
+  const [searchString, setSearchString] = useState('');
+
   const [results, setResults] = useState([]);
   const artworkMap = useRef(new Map());
 
@@ -52,8 +53,8 @@ const MainContainer = () => {
 
   useEffect(() => setIsLoading(false), [results]);
 
+  // results change => update artwork map
   useEffect(() => {
-    console.log('🚀 ~ file: MainContainer.js ~ line 57 ~ useEffect ~ results', results);
     if (results) {
       results.forEach((artwork) => {
         if (!artworkMap.current.has(artwork.id)) { artworkMap.current.set(artwork.id, artwork); }
@@ -63,13 +64,16 @@ const MainContainer = () => {
     // destroy map item(s) here?
   }, [results]);
 
-  // Update filtered (displayed) results using new searchText and tags
-  const updateSearchResults = (searchText, tagFilter) => {
-    console.log('updateSearchResults ~ searchText', searchText);
-    // setFilteredResults(filterResults(dbCleaned, searchText, tagFilter));
+  // page or search change => update url
+  useEffect(() => {
+    const offset = (RESULTS_PER_PAGE * curPage).toString();
+    setUrl(`${ENDPOINT + OPTIONS}&skip=${offset}${searchString}`);
+  }, [curPage, searchString]);
+
+  const updateSearchQuery = (searchText, tagFilter) => {
+    // console.log('updateSearchResults ~ searchText', searchText);
     setCurPage(0);
-    const SEARCH_STRING = searchText.length > 0 ? `&artists=${searchText}` : '';
-    setUrl(`${ENDPOINT + OPTIONS + SEARCH_STRING}`);
+    setSearchString(searchText.length > 0 ? `&q=${searchText}` : '');
   };
 
   const handleModalOpen = (id) => {
@@ -82,10 +86,7 @@ const MainContainer = () => {
   };
 
   const handlePageChange = (num) => {
-    const offset = (RESULTS_PER_PAGE * curPage).toString();
-    console.log('offset', offset);
     setCurPage(num);
-    setUrl(`${ENDPOINT + OPTIONS}&skip=${offset}`);
   };
 
   return (
@@ -99,10 +100,11 @@ const MainContainer = () => {
       >
         <ModalContent id={idForModal.current} artworkMap={artworkMap} />
       </Modal>
-      <SearchContainer updateSearchResults={updateSearchResults} />
+      <SearchContainer updateSearchQuery={updateSearchQuery} />
       <ResultsContainer
         handlePageChange={handlePageChange}
         numPages={Math.floor(numResults / RESULTS_PER_PAGE)}
+        curPage={curPage}
         filteredResults={results}
         handleModalOpen={handleModalOpen}
         isLoading={isLoading}
