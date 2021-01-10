@@ -10,8 +10,11 @@ import Masonry from '../components/Masonry';
 const ResultsContainer = ({
   filteredResults = [],
   handleModalOpen,
-  handlePageChange, numPages, curPage,
-  isLoading, isError }) => {
+  handlePageChange,
+  numPages,
+  curPage,
+  isLoading,
+  isError }) => {
   const pageButtons = [];
   const pageButtonsToDisplay = Math.min(10, numPages);
   const random = (Math.random() * 100).toFixed(0).toString();
