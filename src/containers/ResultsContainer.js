@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/require-default-props */
 import React from 'react';
-import { arrayOf, shape, string, func } from 'prop-types';
+import { arrayOf, number, shape, string, func, bool } from 'prop-types';
 import styled from 'styled-components';
 import { Pagination } from '@material-ui/lab';
 import DisplayCard from '../components/DisplayCard';
@@ -84,16 +84,21 @@ const ResultsWrapper = styled.div`
 
 ResultsContainer.propTypes = {
   filteredResults: arrayOf(shape({
-    id: string.isRequired,
+    id: number.isRequired,
     accession_number: string.isRequired,
     title: string.isRequired,
     tombstone: string.isRequired,
-    creator: arrayOf(shape({
-      creatorRole: string,
-      creatorDescription: string,
+    creators: arrayOf(shape({
+      role: string,
+      description: string,
     })).isRequired,
   })),
   handleModalOpen: func.isRequired,
+  handlePageChange: func.isRequired,
+  numPages: number.isRequired,
+  curPage: number.isRequired,
+  isLoading: bool,
+  isError: bool,
 };
 
 export default ResultsContainer;

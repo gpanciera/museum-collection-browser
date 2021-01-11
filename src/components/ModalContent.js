@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
-import { string } from 'prop-types';
+import { number } from 'prop-types';
 import ArtDetails from './ArtDetails';
 import mediaQueries from '../styles/mediaQueries';
 
@@ -45,5 +45,5 @@ const InfoContainer = styled.div`
 `;
 
 ModalContent.propTypes = {
-  aNum: string.isRequired,
+  id: number.isRequired,
 };
