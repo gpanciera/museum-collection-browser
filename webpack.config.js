@@ -3,11 +3,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  mode: process.env.NODE_ENV,
+  // mode: process.env.NODE_ENV,
   entry: './src/index.js',
 
   // Enable sourcemaps for debugging webpack's output.
-  devtool: 'source-map',
+  // devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
 
   output: {
     publicPath: '/',
@@ -19,7 +20,10 @@ module.exports = {
     publicPath: '/',
     inline: true,
     hot: true,
-    port: 3000, // to check: why getting cors error on 8080 and not 3000
+    port: 3000,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
     // stats: 'errors-only',
   },
 

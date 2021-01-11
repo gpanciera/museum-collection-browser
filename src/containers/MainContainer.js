@@ -31,7 +31,7 @@ const MainContainer = () => {
   const [isError, setIsError] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const idForModal = useRef('-1');
+  const idForModal = useRef(-1);
 
   useEffect(() => {
     setIsLoading(true);
