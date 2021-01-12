@@ -2,6 +2,8 @@
 /* eslint-disable no-restricted-syntax */
 import React, { useState, useEffect, useRef } from 'react';
 import Modal from 'react-modal';
+import { Pagination } from '@material-ui/core';
+import styled from 'styled-components';
 import NavBar from './NavBar';
 import SearchContainer from './SearchContainer';
 import ResultsContainer from './ResultsContainer';
@@ -25,7 +27,7 @@ const MainContainer = () => {
   const artworkMap = useRef(new Map());
 
   const [numResults, setNumResults] = useState(0);
-  const [curPage, setCurPage] = useState(0);
+  const [curPage, setCurPage] = useState(1);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -60,19 +62,20 @@ const MainContainer = () => {
         if (!artworkMap.current.has(artwork.id)) { artworkMap.current.set(artwork.id, artwork); }
       });
     }
-    console.log('artworkMap', artworkMap.current);
+    // console.log('artworkMap', artworkMap.current);
     // destroy map item(s) here?
   }, [results]);
 
   // page or search change => update url
   useEffect(() => {
-    const offset = (RESULTS_PER_PAGE * curPage).toString();
+    const offset = ((RESULTS_PER_PAGE * curPage) - RESULTS_PER_PAGE).toString();
+    console.log("🚀 ~ file: MainContainer.js ~ line 71 ~ useEffect ~ offset", offset)
     setUrl(`${ENDPOINT + OPTIONS}&skip=${offset}${searchString}`);
   }, [curPage, searchString]);
 
   const updateSearchQuery = (searchText, tagFilter) => {
     // console.log('updateSearchResults ~ searchText', searchText);
-    setCurPage(0);
+    setCurPage(1);
     setSearchString(searchText.length > 0 ? `&q=${searchText}` : '');
   };
 
@@ -85,7 +88,7 @@ const MainContainer = () => {
     setIsModalOpen(false);
   };
 
-  const handlePageChange = (num) => {
+  const handlePageChange = (e, num) => {
     setCurPage(num);
   };
 
@@ -101,10 +104,17 @@ const MainContainer = () => {
         <ModalContent id={idForModal.current} artworkMap={artworkMap} />
       </Modal>
       <SearchContainer updateSearchQuery={updateSearchQuery} />
+      <PaginationContainer>
+        <StyledPagination 
+          siblingCount={1}
+          count={Math.floor(numResults / RESULTS_PER_PAGE)}
+          page={curPage}
+          onChange={handlePageChange}
+          shape="rounded" 
+          variant="outlined" 
+          />
+      </PaginationContainer>
       <ResultsContainer
-        handlePageChange={handlePageChange}
-        numPages={Math.floor(numResults / RESULTS_PER_PAGE)}
-        curPage={curPage}
         filteredResults={results}
         handleModalOpen={handleModalOpen}
         isLoading={isLoading}
@@ -128,6 +138,17 @@ const modalStyle = {
     zIndex: '1',
   },
 };
+
+const PaginationContainer = styled.div`
+  display: flex;
+`;
+
+const StyledPagination = styled(Pagination)`
+  margin: 0 0 0.5rem 2.5rem;
+  ${'' /* margin-left: auto; */}
+  ${'' /* margin-right: 2rem; */}
+  ${'' /* align-self: flex-end; */}
+`;
 
 // const [filteredResults, setFilteredResults] = useState([]);
 // const deptMap = useRef(null);
