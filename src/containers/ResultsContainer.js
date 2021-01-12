@@ -3,43 +3,16 @@
 import React from 'react';
 import { arrayOf, number, shape, string, func, bool } from 'prop-types';
 import styled from 'styled-components';
-import { Pagination } from '@material-ui/lab';
 import DisplayCard from '../components/DisplayCard';
 import Masonry from '../components/Masonry';
 
-const ResultsContainer = ({
-  filteredResults = [],
-  handleModalOpen,
-  handlePageChange,
-  numPages,
-  curPage,
-  isLoading,
-  isError }) => {
-  const pageButtons = [];
-  const pageButtonsToDisplay = Math.min(10, numPages);
-  const random = (Math.random() * 100).toFixed(0).toString();
-  for (let i = 0; i < pageButtonsToDisplay; i++) {
-    pageButtons.push(
-      <PageButton
-        key={random + i.toString()}
-        type="button"
-        onClick={() => handlePageChange(i)}
-        curPage={curPage === i}
-      >
-        {i + 1}
-      </PageButton>,
-    );
-  }
-
+const ResultsContainer = ({ filteredResults = [], handleModalOpen, isLoading, isError }) => {
   return (
     <div className="results">
       {isError && <div>Something went wrong...</div>}
 
       {isLoading ? (<div>Loading...</div>) : (
         <div>
-          <PaginationWrapper>
-            {pageButtons}
-          </PaginationWrapper>
           <ResultsWrapper>
             <Masonry minWidth={400} gap="0em" css="margin: 0em;">
               { filteredResults.map((item) => (
@@ -61,23 +34,6 @@ const ResultsContainer = ({
   );
 };
 
-const PageButton = styled.button`
-  padding: 0.5rem;
-  border: none;
-  outline: none;
-  font: inherit;
-  color: inherit;
-  background: ${(props) => (props.curPage ? 'lightgrey' : 'none')};
-  cursor: pointer;
-  &:focus, &:hover {
-    background: lightblue;
-  }
-`;
-
-const PaginationWrapper = styled.div`
-  margin: 0 0 0.5rem 2.5rem;
-`;
-
 const ResultsWrapper = styled.div`
   border-top: 1px solid #EBEBEB;
 `;
@@ -94,11 +50,47 @@ ResultsContainer.propTypes = {
     })).isRequired,
   })),
   handleModalOpen: func.isRequired,
-  handlePageChange: func.isRequired,
-  numPages: number.isRequired,
-  curPage: number.isRequired,
   isLoading: bool,
   isError: bool,
 };
 
 export default ResultsContainer;
+
+  // const pageButtons = [];
+  // const pageButtonsToDisplay = Math.min(10, numPages);
+  // const random = (Math.random() * 100).toFixed(0).toString();
+  // for (let i = 0; i < pageButtonsToDisplay; i++) {
+  //   pageButtons.push(
+  //     <PageButton
+  //       key={random + i.toString()}
+  //       type="button"
+  //       onClick={() => handlePageChange(i)}
+  //       curPage={curPage === i}
+  //     >
+  //       {i + 1}
+  //     </PageButton>,
+  //   );
+  // }
+
+/* 
+  <PaginationWrapper>
+    {pageButtons}
+  </PaginationWrapper> 
+*/
+
+// const PageButton = styled.button`
+//   padding: 0.5rem;
+//   border: none;
+//   outline: none;
+//   font: inherit;
+//   color: inherit;
+//   background: ${(props) => (props.curPage ? 'lightgrey' : 'none')};
+//   cursor: pointer;
+//   &:focus, &:hover {
+//     background: lightblue;
+//   }
+// `;
+
+// const PaginationWrapper = styled.div`
+//   margin: 0 0 0.5rem 2.5rem;
+// `;

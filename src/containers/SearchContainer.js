@@ -3,7 +3,7 @@
 /* eslint-disable no-fallthrough */
 /* eslint-disable default-case */
 import React, { useState, useEffect } from 'react';
-import TextField from '@material-ui/core/TextField';
+import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 import DOMPurify from 'dompurify';
