@@ -11,7 +11,7 @@ import mediaQueries from '../styles/mediaQueries';
 const MAX_CREATORS_TO_RENDER = 8;
 
 export default function ArtDetails({
-  details: { accession_number, department, id, title, tombstone, creators },
+  details: { accession_number, department, id, title, tombstone, fun_fact, digital_description, wall_description, measurements, creators },
 }) {
   let filteredTombstone = tombstone.replace(title, '').trimStart();
   filteredTombstone = filteredTombstone.replace(/(^,)|(,$)/g, '');
@@ -21,20 +21,30 @@ export default function ArtDetails({
       <CreatorsWrapper>
         <CreatorsText creatorsAll={creators} maxToRender={MAX_CREATORS_TO_RENDER} />
       </CreatorsWrapper>
-      <Department>{department}</Department>
+      <Subhead>Description</Subhead>
+      <Description>{digital_description || wall_description }</Description>
+      { fun_fact ? (
+        <>
+          <Subhead>Fun Fact</Subhead>
+          <FunFact>{fun_fact}</FunFact>
+        </>
+      ) : null
+      }
+      <Subhead>Details</Subhead>
       <Tombstone>{filteredTombstone}</Tombstone>
       <ANum>
         Accession Number:
         {' '}
         {accession_number}
       </ANum>
+      <Department>{department}</Department>
     </>
   );
 }
 
 const CreatorsWrapper = styled.div`
   display: block;
-  margin-top: 0.5em;
+  margin: 0.5rem 0 0.8rem 0;
   color: rgb(100,100,100);
   max-width: 100%;
   ${mediaQueries('md')`
@@ -42,23 +52,48 @@ const CreatorsWrapper = styled.div`
   `};
 `;
 
+const Subhead = styled.div`
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+`;
+
+const FunFact = styled.div`
+  color: rgb(100,100,100);
+  font-size: 0.9em;
+  font-family: 'Lora';
+  margin-bottom: 0.9rem;
+`;
+
+const Description = styled.div`
+  color: rgb(100,100,100);
+  font-size: 0.9em;
+  font-family: 'Lora';
+  margin-bottom: 0.9rem;
+`;
+
 const Title = styled.div`
   font-weight: 700;
   font-size: 1.2em;
-`;
-
-const Department = styled.div`
-  margin: 13px 0px;
 `;
 
 const Tombstone = styled.div`
   color: rgb(100,100,100);
   font-size: 0.9em;
   font-family: 'Lora';
-  margin: 13px 0px;
+  margin-bottom: 1.4rem;
+`;
+
+const Department = styled.div`
+  font-size: .8em;
+  font-weight: 300;
+  color: rgb(130,130,130);
+  margin-bottom: 0.3rem;
 `;
 
 const ANum = styled.div`
-  color: rgb(100,100,100);
-  margin: 13px 0px;
+  font-size: .8em;
+  font-weight: 300;
+  color: rgb(130,130,130);
+  margin-bottom: 0.3rem;
 `;

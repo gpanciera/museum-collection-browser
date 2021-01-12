@@ -42,7 +42,7 @@ const MainContainer = () => {
     fetch(url)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         setNumResults(result.info.total);
         setResults(result.data);
       })
@@ -69,7 +69,6 @@ const MainContainer = () => {
   // page or search change => update url
   useEffect(() => {
     const offset = ((RESULTS_PER_PAGE * curPage) - RESULTS_PER_PAGE).toString();
-    console.log("🚀 ~ file: MainContainer.js ~ line 71 ~ useEffect ~ offset", offset)
     setUrl(`${ENDPOINT + OPTIONS}&skip=${offset}${searchString}`);
   }, [curPage, searchString]);
 
