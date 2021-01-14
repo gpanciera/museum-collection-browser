@@ -38,7 +38,7 @@ const useDataApi = (initialUrl, initialData) => {
       dispatch({ type: 'FETCH_INIT' });
       try {
         const result = await axios.get(url, { cancelToken: source.token }); 
-        console.log("fetchData ~ result", result.data)
+        // console.log("fetching data ~ result", result.data)
         if (isMounted) {
           dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
         }
