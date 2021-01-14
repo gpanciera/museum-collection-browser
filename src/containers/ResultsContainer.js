@@ -5,13 +5,15 @@ import { arrayOf, number, shape, string, func, bool } from 'prop-types';
 import styled from 'styled-components';
 import DisplayCard from '../components/DisplayCard';
 import Masonry from '../components/Masonry';
+import { CircularProgress } from '@material-ui/core';
+import { Divider } from '@material-ui/core';
 
 const ResultsContainer = ({ filteredResults = [], handleModalOpen, isLoading, isError }) => {
   return (
-    <div className="results">
-      {isError && <div>Something went wrong...</div>}
-
-      {isLoading ? (<div>Loading...</div>) : (
+    <StyledResultsContainer>
+      {isError && <div style={{ marginLeft: "2.5rem" }}>Something went wrong...</div>}
+      <Divider variant="middle" />
+      {isLoading ? (<StyledCircularProgress size="5rem"/>) : (
         <div>
           <ResultsWrapper>
             <Masonry minWidth={400} gap="0em" css="margin: 0em;">
@@ -30,12 +32,24 @@ const ResultsContainer = ({ filteredResults = [], handleModalOpen, isLoading, is
           </ResultsWrapper>
         </div>
       )}
-    </div>
+    </StyledResultsContainer>
   );
 };
 
+const StyledResultsContainer = styled.div`
+  ${'' /* width: 100%; */}
+  ${'' /* height: 100%; */}
+  ${'' /* border: 1px solid red; */}
+  margin-bottom: 2.5em;
+`;
+
+const StyledCircularProgress = styled(CircularProgress)`
+  position: fixed;
+  margin-left: 4rem;
+`;
+
 const ResultsWrapper = styled.div`
-  border-top: 1px solid #EBEBEB;
+  ${'' /* border-top: 1px solid #EBEBEB; */}
 `;
 
 ResultsContainer.propTypes = {
@@ -55,42 +69,3 @@ ResultsContainer.propTypes = {
 };
 
 export default ResultsContainer;
-
-  // const pageButtons = [];
-  // const pageButtonsToDisplay = Math.min(10, numPages);
-  // const random = (Math.random() * 100).toFixed(0).toString();
-  // for (let i = 0; i < pageButtonsToDisplay; i++) {
-  //   pageButtons.push(
-  //     <PageButton
-  //       key={random + i.toString()}
-  //       type="button"
-  //       onClick={() => handlePageChange(i)}
-  //       curPage={curPage === i}
-  //     >
-  //       {i + 1}
-  //     </PageButton>,
-  //   );
-  // }
-
-/* 
-  <PaginationWrapper>
-    {pageButtons}
-  </PaginationWrapper> 
-*/
-
-// const PageButton = styled.button`
-//   padding: 0.5rem;
-//   border: none;
-//   outline: none;
-//   font: inherit;
-//   color: inherit;
-//   background: ${(props) => (props.curPage ? 'lightgrey' : 'none')};
-//   cursor: pointer;
-//   &:focus, &:hover {
-//     background: lightblue;
-//   }
-// `;
-
-// const PaginationWrapper = styled.div`
-//   margin: 0 0 0.5rem 2.5rem;
-// `;

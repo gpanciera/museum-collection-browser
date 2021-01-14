@@ -30,6 +30,27 @@ body {
   color: var(--cma-text3);
 }
 
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.non-footer-content {
+  flex: 1 0 auto;
+  top: 0;
+  /* padding: 10px; */
+}
+
+a:link {
+  /* text-decoration: none; */
+}
+
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* @media screen and (min-width: 400px) {
   html {
     font-size: 28px;
