@@ -2,72 +2,44 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-fallthrough */
 /* eslint-disable default-case */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 import DOMPurify from 'dompurify';
 import mediaQueries from '../styles/mediaQueries';
 
-const TAGS_TO_DISPLAY = 20;
-
-export default function SearchContainer({ updateSearchQuery, deptMap = null }) {
+export default function SearchContainer({ handleSearchChange }) {
+  const initialRender = useRef(true);
   const [searchText, setSearchText] = useState('');
-  const [shouldUpdateResults, setShouldUpdateResults] = useState(false);
-  const [deptTags, setDeptTags] = useState(null);
-  const [selectedTagName, setSelectedTagName] = useState('All');
-
-  // Set up department tags, ordered by number of works
-  useEffect(() => {
-    if (deptMap) {
-      const tags = Array.from(deptMap.keys())
-        .filter((elem, i) => i < TAGS_TO_DISPLAY)
-        .map((val) => (
-          <TagButton
-            key={val}
-            isSelected={val === selectedTagName}
-            onClick={() => {
-              setSelectedTagName(val);
-              updateSearchQuery(searchText, val);
-            }}
-          >
-            {val}
-          </TagButton>
-        ));
-      tags.unshift((
-        <TagButton
-          key="All"
-          isSelected={selectedTagName === 'All'}
-          onClick={() => {
-            setSelectedTagName('All');
-            updateSearchQuery(searchText, 'All');
-          }}
-        >
-          All
-        </TagButton>));
-      setDeptTags(tags);
-    }
-  }, [deptMap, selectedTagName]);
+  const [userEnteredNewSearch, setUserEnteredNewSearch] = useState(false);
 
   const handleTextChange = (e) => {
     setSearchText(e.target.value);
   };
+
   const handleKeyDown = (e) => {
     switch (e.key) {
       case 'Escape':
         setSearchText('');
       case 'Enter':
-        setShouldUpdateResults(true);
+        setUserEnteredNewSearch(true);
         break;
     }
   };
+
+  // if user hit enter or cleared contents of search field, send updated search string to parent
   useEffect(() => {
-    if (shouldUpdateResults || searchText.length === 0) {
-      const clean = DOMPurify.sanitize(searchText);
-      updateSearchQuery(clean, selectedTagName);
+    if (initialRender.current)
+      initialRender.current = false;
+    else {
+      if (userEnteredNewSearch || searchText.length === 0) {
+        const cleanedString = DOMPurify.sanitize(searchText);
+        handleSearchChange(cleanedString);
+      }
+      setUserEnteredNewSearch(false);
     }
-    setShouldUpdateResults(false);
-  }, [searchText, shouldUpdateResults]);
+  }, [searchText, userEnteredNewSearch]);
 
   return (
     <>
@@ -83,9 +55,6 @@ export default function SearchContainer({ updateSearchQuery, deptMap = null }) {
           onKeyDown={handleKeyDown}
         />
       </SearchWrapper>
-      <TagContainer>
-        {deptTags}
-      </TagContainer>
     </>
   );
 }
@@ -99,42 +68,40 @@ const SearchWrapper = styled.div`
   `};
 `;
 
-const TagContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0.8em 1em 0em 1em;
-  margin-bottom: 1em;
-  ${mediaQueries('md')`
-    width: 100%;
-    padding: 0.8em 2.5em 0em 2.5em;
-  `};
-`;
-
-const TagButton = styled.button`
-  display: inline-block;
-  float: left;
-  margin: 2px;
-  padding: 0.5em;
-  border: 1px solid rgb(220,220,220);
-  border-radius: 2px;
-  text-decoration: none;  
-  display: block;
-  background-color: ${(prop) => (prop.isSelected ? 'rgb(220,220,220)' : 'white')};
-  font-size: 0.8em;
-  color: rgb(110,110,110);
-  cursor: pointer;
-  transition: background 250ms ease-in-out, 
-  transform 150ms ease;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  :hover {
-    color: #311e00;
-  }
-  ${mediaQueries('md')`
-    font-size: 0.85em;
-  `};
-`;
 
 SearchContainer.propTypes = {
-  updateSearchQuery: func.isRequired,
+  handleSearchChange: func.isRequired,
 };
+
+
+  // Set up department tags, ordered by number of works
+  // useEffect(() => {
+  //   if (deptMap) {
+  //     const tags = Array.from(deptMap.keys())
+  //       .filter((elem, i) => i < TAGS_TO_DISPLAY)
+  //       .map((val) => (
+  //         <FilterButton
+  //           key={val}
+  //           isSelected={val === selectedTagName}
+  //           onClick={() => {
+  //             setSelectedTagName(val);
+  //             handleSearchChange(searchText, val);
+  //           }}
+  //         >
+  //           {val}
+  //         </FilterButton>
+  //       ));
+  //     tags.unshift((
+  //       <FilterButton
+  //         key="All"
+  //         isSelected={selectedTagName === 'All'}
+  //         onClick={() => {
+  //           setSelectedTagName('All');
+  //           handleSearchChange(searchText, 'All');
+  //         }}
+  //       >
+  //         All
+  //       </FilterButton>));
+  //     setDeptTags(tags);
+  //   }
+  // }, [deptMap, selectedTagName]);

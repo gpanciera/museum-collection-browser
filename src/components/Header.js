@@ -19,7 +19,7 @@ const HeaderContainer = styled.div`
   display: flex-column;
   ${mediaQueries('md')`
     height: 10vh;
-    max-height: 120px;
+    max-height: 100px;
 `};
 `;
 
