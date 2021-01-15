@@ -26,31 +26,36 @@ const MainContainer = () => {
   const artworkMap = useRef(new Map());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const idForModal = useRef(-1);
+  const isFirstRender = useRef(true);
 
   const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + OPTIONS);
 
-  // results change => update artwork map
+  // ****** When results change add any new content to artworMap
   useEffect(() => {
-    console.log("In update artwork map useEffect");
     if (results && results.length > 0) {
       results.forEach((artwork) => {
         if (!artworkMap.current.has(artwork.id)) { artworkMap.current.set(artwork.id, artwork); }
       });
-    }
+    };
     // console.log('artworkMap', artworkMap.current);
-    // destroy map item(s) here?
   }, [results]);
 
-  // ****** Run the API Fetch (first time, and on page change or search change)
+  // ****** Run the API Fetch after any changes to query parameters
   useEffect(() => {
-    const curFilter = queryElems.filterName;
-    const filterStr = FILTERS.has(curFilter) ? FILTERS.get(curFilter) : FILTERS.get(DEFAULT_FILTER);
-    const combinedSearchStr = `${filterStr}${queryElems.searchString}`;
-    const offset = ((RESULTS_PER_PAGE * queryElems.curPage) - RESULTS_PER_PAGE).toString();
-    const query = `${ENDPOINT + OPTIONS}&skip=${offset}${combinedSearchStr}`;
-
-    // console.log("🚀 ~ line 50 ~ SENDING QUERY:", query);
-    runAPIFetch(query);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    }
+    else {
+      const { filterName, searchString, curPage } = queryElems;
+      const filterStr = FILTERS.has(filterName) ? FILTERS.get(filterName) : FILTERS.get(DEFAULT_FILTER);
+      const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
+      // const combinedSearchStr = `${filterStr}${searchString}`; // dev
+      const offset = ((RESULTS_PER_PAGE * curPage) - RESULTS_PER_PAGE).toString();
+      const query = `${ENDPOINT + OPTIONS}&skip=${offset}${combinedSearchStr}`;
+      
+      // console.log("🚀 ~ line 50 ~ SENDING QUERY:", query);
+      runAPIFetch(query); 
+    }
   }, [queryElems]);
 
   const handlePageChange = (e, num) => {
