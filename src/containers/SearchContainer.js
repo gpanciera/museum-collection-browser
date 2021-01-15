@@ -10,7 +10,7 @@ import DOMPurify from 'dompurify';
 import mediaQueries from '../styles/mediaQueries';
 
 export default function SearchContainer({ handleSearchChange }) {
-  const initialRender = useRef(true);
+  const isFirstRender = useRef(true);
   const [searchText, setSearchText] = useState('');
   const [userEnteredNewSearch, setUserEnteredNewSearch] = useState(false);
 
@@ -30,8 +30,8 @@ export default function SearchContainer({ handleSearchChange }) {
 
   // if user hit enter or cleared contents of search field, send updated search string to parent
   useEffect(() => {
-    if (initialRender.current)
-      initialRender.current = false;
+    if (isFirstRender.current)
+      isFirstRender.current = false;
     else {
       if (userEnteredNewSearch || searchText.length === 0) {
         const cleanedString = DOMPurify.sanitize(searchText);

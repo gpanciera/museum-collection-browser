@@ -18,15 +18,11 @@ import { ENDPOINT, OPTIONS, RESULTS_PER_PAGE, FILTERS, DEFAULT_FILTER } from '..
 Modal.setAppElement('#root');
 
 const MainContainer = () => {
-  // const [searchString, setSearchString] = useState('');
-  // const [filterName, setFilterName] = useState('');
-  // const [curPage, setCurPage] = useState(1);
   const [queryElems, setQueryElems] = useState({
     curPage: 1,
     searchString: '',
     filterName: DEFAULT_FILTER,
   });
-
   const artworkMap = useRef(new Map());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const idForModal = useRef(-1);
@@ -35,6 +31,7 @@ const MainContainer = () => {
 
   // results change => update artwork map
   useEffect(() => {
+    console.log("In update artwork map useEffect");
     if (results && results.length > 0) {
       results.forEach((artwork) => {
         if (!artworkMap.current.has(artwork.id)) { artworkMap.current.set(artwork.id, artwork); }
@@ -57,14 +54,17 @@ const MainContainer = () => {
   }, [queryElems]);
 
   const handlePageChange = (e, num) => {
+    // console.log("handlePageChange");
     setQueryElems(prevState => ({ ...prevState, curPage: num }))
   };
 
   const handleSearchChange = (searchText) => {
+    // console.log("handleSearchChange");
     setQueryElems(prevState => ({ ...prevState, curPage: 1, searchString: searchText }));
   };
   
   const handleFilterChange = (filter) => {
+    // console.log("handleFilterChange");
     setQueryElems(prevState => ({ ...prevState, curPage: 1, filterName: filter }));
   }
 
