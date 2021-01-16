@@ -3,8 +3,12 @@ import styled from 'styled-components';
 import { FILTERS, DEFAULT_FILTER } from '../constants/constants';
 import mediaQueries from '../styles/mediaQueries';
 
-export default function Filters({ handleFilterChange, selectedFilter }) {
+export default function Filters({ dispatchQueryUpdate, selectedFilter, handleResetSearch }) {
   const filterButtons = [];
+
+  const handleFilterChange = (filterName) => {
+    dispatchQueryUpdate({ type: 'UPDATE_FILTER', payload: filterName });
+  }
 
   FILTERS.forEach((val, key) => {
     filterButtons.push(
@@ -17,6 +21,15 @@ export default function Filters({ handleFilterChange, selectedFilter }) {
       </FilterButton>
     );
   })
+  filterButtons.push(
+    <FilterButton
+      key={"Reset Search"}
+      onClick={() => handleResetSearch() }
+      addLeftMargin
+    >
+      Reset Search
+    </FilterButton>
+  )
 
   return (
     <FilterContainer>
@@ -40,7 +53,7 @@ const FilterContainer = styled.div`
 const FilterButton = styled.button`
   display: inline-block;
   float: left;
-  margin: 2px;
+  margin: ${(prop) => (prop.addLeftMargin ? '2px 2px 2px 20px' : '2px')};
   padding: 0.5em;
   height: 2rem;
   border: 1px solid rgb(220,220,220);

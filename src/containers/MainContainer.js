@@ -2,23 +2,22 @@
 /* eslint-disable no-restricted-syntax */
 import React, { useState, useEffect, useRef, useReducer } from 'react';
 import Modal from 'react-modal';
-import { Pagination } from '@material-ui/core';
 import styled from 'styled-components';
-import NavBar from './NavBar';
+import NavBar from '../components/NavBar';
 import Header from '../components/Header'
-import SearchContainer from './SearchContainer';
 import ResultsContainer from './ResultsContainer';
-import Filters from '../components/Filters';
 import ModalContent from '../components/ModalContent';
+import ControlContainer from './ControlContainer';
 import useDataApi from '../hooks/useDataApi';
 import mediaQueries from '../styles/mediaQueries';
-import { ENDPOINT, OPTIONS, RESULTS_PER_PAGE, FILTERS, DEFAULT_FILTER } from '../constants/constants'
+import queryReducer from '../reducers/queryReducer';
+import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, FILTERS, DEFAULT_FILTER } from '../constants/constants';
 
 // WAI-ARIA standard to hide other content from screenreaders when a modal is open
 Modal.setAppElement('#root');
 
 const MainContainer = () => {
-  const [queryElems, setQueryElems] = useState({
+  const [queryElems, dispatchQueryUpdate] = useReducer(queryReducer, {
     curPage: 1,
     searchString: '',
     filterName: DEFAULT_FILTER,
@@ -27,7 +26,6 @@ const MainContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const idForModal = useRef(-1);
   const isFirstRender = useRef(true);
-
   const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + OPTIONS);
 
   // ****** When results change add any new content to artworMap
@@ -37,7 +35,6 @@ const MainContainer = () => {
         if (!artworkMap.current.has(artwork.id)) { artworkMap.current.set(artwork.id, artwork); }
       });
     };
-    // console.log('artworkMap', artworkMap.current);
   }, [results]);
 
   // ****** Run the API Fetch after any changes to query parameters
@@ -47,31 +44,15 @@ const MainContainer = () => {
     }
     else {
       const { filterName, searchString, curPage } = queryElems;
-      const filterStr = FILTERS.has(filterName) ? FILTERS.get(filterName) : FILTERS.get(DEFAULT_FILTER);
+      const filterStr = FILTERS.has(filterName) 
+        ? FILTERS.get(filterName) 
+        : FILTERS.get(DEFAULT_FILTER);
       const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
-      // const combinedSearchStr = `${filterStr}${searchString}`; // dev
       const offset = ((RESULTS_PER_PAGE * curPage) - RESULTS_PER_PAGE).toString();
       const query = `${ENDPOINT + OPTIONS}&skip=${offset}${combinedSearchStr}`;
-      
-      // console.log("🚀 ~ line 50 ~ SENDING QUERY:", query);
       runAPIFetch(query); 
     }
   }, [queryElems]);
-
-  const handlePageChange = (e, num) => {
-    // console.log("handlePageChange");
-    setQueryElems(prevState => ({ ...prevState, curPage: num }))
-  };
-
-  const handleSearchChange = (searchText) => {
-    // console.log("handleSearchChange");
-    setQueryElems(prevState => ({ ...prevState, curPage: 1, searchString: searchText }));
-  };
-  
-  const handleFilterChange = (filter) => {
-    // console.log("handleFilterChange");
-    setQueryElems(prevState => ({ ...prevState, curPage: 1, filterName: filter }));
-  }
 
   const handleModalOpen = (id) => {
     idForModal.current = id;
@@ -97,23 +78,12 @@ const MainContainer = () => {
         />
       </Modal>
       <Header />
-      <SearchContainer 
-        handleSearchChange={handleSearchChange} 
+      <ControlContainer 
+        dispatchQueryUpdate={dispatchQueryUpdate}
+        numResults={numResults}
+        filterName={queryElems.filterName}
+        curPage={queryElems.curPage}
       />
-      <FilterAndPaginationWrapper>
-        <Filters 
-          handleFilterChange={handleFilterChange} 
-          selectedFilter={queryElems.filterName}
-        />
-        <StyledPagination 
-          siblingCount={1}
-          count={Math.floor(numResults / RESULTS_PER_PAGE)}
-          page={queryElems.curPage}
-          onChange={handlePageChange}
-          shape="rounded" 
-          variant="outlined" 
-        />
-      </FilterAndPaginationWrapper>
       <ResultCountWrapper>
           { results && numResults > 0 
             ? (<Result>Found{' '}<Count>{numResults}</Count>{' '}Results</Result>) 
@@ -143,13 +113,12 @@ const modalStyle = {
     zIndex: '1',
   },
 };
+
 const ResultCountWrapper = styled.div`
   margin-left: 1rem;
   font-size: 1rem;
-  ${'' /* color: rgb(110,110,110); */}
   color: black;
   font-weight: 400;
-  ${'' /* border: 1px solid blue; */}
   display: flex;
   justify-content: flex-start;
   width: auto;
@@ -164,35 +133,4 @@ const Result = styled.div`
 
 const Count = styled.div`
   display: inline-block;
-`;
-
-const FilterAndPaginationWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 6.5rem;
-  ${mediaQueries('sm')`
-    height: 4rem;
-    flex-direction: row;
-    justify-content: start;
-  `};
-
-  ${mediaQueries('md')`
-    height: 4rem;
-    flex-direction: row;
-    justify-content: start;
-  `};
-`;
-
-const PaginationContainer = styled.div`
-`;
-
-const StyledPagination = styled(Pagination)`
-  margin: 0.5rem 0 0 0.5rem;
-  ${mediaQueries('sm')`
-    margin-left: auto;
-    margin-right: 2.5rem;
-    margin-top: 4px;
-    margin-bottom: 0;
-  `};
 `;
