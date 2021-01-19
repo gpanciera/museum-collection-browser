@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Divider } from '@material-ui/core';
-import CMALogo from '../../public/cma-logo-black.svg';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import CopyrightIcon from '@material-ui/icons/Copyright';
+// import CMALogo from '../../public/cma-logo-black.svg';
 import mediaQueries from '../styles/mediaQueries';
 
 function Footer() {
@@ -16,23 +15,24 @@ function Footer() {
         <StyledLinkWrapper>
           <a href="https://www.clevelandart.org/" title="Cleveland Museum of Art" target="_blank" rel="noreferrer">Cleveland Museum of Art Home Page</a>
         </StyledLinkWrapper>
-        <StyledLinkWrapper>  
+        <StyledLinkWrapper>
           <a href="https://www.clevelandart.org/open-access" title="CMA Open Access" target="_blank" rel="noreferrer">CMA Open Access</a>
-        </StyledLinkWrapper>  
-        <StyledLinkWrapper>  
-          <strong>site design</strong> Greg Panciera
+        </StyledLinkWrapper>
+        <StyledLinkWrapper>
+          <strong>site design</strong>
+          {' '}
+          Greg Panciera
           <StyledIconWrapper>
-            <StyledIconA href="https://github.com/gpanciera" title="Greg Panciera - Github" target="_blank" rel="noreferrer"><GitHubIcon style={{ verticalAlign: "bottom", fontSize: 20 }}/></StyledIconA>
+            <StyledIconA href="https://github.com/gpanciera" title="Greg Panciera - Github" target="_blank" rel="noreferrer"><GitHubIcon style={{ verticalAlign: 'bottom', fontSize: 20 }} /></StyledIconA>
           </StyledIconWrapper>
           <StyledIconWrapper>
-            <StyledIconA2 href="https://www.linkedin.com/in/gregpanciera" title="Greg Panciera - LinkedIn" target="_blank" rel="noreferrer"><LinkedInIcon style={{ verticalAlign: "bottom", fontSize: 26 }}/></StyledIconA2>
+            <StyledIconA2 href="https://www.linkedin.com/in/gregpanciera" title="Greg Panciera - LinkedIn" target="_blank" rel="noreferrer"><LinkedInIcon style={{ verticalAlign: 'bottom', fontSize: 26 }} /></StyledIconA2>
           </StyledIconWrapper>
         </StyledLinkWrapper>
       </FooterContentWrapper>
     </FooterContainer>
   );
 }
-
 
 const FooterContainer = styled.footer`
   height: 6rem;           
@@ -80,7 +80,6 @@ const StyledIconWrapper = styled.div`
   ${'' /* border: 1px solid green; */}
 `;
 
-
 const StyledIconA = styled.a`
   display: inline-block;
   position: relative;
@@ -93,13 +92,13 @@ const StyledIconA2 = styled.a`
   position: relative;
   top: 6px;
   margin-left: 6px;
-`; 
-
-const Logo = styled.svg`
-    display: inline-block;
-    margin: auto 1.5rem 0 1.5rem;
-    height: 15%;
-    border: 1px solid red;
 `;
+
+// const Logo = styled.svg`
+//     display: inline-block;
+//     margin: auto 1.5rem 0 1.5rem;
+//     height: 15%;
+//     border: 1px solid red;
+// `;
 
 export default Footer;

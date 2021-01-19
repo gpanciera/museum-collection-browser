@@ -1,9 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable default-case */
 import React, { useState, useEffect, useRef } from 'react';
-import Filters from '../components/Filters';
+import { string, func, number } from 'prop-types';
 import { Pagination, TextField } from '@material-ui/core';
 import styled from 'styled-components';
-import mediaQueries from '../styles/mediaQueries';
 import DOMPurify from 'dompurify';
+import mediaQueries from '../styles/mediaQueries';
+import Filters from '../components/Filters';
 import { RESULTS_PER_PAGE } from '../constants/constants';
 
 export default function ControlContainer({ dispatchQueryUpdate, filterName, numResults, curPage }) {
@@ -13,12 +16,12 @@ export default function ControlContainer({ dispatchQueryUpdate, filterName, numR
 
   const handlePageChange = (e, num) => {
     dispatchQueryUpdate({ type: 'UPDATE_PAGE', payload: num });
-  }
+  };
 
   const handleResetSearch = () => {
     setSearchText('');
     dispatchQueryUpdate({ type: 'RESET_ALL' });
-  }
+  };
 
   const handleTextChange = (e) => {
     setSearchText(e.target.value);
@@ -26,15 +29,19 @@ export default function ControlContainer({ dispatchQueryUpdate, filterName, numR
 
   const handleKeyDown = (e) => {
     switch (e.key) {
-      case 'Escape':
+      case 'Escape': {
         setSearchText('');
-      case 'Enter':
         setUserSubmittedSearch(true);
         break;
+      }
+      case 'Enter': {
+        setUserSubmittedSearch(true);
+        break;
+      }
     }
   };
 
-  // if user hit enter or cleared contents of search field, send updated search string to parent
+  // If user hit enter or cleared contents of search field, send updated search string to parent
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -51,7 +58,7 @@ export default function ControlContainer({ dispatchQueryUpdate, filterName, numR
   return (
     <>
       <SearchWrapper>
-        <TextField
+        <StyledTextField
           fullWidth
           value={searchText}
           label="Search by title, artist, country, dept. etc..."
@@ -63,23 +70,27 @@ export default function ControlContainer({ dispatchQueryUpdate, filterName, numR
         />
       </SearchWrapper>
       <FilterAndPaginationWrapper>
-        <Filters 
-          dispatchQueryUpdate={dispatchQueryUpdate} 
+        <Filters
+          dispatchQueryUpdate={dispatchQueryUpdate}
           selectedFilter={filterName}
           handleResetSearch={handleResetSearch}
         />
-        <StyledPagination 
+        <StyledPagination
           siblingCount={1}
           count={Math.floor(numResults / RESULTS_PER_PAGE)}
           page={curPage}
           onChange={handlePageChange}
-          shape="rounded" 
-          variant="outlined" 
+          shape="rounded"
+          variant="outlined"
         />
       </FilterAndPaginationWrapper>
     </>
-  )
+  );
 }
+
+const StyledTextField = styled(TextField)`
+  border: '1px solid #000000';
+`;
 
 const SearchWrapper = styled.div`
   padding: 0.6em 1em 0em 1em;
@@ -106,8 +117,8 @@ const FilterAndPaginationWrapper = styled.div`
   `};
 `;
 
-const PaginationContainer = styled.div`
-`;
+// const PaginationContainer = styled.div`
+// `;
 
 const StyledPagination = styled(Pagination)`
   margin: 0.5rem 0 0 0.5rem;
@@ -118,3 +129,10 @@ const StyledPagination = styled(Pagination)`
     margin-bottom: 0;
   `};
 `;
+
+ControlContainer.propTypes = {
+  filterName: string.isRequired,
+  numResults: number.isRequired,
+  curPage: number.isRequired,
+  dispatchQueryUpdate: func.isRequired,
+};

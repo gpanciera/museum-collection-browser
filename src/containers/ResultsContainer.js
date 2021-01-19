@@ -3,17 +3,16 @@
 import React from 'react';
 import { arrayOf, number, shape, string, func, bool } from 'prop-types';
 import styled from 'styled-components';
+import { CircularProgress, Divider } from '@material-ui/core';
 import DisplayCard from '../components/DisplayCard';
 import Masonry from '../components/Masonry';
-import { CircularProgress } from '@material-ui/core';
-import { Divider } from '@material-ui/core';
 
 const ResultsContainer = ({ filteredResults = [], handleModalOpen, isLoading, isError }) => {
   return (
     <StyledResultsContainer>
-      {isError && <div style={{ marginLeft: "2.5rem" }}>Something went wrong...</div>}
+      {isError && <div style={{ marginLeft: '2.5rem' }}>Something went wrong...</div>}
       <Divider variant="middle" />
-      {isLoading ? (<StyledCircularProgress size="5rem"/>) : (
+      {isLoading ? (<StyledCircularProgress size="5rem" />) : (
         <div>
           <ResultsWrapper>
             <Masonry minWidth={400} gap="0em" css="margin: 0em;">

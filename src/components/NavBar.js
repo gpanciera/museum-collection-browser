@@ -5,7 +5,7 @@ import mediaQueries from '../styles/mediaQueries';
 
 function NavBar() {
   return (
-    <NavBarContainer>      
+    <NavBarContainer>
       <Logo src={CMALogo} />
       <StyledTitle>Cleveland Museum of Art</StyledTitle>
     </NavBarContainer>
@@ -13,7 +13,6 @@ function NavBar() {
 }
 
 const NavBarContainer = styled.div`
-  ${'' /* background-color: rgb(39,121,105); */}
   background-color: rgb(40,40,40);
   color: #F1F0F0;
   height: 60px;

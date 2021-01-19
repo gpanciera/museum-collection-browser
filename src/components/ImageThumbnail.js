@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
-import mediaQueries from '../styles/mediaQueries';
+// import mediaQueries from '../styles/mediaQueries';
 
 function ImageThumbnail({ imgUrl }) {
   return (
@@ -24,7 +24,7 @@ const Thumbnail = styled.img`
 `;
 
 ImageThumbnail.propTypes = {
-  // aNum: string.isRequired,
+  imgUrl: string.isRequired,
 };
 
 export default ImageThumbnail;
