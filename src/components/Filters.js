@@ -2,40 +2,55 @@
 import React from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
-import { FILTERS } from '../constants/constants';
+import { Select } from '@material-ui/core';
+import { MAIN_FILTER } from '../constants/constants';
 import mediaQueries from '../styles/mediaQueries';
 
 export default function Filters({ dispatchQueryUpdate, selectedFilter, handleResetSearch }) {
-  const filterButtons = [];
-
-  const handleFilterChange = (filterName) => {
-    dispatchQueryUpdate({ type: 'UPDATE_FILTER', payload: filterName });
+  const handleMainFilterChange = (mainFilter) => {
+    dispatchQueryUpdate({ type: 'UPDATE_MAIN_FILTER', payload: mainFilter });
   };
-
-  FILTERS.forEach((val, key) => {
-    filterButtons.push(
-      <FilterButton
-        key={key}
-        isSelected={key === selectedFilter}
-        onClick={() => handleFilterChange(key)}
-      >
-        {key}
-      </FilterButton>,
-    );
-  });
-  filterButtons.push(
-    <FilterButton
-      key="Reset Search"
-      onClick={() => handleResetSearch()}
-      addLeftMargin
-    >
-      Reset Search
-    </FilterButton>,
-  );
 
   return (
     <FilterContainer>
-      {filterButtons}
+      { MAIN_FILTER.map((val, key) => {
+          <FilterButton
+            key={key}
+            isSelected={key === selectedFilter}
+            onClick={() => handleMainFilterChange(key)}
+          >
+            {key}
+          </FilterButton>,
+        }
+      )}
+      <FormControl className={classes.formControl}>
+        <InputLabel shrink id="demo-simple-select-placeholder-label-label">
+          Age
+        </InputLabel>
+        <Select
+          labelId="demo-simple-select-placeholder-label-label"
+          id="demo-simple-select-placeholder-label"
+          value={age}
+          onChange={handleChange}
+          displayEmpty
+          className={classes.selectEmpty}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+        <FormHelperText>Label + placeholder</FormHelperText>
+      </FormControl>
+      <FilterButton
+        key="Reset Search"
+        onClick={() => handleResetSearch()}
+        addLeftMargin
+      >
+        Reset Search
+     </FilterButton>
     </FilterContainer>
   );
 }

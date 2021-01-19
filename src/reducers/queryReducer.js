@@ -8,11 +8,11 @@ export default function queryReducer(prevState, action) {
         curPage: 1,
         searchString: action.payload,
       };
-    case 'UPDATE_FILTER':
+    case 'UPDATE_MAIN_FILTER':
       return {
         ...prevState,
         curPage: 1,
-        filterName: action.payload,
+        mainFilter: action.payload,
       };
     case 'UPDATE_PAGE':
       return {
@@ -23,7 +23,7 @@ export default function queryReducer(prevState, action) {
       return {
         ...prevState,
         curPage: 1,
-        filterName: DEFAULT_FILTER,
+        mainFilter: DEFAULT_FILTER,
         searchString: '',
       };
     default:

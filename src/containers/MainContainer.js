@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-spaces */
 /* eslint-disable max-len */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-use-before-define */
@@ -13,7 +14,7 @@ import ControlContainer from './ControlContainer';
 import useDataApi from '../hooks/useDataApi';
 import mediaQueries from '../styles/mediaQueries';
 import queryReducer from '../reducers/queryReducer';
-import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, FILTERS, DEFAULT_FILTER } from '../constants/constants';
+import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, MAIN_FILTER, DEFAULT_FILTER } from '../constants/constants';
 
 // WAI-ARIA standard to hide other content from screenreaders when a modal is open
 Modal.setAppElement('#root');
@@ -25,7 +26,8 @@ const MainContainer = () => {
   const [queryElems, dispatchQueryUpdate] = useReducer(queryReducer, {
     curPage: 1,
     searchString: '',
-    filterName: DEFAULT_FILTER,
+    mainFilter: DEFAULT_FILTER,
+    otherFilters: {},                   // Department: 'Drawings', Type: 'Amulets',
   });
   const artworkMap = useRef(new Map());
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,10 +50,10 @@ const MainContainer = () => {
       isFirstRender.current = false;
     }
     else {
-      const { filterName, searchString, curPage } = queryElems;
-      const filterStr = FILTERS.has(filterName)
-        ? FILTERS.get(filterName)
-        : FILTERS.get(DEFAULT_FILTER);
+      const { mainFilter, searchString, curPage } = queryElems;
+      const filterStr = MAIN_FILTER.has(mainFilter)
+        ? MAIN_FILTER.get(mainFilter)
+        : MAIN_FILTER.get(DEFAULT_FILTER);
       // const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
       const combinedSearchStr = `${filterStr}${searchString}`; // dev
       const offset = ((RESULTS_PER_PAGE * curPage) - RESULTS_PER_PAGE).toString();
@@ -87,7 +89,7 @@ const MainContainer = () => {
       <ControlContainer
         dispatchQueryUpdate={dispatchQueryUpdate}
         numResults={numResults}
-        filterName={queryElems.filterName}
+        mainFilter={queryElems.mainFilter}
         curPage={queryElems.curPage}
       />
       <ResultCountWrapper>

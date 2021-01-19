@@ -9,7 +9,7 @@ import mediaQueries from '../styles/mediaQueries';
 import Filters from '../components/Filters';
 import { RESULTS_PER_PAGE } from '../constants/constants';
 
-export default function ControlContainer({ dispatchQueryUpdate, filterName, numResults, curPage }) {
+export default function ControlContainer({ dispatchQueryUpdate, mainFilter, numResults, curPage }) {
   const [searchText, setSearchText] = useState('');
   const [userSubmittedSearch, setUserSubmittedSearch] = useState(false);
   const isFirstRender = useRef(true);
@@ -72,7 +72,7 @@ export default function ControlContainer({ dispatchQueryUpdate, filterName, numR
       <FilterAndPaginationWrapper>
         <Filters
           dispatchQueryUpdate={dispatchQueryUpdate}
-          selectedFilter={filterName}
+          selectedFilter={mainFilter}
           handleResetSearch={handleResetSearch}
         />
         <StyledPagination
@@ -131,7 +131,7 @@ const StyledPagination = styled(Pagination)`
 `;
 
 ControlContainer.propTypes = {
-  filterName: string.isRequired,
+  mainFilter: string.isRequired,
   numResults: number.isRequired,
   curPage: number.isRequired,
   dispatchQueryUpdate: func.isRequired,
