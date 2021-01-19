@@ -26,7 +26,7 @@ const MainContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const idForModal = useRef(-1);
   const isFirstRender = useRef(true);
-  const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + OPTIONS);
+  const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + DEV_OPTIONS);
 
   // ****** When results change add any new content to artworMap
   useEffect(() => {

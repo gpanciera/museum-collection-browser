@@ -51,7 +51,7 @@ export default function ControlContainer({ dispatchQueryUpdate, filterName, numR
   return (
     <>
       <SearchWrapper>
-        <TextField
+        <StyledTextField
           fullWidth
           value={searchText}
           label="Search by title, artist, country, dept. etc..."
@@ -80,6 +80,10 @@ export default function ControlContainer({ dispatchQueryUpdate, filterName, numR
     </>
   )
 }
+
+const StyledTextField = styled(TextField)`
+  border: '1px solid #000000';
+`;
 
 const SearchWrapper = styled.div`
   padding: 0.6em 1em 0em 1em;
