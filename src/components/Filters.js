@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+/* eslint-disable react/no-array-index-key */
+import React from 'react';
 import styled from 'styled-components';
-import { FILTERS, DEFAULT_FILTER } from '../constants/constants';
+import { string, func } from 'prop-types';
+import { FILTERS } from '../constants/constants';
 import mediaQueries from '../styles/mediaQueries';
 
 export default function Filters({ dispatchQueryUpdate, selectedFilter, handleResetSearch }) {
@@ -8,34 +10,40 @@ export default function Filters({ dispatchQueryUpdate, selectedFilter, handleRes
 
   const handleFilterChange = (filterName) => {
     dispatchQueryUpdate({ type: 'UPDATE_FILTER', payload: filterName });
-  }
+  };
 
   FILTERS.forEach((val, key) => {
     filterButtons.push(
       <FilterButton
         key={key}
         isSelected={key === selectedFilter}
-        onClick={() => handleFilterChange(key) }
+        onClick={() => handleFilterChange(key)}
       >
         {key}
-      </FilterButton>
+      </FilterButton>,
     );
-  })
+  });
   filterButtons.push(
     <FilterButton
-      key={"Reset Search"}
-      onClick={() => handleResetSearch() }
+      key="Reset Search"
+      onClick={() => handleResetSearch()}
       addLeftMargin
     >
       Reset Search
-    </FilterButton>
-  )
+    </FilterButton>,
+  );
 
   return (
     <FilterContainer>
       {filterButtons}
     </FilterContainer>
   );
+}
+
+Filters.propTypes = {
+  selectedFilter: string.isRequired,
+  dispatchQueryUpdate: func.isRequired,
+  handleResetSearch: func.isRequired,
 };
 
 const FilterContainer = styled.div`

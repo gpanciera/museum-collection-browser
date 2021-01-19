@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { arrayOf, shape, string, func } from 'prop-types';
+import { arrayOf, shape, string, func, number } from 'prop-types';
 import ImageThumbnail from './ImageThumbnail';
 import TextOverview from './TextOverview';
 import mediaQueries from '../styles/mediaQueries';
 
-const DisplayCard = ({ id, aNum, imgUrl, title, creatorsAll, handleModalOpen }) => (
+const DisplayCard = ({ id, imgUrl, title, creatorsAll, handleModalOpen }) => (
   <>
     <Card onClick={() => handleModalOpen(id)}>
       <ImageThumbnail imgUrl={imgUrl} />
@@ -34,7 +34,8 @@ const Card = styled.div`
 `;
 
 DisplayCard.propTypes = {
-  aNum: string.isRequired,
+  id: number.isRequired,
+  imgUrl: string.isRequired,
   title: string.isRequired,
   creatorsAll: arrayOf(shape({
     creatorRole: string,

@@ -8,7 +8,7 @@ function Header() {
   return (
     <HeaderContainer>
       <StyledTextBlock>
-        Greetings, I'm a software engineer and art lover–I built this interface to the Cleveland Museum of Art's API for fun and demo purposes. All content is made freely available through the Museum's Open Access initiative. Please visit the CMA website for more info on these works, and explore their many other offerings. The code for this site is available on my github. Links in footer–thanks for visiting!
+        Greetings, I&apos;m a software engineer and art lover–I built this interface to the Cleveland Museum of Art&apos;s API for fun and demo purposes. All content is made freely available through the Museum&apos;s Open Access initiative. Please visit the CMA website for more info on these works, and explore their many other offerings. The code for this site is available on my github. Links in footer–thanks for visiting!
       </StyledTextBlock>
       <Divider variant="middle" />
     </HeaderContainer>

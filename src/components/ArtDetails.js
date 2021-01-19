@@ -11,8 +11,9 @@ import mediaQueries from '../styles/mediaQueries';
 const MAX_CREATORS_TO_RENDER = 8;
 
 export default function ArtDetails({
-  details: { accession_number, department, id, title, tombstone, fun_fact, digital_description, wall_description, measurements, creators },
-}) {
+  details: {
+    accession_number, department, id, title, tombstone, fun_fact, digital_description, wall_description, measurements, creators,
+  } }) {
   let filteredTombstone = tombstone.replace(title, '').trimStart();
   filteredTombstone = filteredTombstone.replace(/(^,)|(,$)/g, '');
   return (
@@ -28,8 +29,7 @@ export default function ArtDetails({
           <Subhead>Fun Fact</Subhead>
           <FunFact>{fun_fact}</FunFact>
         </>
-      ) : null
-      }
+      ) : null}
       <Subhead>Details</Subhead>
       <Tombstone>{filteredTombstone}</Tombstone>
       <ANum>
