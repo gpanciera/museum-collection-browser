@@ -14,7 +14,7 @@ import ControlContainer from './ControlContainer';
 import useDataApi from '../hooks/useDataApi';
 import mediaQueries from '../styles/mediaQueries';
 import queryReducer from '../reducers/queryReducer';
-import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, MAIN_FILTER, DEFAULT_FILTER } from '../constants/constants';
+import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, FILTER_QUERY_TABLE, DEFAULT_FILTER } from '../constants/constants';
 
 // WAI-ARIA standard to hide other content from screenreaders when a modal is open
 Modal.setAppElement('#root');
@@ -51,9 +51,9 @@ const MainContainer = () => {
     }
     else {
       const { mainFilter, searchString, curPage } = queryElems;
-      const filterStr = MAIN_FILTER.has(mainFilter)
-        ? MAIN_FILTER.get(mainFilter)
-        : MAIN_FILTER.get(DEFAULT_FILTER);
+      const filterStr = FILTER_QUERY_TABLE.has(mainFilter)
+        ? FILTER_QUERY_TABLE.get(mainFilter)
+        : FILTER_QUERY_TABLE.get(DEFAULT_FILTER);
       // const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
       const combinedSearchStr = `${filterStr}${searchString}`; // dev
       const offset = ((RESULTS_PER_PAGE * curPage) - RESULTS_PER_PAGE).toString();

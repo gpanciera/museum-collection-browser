@@ -1,56 +1,57 @@
+/* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
-import { Select } from '@material-ui/core';
-import { MAIN_FILTER } from '../constants/constants';
+import { ButtonGroup, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import DeptMenu from './DeptMenu';
+import { MAIN_FILTER_DISPLAY_LIST, DEPTS_DISPLAY_LIST } from '../constants/constants';
 import mediaQueries from '../styles/mediaQueries';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    // margin: theme.spacing(2),
+    marginTop: 8,
+    marginLeft: 2,
+  },
+}));
+
 export default function Filters({ dispatchQueryUpdate, selectedFilter, handleResetSearch }) {
+  const classes = useStyles();
   const handleMainFilterChange = (mainFilter) => {
     dispatchQueryUpdate({ type: 'UPDATE_MAIN_FILTER', payload: mainFilter });
   };
 
   return (
     <FilterContainer>
-      { MAIN_FILTER.map((val, key) => {
-          <FilterButton
-            key={key}
-            isSelected={key === selectedFilter}
-            onClick={() => handleMainFilterChange(key)}
+      <ButtonGroup
+        className={classes.root}
+        style={{ maxHeight: '2rem' }}
+        // variant="contained"
+        size="small"
+        aria-label="outlined primary button group"
+        disableElevation
+      >
+        { MAIN_FILTER_DISPLAY_LIST.map((filtername) => (
+          <Button
+            // variant={filtername === selectedFilter ? 'contained' : 'outlined'}
+            variant="outlined"
+            // color={filtername === selectedFilter ? 'primary' : ''}
+            onClick={() => handleMainFilterChange(filtername)}
           >
-            {key}
-          </FilterButton>,
-        }
-      )}
-      <FormControl className={classes.formControl}>
-        <InputLabel shrink id="demo-simple-select-placeholder-label-label">
-          Age
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-placeholder-label-label"
-          id="demo-simple-select-placeholder-label"
-          value={age}
-          onChange={handleChange}
-          displayEmpty
-          className={classes.selectEmpty}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-        <FormHelperText>Label + placeholder</FormHelperText>
-      </FormControl>
+            {filtername}
+          </Button>
+        ))}
+      </ButtonGroup>
+      <DeptMenu />
       <FilterButton
         key="Reset Search"
         onClick={() => handleResetSearch()}
         addLeftMargin
       >
         Reset Search
-     </FilterButton>
+      </FilterButton>
     </FilterContainer>
   );
 }
@@ -76,11 +77,11 @@ const FilterContainer = styled.div`
 const FilterButton = styled.button`
   display: inline-block;
   float: left;
-  margin: ${(prop) => (prop.addLeftMargin ? '2px 2px 2px 20px' : '2px')};
+  margin: ${(prop) => (prop.addLeftMargin ? '6px 2px 3px 20px' : '3px')};
   padding: 0.5em;
   height: 2rem;
   border: 1px solid rgb(220,220,220);
-  border-radius: 2px;
+  border-radius: 4px;
   text-decoration: none;  
   display: block;
   background-color: ${(prop) => (prop.isSelected ? 'rgb(220,220,220)' : 'white')};
@@ -98,3 +99,11 @@ const FilterButton = styled.button`
     font-size: 0.85em;
   `};
 `;
+
+// <FilterButton
+//   key={filtername}
+//   isSelected={filtername === selectedFilter}
+//   onClick={() => handleMainFilterChange(filtername)}
+// >
+//   {filtername}
+// </FilterButton>

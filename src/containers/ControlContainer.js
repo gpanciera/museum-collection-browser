@@ -2,7 +2,8 @@
 /* eslint-disable default-case */
 import React, { useState, useEffect, useRef } from 'react';
 import { string, func, number } from 'prop-types';
-import { Pagination, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
+import { Pagination } from '@material-ui/lab';
 import styled from 'styled-components';
 import DOMPurify from 'dompurify';
 import mediaQueries from '../styles/mediaQueries';

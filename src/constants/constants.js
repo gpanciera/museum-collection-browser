@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 /* eslint-disable no-multi-spaces */
 export const ENDPOINT = 'https://openaccess-api.clevelandart.org/api/artworks/';
 export const OPTIONS = '?has_image=1&limit=20';
@@ -7,14 +8,60 @@ export const TAGS_TO_DISPLAY = 20;
 
 export const DEFAULT_FILTER = 'All Results';
 
-export const MAIN_FILTER = new Map([
+export const MAIN_FILTER_DISPLAY_LIST = [
+  'All Results',
+  'Artist',
+  'Title',
+  'Medium',
+];
+
+export const OTHER_FILTERS_DISPLAY_LIST = [
+  'Department',
+  'Type',
+  'Created Before',
+  'Created After',
+];
+
+export const DEPTS_DISPLAY_LIST = [
+  'African Art',
+  'American Painting and Sculpture',
+  'Art of the Americas',
+  'Chinese Art',
+  'Contemporary Art',
+  'Decorative Art and Design',
+  'Drawings',
+  'Egyptian and Ancient Near Eastern Art',
+  'European Painting and Sculpture',
+  'Greek and Roman Art',
+  'Indian and South East Asian Art',
+  'Islamic Art',
+  'Japanese Art',
+  'Korean Art',
+  'Medieval Art',
+  'Modern European Painting and Sculpture',
+  'Oceania',
+  'Performing Arts, Music, & Film',
+  'Photography',
+  'Prints',
+  'Textiles',
+];
+
+// export const FILTER_QUERY_TABLE = {
+//   'All Results': '&q=',
+//   'Artist': '&artists=',
+//   'Title': '&title=',
+//   'Medium': '&medium=',
+//   'Department': '&department=',
+//   'Type': '&type=',
+//   'Created Before': '&created_before=',     // int, year
+//   'Created After': '&created_after=',       // int, year
+// };
+
+export const FILTER_QUERY_TABLE = new Map([
   ['All Results', '&q='],
   ['Artist', '&artists='],
   ['Title', '&title='],
   ['Medium', '&medium='],
-]);
-
-export const OTHER_FILTERS = new Map([
   ['Department', '&department='],
   ['Type', '&type='],
   ['Created Before', '&created_before='],     // int, year
