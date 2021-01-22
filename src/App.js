@@ -16,18 +16,18 @@ const theme = createMuiTheme({
       dark: '#373737',
       contrastText: '#ffffff',
     },
-    secondary: { // purple
-      light: '#b084f4',
-      main: '#7e56c1',
-      dark: '#4d2b90',
-      contrastText: '#ffffff',
-    },
-    // secondary: {
-    //   light: '#ffffff',
-    //   main: '#e0e0e0',
-    //   dark: '#aeaeae',
-    //   contrastText: '#000000',
+    // secondary: { // purple
+    //   light: '#b084f4',
+    //   main: '#7e56c1',
+    //   dark: '#4d2b90',
+    //   contrastText: '#ffffff',
     // },
+    secondary: {
+      light: '#ffffff',
+      main: '#e0e0e0',
+      dark: '#aeaeae',
+      contrastText: '#000000',
+    },
   },
   // overrides: {
   //   // Style sheet name ⚛️

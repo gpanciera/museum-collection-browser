@@ -10,7 +10,7 @@ import { MAIN_FILTER_DISPLAY_LIST, DEPTS_DISPLAY_LIST } from '../constants/const
 import mediaQueries from '../styles/mediaQueries';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  btngroup: {
     margin: theme.spacing(2),
     marginTop: 6,
     marginLeft: 2,
@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     maxHeight: '2.2rem',
     padding: theme.spacing(1.5),
+    border: '1px solid #CBCBCB',
+    // border: '1px solid #616161',
+    // color: '#616161',
   },
 }));
 
@@ -30,7 +33,7 @@ export default function Filters({ dispatchQueryUpdate, selectedFilter, handleRes
   return (
     <FilterContainer>
       <ButtonGroup
-        className={classes.root}
+        className={classes.btngroup}
         size="small"
         disableElevation
       >
