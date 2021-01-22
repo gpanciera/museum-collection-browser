@@ -28,7 +28,7 @@ export default function DeptMenu() {
       multiple
       margin="dense"
       size="small"
-      autoWidth
+      autowidth
       className={classes.formControl}
     >
       <InputLabel>Department</InputLabel>

@@ -11,9 +11,13 @@ import mediaQueries from '../styles/mediaQueries';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // margin: theme.spacing(2),
-    marginTop: 8,
+    margin: theme.spacing(2),
+    marginTop: 6,
     marginLeft: 2,
+  },
+  btn: {
+    maxHeight: '2.2rem',
+    padding: theme.spacing(1.5),
   },
 }));
 
@@ -27,17 +31,16 @@ export default function Filters({ dispatchQueryUpdate, selectedFilter, handleRes
     <FilterContainer>
       <ButtonGroup
         className={classes.root}
-        style={{ maxHeight: '2rem' }}
-        // variant="contained"
         size="small"
-        aria-label="outlined primary button group"
         disableElevation
       >
         { MAIN_FILTER_DISPLAY_LIST.map((filtername) => (
           <Button
-            // variant={filtername === selectedFilter ? 'contained' : 'outlined'}
-            variant="outlined"
-            // color={filtername === selectedFilter ? 'primary' : ''}
+            className={classes.btn}
+            aria-label="outlined primary button"
+            key={filtername}
+            variant={filtername === selectedFilter ? 'contained' : 'outlined'}
+            color={filtername === selectedFilter ? 'secondary' : 'primary'}
             onClick={() => handleMainFilterChange(filtername)}
           >
             {filtername}
@@ -45,13 +48,17 @@ export default function Filters({ dispatchQueryUpdate, selectedFilter, handleRes
         ))}
       </ButtonGroup>
       <DeptMenu />
-      <FilterButton
+      <Button
+        style={{ marginTop: 6, marginLeft: 10 }}
+        className={classes.btn}
+        size="small"
+        disableElevation
         key="Reset Search"
         onClick={() => handleResetSearch()}
-        addLeftMargin
+        variant="outlined"
       >
         Reset Search
-      </FilterButton>
+      </Button>
     </FilterContainer>
   );
 }
