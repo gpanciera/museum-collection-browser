@@ -34,7 +34,7 @@ const MainContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const idForModal = useRef(-1);
   const isFirstRender = useRef(true);
-  const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + DEV_OPTIONS);
+  const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + OPTIONS);
 
   // ****** When results change add any new content to artworMap
   useEffect(() => {
@@ -55,8 +55,8 @@ const MainContainer = () => {
       const filterStr = FILTER_QUERY_TABLE.has(mainFilter)
         ? FILTER_QUERY_TABLE.get(mainFilter)
         : FILTER_QUERY_TABLE.get(DEFAULT_FILTER);
-      // const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
-      const combinedSearchStr = `${filterStr}${searchString}`; // dev
+      const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
+      // const combinedSearchStr = `${filterStr}${searchString}`; // dev
       const offset = ((RESULTS_PER_PAGE * curPage) - RESULTS_PER_PAGE).toString();
       const query = `${ENDPOINT + OPTIONS}&skip=${offset}${combinedSearchStr}`;
       runAPIFetch(query);
