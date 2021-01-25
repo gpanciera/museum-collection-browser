@@ -1,41 +1,73 @@
+/* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
-import { FILTERS } from '../constants/constants';
+import { ButtonGroup, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { MAIN_FILTER_DISPLAY_LIST } from '../constants/constants';
 import mediaQueries from '../styles/mediaQueries';
 
-export default function Filters({ dispatchQueryUpdate, selectedFilter, handleResetSearch }) {
-  const filterButtons = [];
+const useStyles = makeStyles((theme) => ({
+  btngroup: {
+    margin: theme.spacing(2),
+    marginTop: 6,
+    marginLeft: 2,
+  },
+  btn: {
+    maxHeight: '2.2rem',
+    padding: theme.spacing(1.5),
+    border: '1px solid #CBCBCB',
+    // border: '1px solid #616161',
+    // color: '#616161',
+  },
+}));
 
-  const handleFilterChange = (filterName) => {
-    dispatchQueryUpdate({ type: 'UPDATE_FILTER', payload: filterName });
+export default function Filters({
+  dispatchQueryUpdate, selectedFilter, handleResetSearch, handleToggleDeptDrawer }) {
+  const classes = useStyles();
+  const handleMainFilterChange = (mainFilter) => {
+    dispatchQueryUpdate({ type: 'UPDATE_MAIN_FILTER', payload: mainFilter });
   };
-
-  FILTERS.forEach((val, key) => {
-    filterButtons.push(
-      <FilterButton
-        key={key}
-        isSelected={key === selectedFilter}
-        onClick={() => handleFilterChange(key)}
-      >
-        {key}
-      </FilterButton>,
-    );
-  });
-  filterButtons.push(
-    <FilterButton
-      key="Reset Search"
-      onClick={() => handleResetSearch()}
-      addLeftMargin
-    >
-      Reset Search
-    </FilterButton>,
-  );
 
   return (
     <FilterContainer>
-      {filterButtons}
+      <ButtonGroup
+        className={classes.btngroup}
+        size="small"
+        disableElevation
+      >
+        { MAIN_FILTER_DISPLAY_LIST.map((filtername) => (
+          <Button
+            className={classes.btn}
+            aria-label="outlined primary button"
+            key={filtername}
+            variant={filtername === selectedFilter ? 'contained' : 'outlined'}
+            color={filtername === selectedFilter ? 'secondary' : 'primary'}
+            onClick={() => handleMainFilterChange(filtername)}
+          >
+            {filtername}
+          </Button>
+        ))}
+      </ButtonGroup>
+      {/* <Button
+        style={{ marginTop: 6, marginLeft: 10 }}
+        className={classes.btn}
+        key="Department"
+        onClick={() => handleToggleDeptDrawer()}
+        variant="outlined"
+      >
+        Departments
+      </Button> */}
+      <Button
+        style={{ marginTop: 6, marginLeft: 10 }}
+        className={classes.btn}
+        key="Reset Search"
+        onClick={() => handleResetSearch()}
+        variant="outlined"
+      >
+        Reset Search
+      </Button>
     </FilterContainer>
   );
 }
@@ -44,6 +76,7 @@ Filters.propTypes = {
   selectedFilter: string.isRequired,
   dispatchQueryUpdate: func.isRequired,
   handleResetSearch: func.isRequired,
+  handleToggleDeptDrawer: func.isRequired,
 };
 
 const FilterContainer = styled.div`
@@ -58,28 +91,36 @@ const FilterContainer = styled.div`
   `};
 `;
 
-const FilterButton = styled.button`
-  display: inline-block;
-  float: left;
-  margin: ${(prop) => (prop.addLeftMargin ? '2px 2px 2px 20px' : '2px')};
-  padding: 0.5em;
-  height: 2rem;
-  border: 1px solid rgb(220,220,220);
-  border-radius: 2px;
-  text-decoration: none;  
-  display: block;
-  background-color: ${(prop) => (prop.isSelected ? 'rgb(220,220,220)' : 'white')};
-  font-size: 0.8em;
-  color: rgb(110,110,110);
-  cursor: pointer;
-  transition: background 250ms ease-in-out, 
-  transform 150ms ease;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  :hover {
-    color: #311e00;
-  }
-  ${mediaQueries('md')`
-    font-size: 0.85em;
-  `};
-`;
+// const FilterButton = styled.button`
+//   display: inline-block;
+//   float: left;
+//   margin: ${(prop) => (prop.addLeftMargin ? '6px 2px 3px 20px' : '3px')};
+//   padding: 0.5em;
+//   height: 2rem;
+//   border: 1px solid rgb(220,220,220);
+//   border-radius: 4px;
+//   text-decoration: none;
+//   display: block;
+//   background-color: ${(prop) => (prop.isSelected ? 'rgb(220,220,220)' : 'white')};
+//   font-size: 0.8em;
+//   color: rgb(110,110,110);
+//   cursor: pointer;
+//   transition: background 250ms ease-in-out,
+//   transform 150ms ease;
+//   -webkit-appearance: none;
+//   -moz-appearance: none;
+//   :hover {
+//     color: #311e00;
+//   }
+//   ${mediaQueries('md')`
+//     font-size: 0.85em;
+//   `};
+// `;
+
+// <FilterButton
+//   key={filtername}
+//   isSelected={filtername === selectedFilter}
+//   onClick={() => handleMainFilterChange(filtername)}
+// >
+//   {filtername}
+// </FilterButton>

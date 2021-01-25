@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-spaces */
 /* eslint-disable max-len */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-use-before-define */
@@ -5,6 +6,7 @@
 import React, { useState, useEffect, useRef, useReducer } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+import { Pagination } from '@material-ui/lab';
 import NavBar from '../components/NavBar';
 import Header from '../components/Header';
 import ResultsContainer from './ResultsContainer';
@@ -13,7 +15,7 @@ import ControlContainer from './ControlContainer';
 import useDataApi from '../hooks/useDataApi';
 import mediaQueries from '../styles/mediaQueries';
 import queryReducer from '../reducers/queryReducer';
-import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, FILTERS, DEFAULT_FILTER } from '../constants/constants';
+import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, FILTER_QUERY_TABLE, DEFAULT_FILTER } from '../constants/constants';
 
 // WAI-ARIA standard to hide other content from screenreaders when a modal is open
 Modal.setAppElement('#root');
@@ -25,7 +27,8 @@ const MainContainer = () => {
   const [queryElems, dispatchQueryUpdate] = useReducer(queryReducer, {
     curPage: 1,
     searchString: '',
-    filterName: DEFAULT_FILTER,
+    mainFilter: DEFAULT_FILTER,
+    otherFilters: {},                   // Department: 'Drawings', Type: 'Amulets',
   });
   const artworkMap = useRef(new Map());
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,10 +51,10 @@ const MainContainer = () => {
       isFirstRender.current = false;
     }
     else {
-      const { filterName, searchString, curPage } = queryElems;
-      const filterStr = FILTERS.has(filterName)
-        ? FILTERS.get(filterName)
-        : FILTERS.get(DEFAULT_FILTER);
+      const { mainFilter, searchString, curPage } = queryElems;
+      const filterStr = FILTER_QUERY_TABLE.has(mainFilter)
+        ? FILTER_QUERY_TABLE.get(mainFilter)
+        : FILTER_QUERY_TABLE.get(DEFAULT_FILTER);
       // const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
       const combinedSearchStr = `${filterStr}${searchString}`; // dev
       const offset = ((RESULTS_PER_PAGE * curPage) - RESULTS_PER_PAGE).toString();
@@ -67,6 +70,10 @@ const MainContainer = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+  };
+
+  const handlePageChange = (e, num) => {
+    dispatchQueryUpdate({ type: 'UPDATE_PAGE', payload: num });
   };
 
   return (
@@ -87,7 +94,7 @@ const MainContainer = () => {
       <ControlContainer
         dispatchQueryUpdate={dispatchQueryUpdate}
         numResults={numResults}
-        filterName={queryElems.filterName}
+        mainFilter={queryElems.mainFilter}
         curPage={queryElems.curPage}
       />
       <ResultCountWrapper>
@@ -109,6 +116,19 @@ const MainContainer = () => {
         isLoading={isLoading}
         isError={isError}
       />
+      { !isLoading
+      && (
+      <PaginationWrapper>
+        <Pagination
+          siblingCount={1}
+          count={Math.floor(numResults / RESULTS_PER_PAGE)}
+          page={queryElems.curPage}
+          onChange={handlePageChange}
+          shape="rounded"
+          variant="outlined"
+        />
+      </PaginationWrapper>
+      )}
     </div>
   );
 };
@@ -147,4 +167,11 @@ const Result = styled.div`
 
 const Count = styled.div`
   display: inline-block;
+`;
+
+const PaginationWrapper = styled.div`
+  display: flex;
+  height: 130px;
+  justify-content: center;
+  align-items: center;
 `;
