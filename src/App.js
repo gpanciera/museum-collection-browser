@@ -29,15 +29,13 @@ const theme = createMuiTheme({
       contrastText: '#000000',
     },
   },
-  // overrides: {
-  //   // Style sheet name ⚛️
-  //   MuiButton: {
-  //     // Name of the rule
-  //     root: {
-  //       // Some CSS
-  //     },
-  //   },
-  // },
+  // Changes to default props
+  props: {
+    MuiButtonBase: {
+      // size: 'small',
+      // disableElevation: true,  // CSS, not props?
+    },
+  },
 });
 
 const withFooter = (WrappedComponent) => () => [

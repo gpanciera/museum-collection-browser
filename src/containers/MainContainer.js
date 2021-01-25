@@ -6,6 +6,7 @@
 import React, { useState, useEffect, useRef, useReducer } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+import { Pagination } from '@material-ui/lab';
 import NavBar from '../components/NavBar';
 import Header from '../components/Header';
 import ResultsContainer from './ResultsContainer';
@@ -71,6 +72,10 @@ const MainContainer = () => {
     setIsModalOpen(false);
   };
 
+  const handlePageChange = (e, num) => {
+    dispatchQueryUpdate({ type: 'UPDATE_PAGE', payload: num });
+  };
+
   return (
     <div className="non-footer-content">
       <NavBar />
@@ -111,6 +116,19 @@ const MainContainer = () => {
         isLoading={isLoading}
         isError={isError}
       />
+      { !isLoading
+      && (
+      <PaginationWrapper>
+        <Pagination
+          siblingCount={1}
+          count={Math.floor(numResults / RESULTS_PER_PAGE)}
+          page={queryElems.curPage}
+          onChange={handlePageChange}
+          shape="rounded"
+          variant="outlined"
+        />
+      </PaginationWrapper>
+      )}
     </div>
   );
 };
@@ -149,4 +167,11 @@ const Result = styled.div`
 
 const Count = styled.div`
   display: inline-block;
+`;
+
+const PaginationWrapper = styled.div`
+  display: flex;
+  height: 130px;
+  justify-content: center;
+  align-items: center;
 `;

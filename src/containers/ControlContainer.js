@@ -3,20 +3,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { string, func, number } from 'prop-types';
 import { TextField } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
 import styled from 'styled-components';
 import DOMPurify from 'dompurify';
 import mediaQueries from '../styles/mediaQueries';
 import Filters from '../components/Filters';
-import { RESULTS_PER_PAGE } from '../constants/constants';
 
-export default function ControlContainer({ dispatchQueryUpdate, mainFilter, numResults, curPage }) {
+export default function ControlContainer({ dispatchQueryUpdate, mainFilter }) {
   const [searchText, setSearchText] = useState('');
   const [userSubmittedSearch, setUserSubmittedSearch] = useState(false);
   const isFirstRender = useRef(true);
+  const [isDeptDrawerOpen, setIsDeptDrawerOpen] = useState(false);
 
-  const handlePageChange = (e, num) => {
-    dispatchQueryUpdate({ type: 'UPDATE_PAGE', payload: num });
+  const handleToggleDeptDrawer = () => {
+    setIsDeptDrawerOpen((prevState) => !prevState);
   };
 
   const handleResetSearch = () => {
@@ -75,19 +74,20 @@ export default function ControlContainer({ dispatchQueryUpdate, mainFilter, numR
           dispatchQueryUpdate={dispatchQueryUpdate}
           selectedFilter={mainFilter}
           handleResetSearch={handleResetSearch}
-        />
-        <StyledPagination
-          siblingCount={1}
-          count={Math.floor(numResults / RESULTS_PER_PAGE)}
-          page={curPage}
-          onChange={handlePageChange}
-          shape="rounded"
-          variant="outlined"
+          handleToggleDeptDrawer={handleToggleDeptDrawer}
         />
       </FilterAndPaginationWrapper>
+      { isDeptDrawerOpen
+        ? (<DeptDrawer />)
+        : null }
     </>
   );
 }
+
+const DeptDrawer = styled.div`
+  height: 200px;
+  border: 1px solid red;
+`;
 
 const StyledTextField = styled(TextField)`
   border: '1px solid #000000';
@@ -115,19 +115,6 @@ const FilterAndPaginationWrapper = styled.div`
     height: 4rem;
     flex-direction: row;
     justify-content: start;
-  `};
-`;
-
-// const PaginationContainer = styled.div`
-// `;
-
-const StyledPagination = styled(Pagination)`
-  margin: 0.5rem 0 0 0.5rem;
-  ${mediaQueries('sm')`
-    margin-left: auto;
-    margin-right: 2.5rem;
-    margin-top: 4px;
-    margin-bottom: 0;
   `};
 `;
 

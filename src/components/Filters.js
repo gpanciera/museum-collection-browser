@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import { string, func } from 'prop-types';
 import { ButtonGroup, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import DeptMenu from './DeptMenu';
-import { MAIN_FILTER_DISPLAY_LIST, DEPTS_DISPLAY_LIST } from '../constants/constants';
+import { MAIN_FILTER_DISPLAY_LIST } from '../constants/constants';
 import mediaQueries from '../styles/mediaQueries';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Filters({ dispatchQueryUpdate, selectedFilter, handleResetSearch }) {
+export default function Filters({
+  dispatchQueryUpdate, selectedFilter, handleResetSearch, handleToggleDeptDrawer }) {
   const classes = useStyles();
   const handleMainFilterChange = (mainFilter) => {
     dispatchQueryUpdate({ type: 'UPDATE_MAIN_FILTER', payload: mainFilter });
@@ -50,12 +50,18 @@ export default function Filters({ dispatchQueryUpdate, selectedFilter, handleRes
           </Button>
         ))}
       </ButtonGroup>
-      <DeptMenu />
+      {/* <Button
+        style={{ marginTop: 6, marginLeft: 10 }}
+        className={classes.btn}
+        key="Department"
+        onClick={() => handleToggleDeptDrawer()}
+        variant="outlined"
+      >
+        Departments
+      </Button> */}
       <Button
         style={{ marginTop: 6, marginLeft: 10 }}
         className={classes.btn}
-        size="small"
-        disableElevation
         key="Reset Search"
         onClick={() => handleResetSearch()}
         variant="outlined"
@@ -70,6 +76,7 @@ Filters.propTypes = {
   selectedFilter: string.isRequired,
   dispatchQueryUpdate: func.isRequired,
   handleResetSearch: func.isRequired,
+  handleToggleDeptDrawer: func.isRequired,
 };
 
 const FilterContainer = styled.div`
@@ -84,31 +91,31 @@ const FilterContainer = styled.div`
   `};
 `;
 
-const FilterButton = styled.button`
-  display: inline-block;
-  float: left;
-  margin: ${(prop) => (prop.addLeftMargin ? '6px 2px 3px 20px' : '3px')};
-  padding: 0.5em;
-  height: 2rem;
-  border: 1px solid rgb(220,220,220);
-  border-radius: 4px;
-  text-decoration: none;  
-  display: block;
-  background-color: ${(prop) => (prop.isSelected ? 'rgb(220,220,220)' : 'white')};
-  font-size: 0.8em;
-  color: rgb(110,110,110);
-  cursor: pointer;
-  transition: background 250ms ease-in-out, 
-  transform 150ms ease;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  :hover {
-    color: #311e00;
-  }
-  ${mediaQueries('md')`
-    font-size: 0.85em;
-  `};
-`;
+// const FilterButton = styled.button`
+//   display: inline-block;
+//   float: left;
+//   margin: ${(prop) => (prop.addLeftMargin ? '6px 2px 3px 20px' : '3px')};
+//   padding: 0.5em;
+//   height: 2rem;
+//   border: 1px solid rgb(220,220,220);
+//   border-radius: 4px;
+//   text-decoration: none;
+//   display: block;
+//   background-color: ${(prop) => (prop.isSelected ? 'rgb(220,220,220)' : 'white')};
+//   font-size: 0.8em;
+//   color: rgb(110,110,110);
+//   cursor: pointer;
+//   transition: background 250ms ease-in-out,
+//   transform 150ms ease;
+//   -webkit-appearance: none;
+//   -moz-appearance: none;
+//   :hover {
+//     color: #311e00;
+//   }
+//   ${mediaQueries('md')`
+//     font-size: 0.85em;
+//   `};
+// `;
 
 // <FilterButton
 //   key={filtername}

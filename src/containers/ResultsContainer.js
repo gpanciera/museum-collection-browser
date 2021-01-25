@@ -36,19 +36,16 @@ const ResultsContainer = ({ filteredResults = [], handleModalOpen, isLoading, is
 };
 
 const StyledResultsContainer = styled.div`
-  ${'' /* width: 100%; */}
-  ${'' /* height: 100%; */}
-  ${'' /* border: 1px solid red; */}
   margin-bottom: 2.5em;
 `;
 
 const StyledCircularProgress = styled(CircularProgress)`
   position: fixed;
   margin-left: 4rem;
+  margin-top: 2rem;
 `;
 
 const ResultsWrapper = styled.div`
-  ${'' /* border-top: 1px solid #EBEBEB; */}
 `;
 
 ResultsContainer.propTypes = {
