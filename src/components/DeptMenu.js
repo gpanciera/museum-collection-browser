@@ -28,7 +28,6 @@ export default function DeptMenu() {
       multiple
       margin="dense"
       size="small"
-      autowidth
       className={classes.formControl}
     >
       <InputLabel>Department</InputLabel>
@@ -39,7 +38,9 @@ export default function DeptMenu() {
         onChange={handleDeptSelect}
       >
         <MenuItem value="">Any</MenuItem>
-        { DEPTS_DISPLAY_LIST.map((deptName) => (<MenuItem value={deptName}>{deptName}</MenuItem>))}
+        { DEPTS_DISPLAY_LIST.map((deptName) => (
+          <MenuItem key={deptName} value={deptName}>{deptName}</MenuItem>
+        ))}
       </Select>
     </FormControl>
   );
