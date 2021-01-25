@@ -19,12 +19,24 @@ export default function queryReducer(prevState, action) {
         ...prevState,
         curPage: action.payload,
       };
+    case 'UPDATE_DEPT_FILTER':
+      return {
+        ...prevState,
+        deptFilter: action.payload,
+      };
+    case 'UPDATE_TYPE_FILTER':
+      return {
+        ...prevState,
+        typeFilter: action.payload,
+      };
     case 'RESET_ALL':
       return {
         ...prevState,
         curPage: 1,
-        mainFilter: DEFAULT_FILTER,
         searchString: '',
+        mainFilter: DEFAULT_FILTER,
+        deptFilter: '',
+        typeFilter: '',
       };
     default:
       throw new Error();

@@ -6,20 +6,40 @@ import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import DOMPurify from 'dompurify';
 import mediaQueries from '../styles/mediaQueries';
-import Filters from '../components/Filters';
+import FilterPanel from '../components/FilterPanel';
+import Drawer from '../components/Drawer';
+import { DEPTS_DISPLAY_LIST, TYPES_DISPLAY_LIST } from '../constants/constants';
 
 export default function ControlContainer({ dispatchQueryUpdate, mainFilter }) {
   const [searchText, setSearchText] = useState('');
   const [userSubmittedSearch, setUserSubmittedSearch] = useState(false);
   const isFirstRender = useRef(true);
-  const [isDeptDrawerOpen, setIsDeptDrawerOpen] = useState(false);
+  const [drawerState, setDrawerState] = useState({ isOpen: false, drawerName: '' });
 
-  const handleToggleDeptDrawer = () => {
-    setIsDeptDrawerOpen((prevState) => !prevState);
+  const handleDrawerToggle = (drawerName) => {
+    setDrawerState((prevState) => {
+      // if drawer is open and we've clicked on the one that's already open, close it
+      if (prevState.isOpen && prevState.drawerName === drawerName) {
+        return { ...prevState, isOpen: false, drawerName: '' };
+      }
+      // otherwise, open drawer and set drawer name
+      return { ...prevState, isOpen: true, drawerName };
+    });
+  };
+
+  const handleDeptSelect = (deptName) => {
+    console.log('dept selected:', deptName);
+    dispatchQueryUpdate({ type: 'UPDATE_DEPT_FILTER', payload: deptName });
+  };
+
+  const handleTypeSelect = (typeName) => {
+    console.log('type selected:', typeName);
+    dispatchQueryUpdate({ type: 'UPDATE_TYPE_FILTER', payload: typeName });
   };
 
   const handleResetSearch = () => {
     setSearchText('');
+    setDrawerState({ isOpen: false, drawerName: '' });
     dispatchQueryUpdate({ type: 'RESET_ALL' });
   };
 
@@ -69,24 +89,34 @@ export default function ControlContainer({ dispatchQueryUpdate, mainFilter }) {
           onKeyDown={handleKeyDown}
         />
       </SearchWrapper>
-      <FilterAndPaginationWrapper>
-        <Filters
+      <Spacer>
+        <FilterPanel
           dispatchQueryUpdate={dispatchQueryUpdate}
           selectedFilter={mainFilter}
           handleResetSearch={handleResetSearch}
-          handleToggleDeptDrawer={handleToggleDeptDrawer}
+          handleDrawerToggle={handleDrawerToggle}
+          isDrawerOpen={drawerState.isOpen}
+          drawerName={drawerState.drawerName}
         />
-      </FilterAndPaginationWrapper>
-      { isDeptDrawerOpen
-        ? (<DeptDrawer />)
-        : null }
+      </Spacer>
+      { drawerState.isOpen && drawerState.drawerName === 'Department' && (
+        <Drawer
+          itemList={DEPTS_DISPLAY_LIST}
+          clickHandler={handleDeptSelect}
+        />
+      )}
+      { drawerState.isOpen && drawerState.drawerName === 'Type' && (
+        <Drawer
+          itemList={TYPES_DISPLAY_LIST}
+          clickHandler={handleTypeSelect}
+        />
+      )}
     </>
   );
 }
 
-const DeptDrawer = styled.div`
-  height: 200px;
-  border: 1px solid red;
+const Spacer = styled.div`
+  margin-bottom: 1rem;
 `;
 
 const StyledTextField = styled(TextField)`
@@ -100,27 +130,7 @@ const SearchWrapper = styled.div`
   `};
 `;
 
-const FilterAndPaginationWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 6.5rem;
-  ${mediaQueries('sm')`
-    height: 4rem;
-    flex-direction: row;
-    justify-content: start;
-  `};
-
-  ${mediaQueries('md')`
-    height: 4rem;
-    flex-direction: row;
-    justify-content: start;
-  `};
-`;
-
 ControlContainer.propTypes = {
   mainFilter: string.isRequired,
-  numResults: number.isRequired,
-  curPage: number.isRequired,
   dispatchQueryUpdate: func.isRequired,
 };

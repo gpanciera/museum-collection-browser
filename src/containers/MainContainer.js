@@ -28,7 +28,8 @@ const MainContainer = () => {
     curPage: 1,
     searchString: '',
     mainFilter: DEFAULT_FILTER,
-    otherFilters: {},                   // Department: 'Drawings', Type: 'Amulets',
+    deptFilter: '',
+    typeFilter: '',
   });
   const artworkMap = useRef(new Map());
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,14 +52,22 @@ const MainContainer = () => {
       isFirstRender.current = false;
     }
     else {
-      const { mainFilter, searchString, curPage } = queryElems;
+      const { mainFilter, searchString, curPage, deptFilter, typeFilter } = queryElems;
       const filterStr = FILTER_QUERY_TABLE.has(mainFilter)
         ? FILTER_QUERY_TABLE.get(mainFilter)
         : FILTER_QUERY_TABLE.get(DEFAULT_FILTER);
       // const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
       const combinedSearchStr = `${filterStr}${searchString}`; // dev
       const offset = ((RESULTS_PER_PAGE * curPage) - RESULTS_PER_PAGE).toString();
-      const query = `${ENDPOINT + OPTIONS}&skip=${offset}${combinedSearchStr}`;
+      let query = `${ENDPOINT + OPTIONS}&skip=${offset}${combinedSearchStr}`;
+      console.log('🚀 ~ file: MainContainer.js ~ line 64 ~ useEffect ~ deptFilter', deptFilter);
+      if (deptFilter && deptFilter.length > 0) {
+        query += FILTER_QUERY_TABLE.get('Department') + deptFilter;
+      }
+      if (typeFilter && typeFilter.length > 0) {
+        query += FILTER_QUERY_TABLE.get('Type') + typeFilter;
+      }
+      console.log('useEffect ~ query', query);
       runAPIFetch(query);
     }
   }, [queryElems]);

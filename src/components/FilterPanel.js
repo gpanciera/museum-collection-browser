@@ -2,29 +2,35 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import styled from 'styled-components';
-import { string, func } from 'prop-types';
-import { ButtonGroup, Button } from '@material-ui/core';
+import { string, func, bool } from 'prop-types';
+import { ButtonGroup, Button, Chip } from '@material-ui/core';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { makeStyles } from '@material-ui/core/styles';
 import { MAIN_FILTER_DISPLAY_LIST } from '../constants/constants';
 import mediaQueries from '../styles/mediaQueries';
 
 const useStyles = makeStyles((theme) => ({
   btngroup: {
-    margin: theme.spacing(2),
-    marginTop: 6,
     marginLeft: 2,
+    marginRight: 25,
   },
   btn: {
-    maxHeight: '2.2rem',
+    marginTop: 6,
+    height: '2.5rem',
     padding: theme.spacing(1.5),
     border: '1px solid #CBCBCB',
-    // border: '1px solid #616161',
-    // color: '#616161',
   },
 }));
 
-export default function Filters({
-  dispatchQueryUpdate, selectedFilter, handleResetSearch, handleToggleDeptDrawer }) {
+export default function FilterPanel({
+  dispatchQueryUpdate,
+  selectedFilter,
+  handleResetSearch,
+  handleDrawerToggle,
+  isDrawerOpen,
+  drawerName,
+}) {
   const classes = useStyles();
   const handleMainFilterChange = (mainFilter) => {
     dispatchQueryUpdate({ type: 'UPDATE_MAIN_FILTER', payload: mainFilter });
@@ -50,17 +56,37 @@ export default function Filters({
           </Button>
         ))}
       </ButtonGroup>
-      {/* <Button
-        style={{ marginTop: 6, marginLeft: 10 }}
-        className={classes.btn}
-        key="Department"
-        onClick={() => handleToggleDeptDrawer()}
-        variant="outlined"
+      <ButtonGroup
+        className={classes.btngroup}
+        size="small"
+        disableElevation
+        disableRipple
       >
-        Departments
-      </Button> */}
+        <Button
+          className={classes.btn}
+          key="Department"
+          onClick={() => handleDrawerToggle('Department')}
+          variant="outlined"
+          endIcon={isDrawerOpen && drawerName === 'Department'
+            ? <KeyboardArrowDownIcon />
+            : <KeyboardArrowRightIcon />}
+        >
+          Department
+        </Button>
+        <Button
+          className={classes.btn}
+          key="Type"
+          onClick={() => handleDrawerToggle('Type')}
+          variant="outlined"
+          endIcon={isDrawerOpen && drawerName === 'Type'
+            ? <KeyboardArrowDownIcon />
+            : <KeyboardArrowRightIcon />}
+        >
+          Type
+        </Button>
+      </ButtonGroup>
       <Button
-        style={{ marginTop: 6, marginLeft: 10 }}
+        style={{ marginLeft: 'auto' }}
         className={classes.btn}
         key="Reset Search"
         onClick={() => handleResetSearch()}
@@ -72,55 +98,23 @@ export default function Filters({
   );
 }
 
-Filters.propTypes = {
+FilterPanel.propTypes = {
   selectedFilter: string.isRequired,
   dispatchQueryUpdate: func.isRequired,
   handleResetSearch: func.isRequired,
-  handleToggleDeptDrawer: func.isRequired,
+  handleDrawerToggle: func.isRequired,
+  isDrawerOpen: bool.isRequired,
+  drawerName: string.isRequired,
 };
 
 const FilterContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 2px 0 0 1rem;
+  margin: 2px 1rem 0 1rem;
   ${mediaQueries('sm')`
-    margin: 2px 0 0 1rem;
+    margin: 2px 1rem 0 1rem;
   `};
   ${mediaQueries('md')`
-    margin: 2px 0 0 2.4rem;
+    margin: 2px 2.4rem 0 2.4rem;
   `};
 `;
-
-// const FilterButton = styled.button`
-//   display: inline-block;
-//   float: left;
-//   margin: ${(prop) => (prop.addLeftMargin ? '6px 2px 3px 20px' : '3px')};
-//   padding: 0.5em;
-//   height: 2rem;
-//   border: 1px solid rgb(220,220,220);
-//   border-radius: 4px;
-//   text-decoration: none;
-//   display: block;
-//   background-color: ${(prop) => (prop.isSelected ? 'rgb(220,220,220)' : 'white')};
-//   font-size: 0.8em;
-//   color: rgb(110,110,110);
-//   cursor: pointer;
-//   transition: background 250ms ease-in-out,
-//   transform 150ms ease;
-//   -webkit-appearance: none;
-//   -moz-appearance: none;
-//   :hover {
-//     color: #311e00;
-//   }
-//   ${mediaQueries('md')`
-//     font-size: 0.85em;
-//   `};
-// `;
-
-// <FilterButton
-//   key={filtername}
-//   isSelected={filtername === selectedFilter}
-//   onClick={() => handleMainFilterChange(filtername)}
-// >
-//   {filtername}
-// </FilterButton>
