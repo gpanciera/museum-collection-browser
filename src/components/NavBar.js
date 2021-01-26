@@ -19,26 +19,22 @@ const NavBarContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;  
-  ${mediaQueries('md')`
+  ${mediaQueries('sm')`
     justify-content: flex-start;
+    padding-left: 1rem;
   `};
 `;
 
 const Logo = styled.img`
   height: 58%;
   margin: 0 7px 10px 0;
-  ${mediaQueries('md')`
-    margin: 0 7px 12px 2.5rem;
-    height: 58%;
-  `};
 `;
 
 const StyledTitle = styled.div`
-  ${'' /* font-family: 'Lora'; */}
   font-weight: 100;
   font-size: 20px;
   margin: 0 0 5px 0;
-  ${mediaQueries('md')`
+  ${mediaQueries('sm')`
     margin: 0 0 3px 10px;
     font-size: 40px;
     margin: 0 0 2px 0;
