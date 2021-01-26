@@ -28,6 +28,7 @@ function Drawer({ itemList, clickHandler, drawerName, dense = false }) {
   return (
     <GridWrapper dense={dense}>
       { itemList && itemList.map((value) => (
+        <div>
         <Button
           key={`btn${value}`}
           className={dense ? classes.btnDense : classes.btn}
@@ -35,6 +36,7 @@ function Drawer({ itemList, clickHandler, drawerName, dense = false }) {
         >
           {value}
         </Button>
+        </div>
       ))}
     </GridWrapper>
   );
@@ -50,15 +52,16 @@ Drawer.propTypes = {
 };
 
 const GridWrapper = styled.ul`
-  display: grid;
-  grid-template-columns: ${props => (props.dense
-    ? 'repeat(auto-fill, minmax(180px, 1fr))'
-    : 'repeat(auto-fill, minmax(275px, 1fr))')
-  };
+  column-width: ${props => (props.dense ? '180px' : '282px')};
   background-color: #F5F5F6;
   margin-bottom: 1em;
   list-style: none;
   padding: 1rem 2.5rem;
 `;
 
-/* column-width: ${props => (props.dense ? '180px' : '275px')};  */
+// display: grid;
+// grid-template-columns: ${props => (props.dense
+//   ? 'repeat(auto-fill, minmax(180px, 1fr))'
+//   : 'repeat(auto-fill, minmax(275px, 1fr))')
+// };
+
