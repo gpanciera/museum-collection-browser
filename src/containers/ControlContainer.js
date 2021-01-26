@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable default-case */
-import React, { useState, useEffect, useRef } from 'react';
-import { string, func, number } from 'prop-types';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { string, func, bool } from 'prop-types';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import DOMPurify from 'dompurify';
@@ -10,13 +9,18 @@ import FilterPanel from '../components/FilterPanel';
 import Drawer from '../components/Drawer';
 import { DEPTS_DISPLAY_LIST, TYPES_DISPLAY_LIST } from '../constants/constants';
 
-export default function ControlContainer({ dispatchQueryUpdate, mainFilter }) {
+function ControlContainer({
+  dispatchQueryUpdate,
+  selectedMainFilter,
+  deptFilter,
+  typeFilter,
+  isResetable }) {
   const [searchText, setSearchText] = useState('');
   const [userSubmittedSearch, setUserSubmittedSearch] = useState(false);
   const isFirstRender = useRef(true);
   const [drawerState, setDrawerState] = useState({ isOpen: false, drawerName: '' });
 
-  const handleDrawerToggle = (drawerName) => {
+  const handleDrawerToggle = useCallback((drawerName) => {
     setDrawerState((prevState) => {
       // if drawer is open and we've clicked on the one that's already open, close it
       if (prevState.isOpen && prevState.drawerName === drawerName) {
@@ -25,29 +29,23 @@ export default function ControlContainer({ dispatchQueryUpdate, mainFilter }) {
       // otherwise, open drawer and set drawer name
       return { ...prevState, isOpen: true, drawerName };
     });
-  };
+  }, []);
 
-  const handleDeptSelect = (deptName) => {
-    console.log('dept selected:', deptName);
-    dispatchQueryUpdate({ type: 'UPDATE_DEPT_FILTER', payload: deptName });
-  };
+  const handleFilterChange = useCallback((name, val = '') => {
+    dispatchQueryUpdate({ type: 'UPDATE_FILTER', payload: { type: name, value: val } });
+  }, []);
 
-  const handleTypeSelect = (typeName) => {
-    console.log('type selected:', typeName);
-    dispatchQueryUpdate({ type: 'UPDATE_TYPE_FILTER', payload: typeName });
-  };
-
-  const handleResetSearch = () => {
+  const handleResetSearch = useCallback(() => {
     setSearchText('');
     setDrawerState({ isOpen: false, drawerName: '' });
     dispatchQueryUpdate({ type: 'RESET_ALL' });
-  };
+  }, []);
 
-  const handleTextChange = (e) => {
+  const handleTextChange = useCallback((e) => {
     setSearchText(e.target.value);
-  };
+  }, []);
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = useCallback((e) => {
     switch (e.key) {
       case 'Escape': {
         setSearchText('');
@@ -59,7 +57,7 @@ export default function ControlContainer({ dispatchQueryUpdate, mainFilter }) {
         break;
       }
     }
-  };
+  }, []);
 
   // If user hit enter or cleared contents of search field, send updated search string to parent
   useEffect(() => {
@@ -67,7 +65,7 @@ export default function ControlContainer({ dispatchQueryUpdate, mainFilter }) {
       isFirstRender.current = false;
     }
     else {
-      if (userSubmittedSearch || searchText.length === 0) {
+      if (userSubmittedSearch) {
         const cleanedString = DOMPurify.sanitize(searchText);
         dispatchQueryUpdate({ type: 'UPDATE_SEARCH', payload: cleanedString });
       }
@@ -91,29 +89,37 @@ export default function ControlContainer({ dispatchQueryUpdate, mainFilter }) {
       </SearchWrapper>
       <Spacer>
         <FilterPanel
-          dispatchQueryUpdate={dispatchQueryUpdate}
-          selectedFilter={mainFilter}
+          selectedMainFilter={selectedMainFilter}
+          deptFilter={deptFilter}
+          typeFilter={typeFilter}
           handleResetSearch={handleResetSearch}
           handleDrawerToggle={handleDrawerToggle}
+          handleFilterChange={handleFilterChange}
           isDrawerOpen={drawerState.isOpen}
           drawerName={drawerState.drawerName}
+          isResetable={isResetable}
         />
       </Spacer>
       { drawerState.isOpen && drawerState.drawerName === 'Department' && (
         <Drawer
           itemList={DEPTS_DISPLAY_LIST}
-          clickHandler={handleDeptSelect}
+          clickHandler={handleFilterChange}
+          drawerName="Department"
         />
       )}
       { drawerState.isOpen && drawerState.drawerName === 'Type' && (
         <Drawer
           itemList={TYPES_DISPLAY_LIST}
-          clickHandler={handleTypeSelect}
+          clickHandler={handleFilterChange}
+          drawerName="Type"
+          dense
         />
       )}
     </>
   );
 }
+
+export default React.memo(ControlContainer);
 
 const Spacer = styled.div`
   margin-bottom: 1rem;
@@ -131,6 +137,9 @@ const SearchWrapper = styled.div`
 `;
 
 ControlContainer.propTypes = {
-  mainFilter: string.isRequired,
   dispatchQueryUpdate: func.isRequired,
+  selectedMainFilter: string.isRequired,
+  deptFilter: string.isRequired,
+  typeFilter: string.isRequired,
+  isResetable: bool.isRequired,
 };

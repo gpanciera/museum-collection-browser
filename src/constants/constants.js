@@ -8,6 +8,15 @@ export const TAGS_TO_DISPLAY = 20;
 
 export const DEFAULT_FILTER = 'All Results';
 
+export const INIT_QUERY_STATE = {
+  curPage: 1,
+  searchString: '',
+  selectedMainFilter: DEFAULT_FILTER,
+  deptFilter: '',
+  typeFilter: '',
+  isResetable: false,
+};
+
 export const MAIN_FILTER_DISPLAY_LIST = [
   'All Results',
   'Artist',
@@ -146,7 +155,6 @@ export const TYPES_DISPLAY_LIST = [
   'Plate',
   'Portfolio',
   'Portrait',
-  'Miniature',
   'Print',
   'Relief',
   'Rock crystal',

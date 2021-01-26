@@ -21,20 +21,30 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1.5),
     border: '1px solid #CBCBCB',
   },
+  chips: {
+    marginTop: 6,
+    display: 'flex',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
+    },
+  },
 }));
 
-export default function FilterPanel({
-  dispatchQueryUpdate,
-  selectedFilter,
+function FilterPanel({
+  selectedMainFilter,
+  deptFilter,
+  typeFilter,
   handleResetSearch,
   handleDrawerToggle,
+  handleFilterChange,
   isDrawerOpen,
   drawerName,
+  isResetable,
 }) {
+  console.log('🚀 ~ file: FilterPanel.js ~ line 46 ~ isResetable', isResetable);
   const classes = useStyles();
-  const handleMainFilterChange = (mainFilter) => {
-    dispatchQueryUpdate({ type: 'UPDATE_MAIN_FILTER', payload: mainFilter });
-  };
 
   return (
     <FilterContainer>
@@ -48,9 +58,9 @@ export default function FilterPanel({
             className={classes.btn}
             aria-label="outlined primary button"
             key={filtername}
-            variant={filtername === selectedFilter ? 'contained' : 'outlined'}
-            color={filtername === selectedFilter ? 'secondary' : 'primary'}
-            onClick={() => handleMainFilterChange(filtername)}
+            variant={filtername === selectedMainFilter ? 'contained' : 'outlined'}
+            color={filtername === selectedMainFilter ? 'secondary' : 'primary'}
+            onClick={() => handleFilterChange(filtername)}
           >
             {filtername}
           </Button>
@@ -66,7 +76,9 @@ export default function FilterPanel({
           className={classes.btn}
           key="Department"
           onClick={() => handleDrawerToggle('Department')}
-          variant="outlined"
+          style={(isDrawerOpen && drawerName === 'Department')
+            ? { backgroundColor: '#f5f5f5' }
+            : { backgroundColor: 'transparent' }}
           endIcon={isDrawerOpen && drawerName === 'Department'
             ? <KeyboardArrowDownIcon />
             : <KeyboardArrowRightIcon />}
@@ -78,6 +90,9 @@ export default function FilterPanel({
           key="Type"
           onClick={() => handleDrawerToggle('Type')}
           variant="outlined"
+          style={(isDrawerOpen && drawerName === 'Type')
+            ? { backgroundColor: '#f5f5f5' }
+            : { backgroundColor: 'transparent' }}
           endIcon={isDrawerOpen && drawerName === 'Type'
             ? <KeyboardArrowDownIcon />
             : <KeyboardArrowRightIcon />}
@@ -85,12 +100,29 @@ export default function FilterPanel({
           Type
         </Button>
       </ButtonGroup>
+      <div className={classes.chips}>
+        { deptFilter && deptFilter.length > 0
+          && (
+          <Chip
+            label={`Department: ${deptFilter}`}
+            onDelete={() => handleFilterChange('Department', '')}
+          />
+          )}
+        { typeFilter && typeFilter.length > 0
+          && (
+          <Chip
+            label={`Type: ${typeFilter}`}
+            onDelete={() => handleFilterChange('Type', '')}
+          />
+          )}
+      </div>
       <Button
         style={{ marginLeft: 'auto' }}
         className={classes.btn}
         key="Reset Search"
         onClick={() => handleResetSearch()}
         variant="outlined"
+        disabled={!isResetable}
       >
         Reset Search
       </Button>
@@ -99,12 +131,15 @@ export default function FilterPanel({
 }
 
 FilterPanel.propTypes = {
-  selectedFilter: string.isRequired,
-  dispatchQueryUpdate: func.isRequired,
+  selectedMainFilter: string.isRequired,
+  deptFilter: string.isRequired,
+  typeFilter: string.isRequired,
   handleResetSearch: func.isRequired,
   handleDrawerToggle: func.isRequired,
+  handleFilterChange: func.isRequired,
   isDrawerOpen: bool.isRequired,
   drawerName: string.isRequired,
+  isResetable: bool.isRequired,
 };
 
 const FilterContainer = styled.div`
@@ -118,3 +153,5 @@ const FilterContainer = styled.div`
     margin: 2px 2.4rem 0 2.4rem;
   `};
 `;
+
+export default React.memo(FilterPanel);

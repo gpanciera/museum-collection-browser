@@ -15,7 +15,7 @@ import ControlContainer from './ControlContainer';
 import useDataApi from '../hooks/useDataApi';
 import mediaQueries from '../styles/mediaQueries';
 import queryReducer from '../reducers/queryReducer';
-import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, FILTER_QUERY_TABLE, DEFAULT_FILTER } from '../constants/constants';
+import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, FILTER_QUERY_TABLE, DEFAULT_FILTER, INIT_QUERY_STATE } from '../constants/constants';
 
 // WAI-ARIA standard to hide other content from screenreaders when a modal is open
 Modal.setAppElement('#root');
@@ -24,13 +24,7 @@ Modal.setAppElement('#root');
 // function identity is stable and won’t change on re-renders. This is why it’s safe to omit
 // from the useEffect or useCallback dependency list."
 const MainContainer = () => {
-  const [queryElems, dispatchQueryUpdate] = useReducer(queryReducer, {
-    curPage: 1,
-    searchString: '',
-    mainFilter: DEFAULT_FILTER,
-    deptFilter: '',
-    typeFilter: '',
-  });
+  const [queryElems, dispatchQueryUpdate] = useReducer(queryReducer, INIT_QUERY_STATE);
   const artworkMap = useRef(new Map());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const idForModal = useRef(-1);
@@ -52,22 +46,20 @@ const MainContainer = () => {
       isFirstRender.current = false;
     }
     else {
-      const { mainFilter, searchString, curPage, deptFilter, typeFilter } = queryElems;
-      const filterStr = FILTER_QUERY_TABLE.has(mainFilter)
-        ? FILTER_QUERY_TABLE.get(mainFilter)
+      const { selectedMainFilter, searchString, curPage, deptFilter, typeFilter } = queryElems;
+      const filterStr = FILTER_QUERY_TABLE.has(selectedMainFilter)
+        ? FILTER_QUERY_TABLE.get(selectedMainFilter)
         : FILTER_QUERY_TABLE.get(DEFAULT_FILTER);
       // const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
       const combinedSearchStr = `${filterStr}${searchString}`; // dev
       const offset = ((RESULTS_PER_PAGE * curPage) - RESULTS_PER_PAGE).toString();
       let query = `${ENDPOINT + OPTIONS}&skip=${offset}${combinedSearchStr}`;
-      console.log('🚀 ~ file: MainContainer.js ~ line 64 ~ useEffect ~ deptFilter', deptFilter);
       if (deptFilter && deptFilter.length > 0) {
         query += FILTER_QUERY_TABLE.get('Department') + deptFilter;
       }
       if (typeFilter && typeFilter.length > 0) {
         query += FILTER_QUERY_TABLE.get('Type') + typeFilter;
       }
-      console.log('useEffect ~ query', query);
       runAPIFetch(query);
     }
   }, [queryElems]);
@@ -103,8 +95,11 @@ const MainContainer = () => {
       <ControlContainer
         dispatchQueryUpdate={dispatchQueryUpdate}
         numResults={numResults}
-        mainFilter={queryElems.mainFilter}
+        selectedMainFilter={queryElems.selectedMainFilter}
+        deptFilter={queryElems.deptFilter}
+        typeFilter={queryElems.typeFilter}
         curPage={queryElems.curPage}
+        isResetable={queryElems.isResetable}
       />
       <ResultCountWrapper>
         { results && numResults > 0
