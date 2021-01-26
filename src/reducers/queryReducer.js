@@ -1,7 +1,7 @@
 import { MAIN_FILTER_DISPLAY_LIST, INIT_QUERY_STATE } from '../constants/constants';
 
 export default function queryReducer(prevState, action) {
-  console.log('queryReducer ~ action', action);
+  // console.log('queryReducer ~ action', action);
   switch (action.type) {
     case 'UPDATE_SEARCH':
       return {
