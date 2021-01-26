@@ -23,9 +23,9 @@ const useDataApi = (initialUrl, initialData) => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_INIT' });
       try {
-        // console.log("INITIATING FETCH to:", url);
+        // console.log('INITIATING FETCH to:', url);
         const result = await axios.get(url, { cancelToken: source.token });
-        console.log('DATA RECEIVED:', url, result.data);
+        // console.log('DATA RECEIVED:', url, result.data);
         if (isMounted) {
           dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
         }
