@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   btn: {
     marginTop: 6,
-    height: '2.5rem',
+    height: '2.2rem',
     padding: theme.spacing(1.5),
     border: '1px solid #CBCBCB',
   },
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexWrap: 'wrap',
     '& > *': {
-      margin: theme.spacing(0.5),
+      margin: '2px 8px 0 2px',
     },
   },
 }));
@@ -43,7 +43,6 @@ function FilterPanel({
   drawerName,
   isResetable,
 }) {
-  console.log('🚀 ~ file: FilterPanel.js ~ line 46 ~ isResetable', isResetable);
   const classes = useStyles();
 
   return (

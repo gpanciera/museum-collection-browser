@@ -19,6 +19,7 @@ function ControlContainer({
   const [userSubmittedSearch, setUserSubmittedSearch] = useState(false);
   const isFirstRender = useRef(true);
   const [drawerState, setDrawerState] = useState({ isOpen: false, drawerName: '' });
+  // const [drawerState, setDrawerState] = useState({ isOpen: true, drawerName: 'Type' });
 
   const handleDrawerToggle = useCallback((drawerName) => {
     setDrawerState((prevState) => {
@@ -32,6 +33,7 @@ function ControlContainer({
   }, []);
 
   const handleFilterChange = useCallback((name, val = '') => {
+    setDrawerState({ isOpen: false, drawerName: '' });
     dispatchQueryUpdate({ type: 'UPDATE_FILTER', payload: { type: name, value: val } });
   }, []);
 
