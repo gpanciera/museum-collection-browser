@@ -19,7 +19,7 @@ function Footer() {
           <a href="https://www.clevelandart.org/open-access" title="CMA Open Access" target="_blank" rel="noreferrer">CMA Open Access</a>
         </StyledLinkWrapper>
         <StyledLinkWrapper>
-          <strong>site design</strong>
+          <strong>site by</strong>
           {' '}
           Greg Panciera
           <StyledIconWrapper>
