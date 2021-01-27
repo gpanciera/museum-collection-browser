@@ -5,10 +5,15 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import styled from 'styled-components';
+import DOMPurify from 'dompurify';
 import CreatorsText from './CreatorsText';
 import mediaQueries from '../styles/mediaQueries';
 
 const MAX_CREATORS_TO_RENDER = 8;
+
+function sanitizeMarkup(text) {
+  return { __html: DOMPurify.sanitize(text) };
+}
 
 export default function ArtDetails({
   details: {
@@ -23,7 +28,9 @@ export default function ArtDetails({
         <CreatorsText creatorsAll={creators} maxToRender={MAX_CREATORS_TO_RENDER} />
       </CreatorsWrapper>
       <Subhead>Description</Subhead>
-      <Description>{digital_description || wall_description }</Description>
+      <Description
+        dangerouslySetInnerHTML={sanitizeMarkup(digital_description || wall_description)}
+      />
       { fun_fact ? (
         <>
           <Subhead>Fun Fact</Subhead>
