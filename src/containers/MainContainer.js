@@ -29,7 +29,7 @@ const MainContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const idForModal = useRef(-1);
   const isFirstRender = useRef(true);
-  const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + DEV_OPTIONS);
+  const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + OPTIONS);
 
   // ****** When results change add any new content to artworMap
   useEffect(() => {
@@ -50,8 +50,8 @@ const MainContainer = () => {
       const filterStr = FILTER_QUERY_TABLE.has(selectedMainFilter)
         ? FILTER_QUERY_TABLE.get(selectedMainFilter)
         : FILTER_QUERY_TABLE.get(DEFAULT_FILTER);
-      // const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
-      const combinedSearchStr = `${filterStr}${searchString}`; // dev
+      const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
+      // const combinedSearchStr = `${filterStr}${searchString}`; // dev
       const offset = ((RESULTS_PER_PAGE * curPage) - RESULTS_PER_PAGE).toString();
       let query = `${ENDPOINT + OPTIONS}&skip=${offset}${combinedSearchStr}`;
       if (deptFilter && deptFilter.length > 0) {
@@ -141,11 +141,15 @@ export default MainContainer;
 
 const modalStyle = {
   content: {
-    top: '10vh',
-    bottom: 'auto',
+    // top: '10vh',
+    // bottom: 'auto',
     backgroundColor: 'rgb(233,233,233)',
     borderStyle: 'none',
     zIndex: '2',
+    width: 'fit-content',
+    maxWidth: '95%',
+    margin: '0 auto',
+    padding: '20px',
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.85)',

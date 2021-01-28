@@ -7,10 +7,10 @@ import mediaQueries from '../styles/mediaQueries';
 
 export default function ModalContent({ id, artworkMap }) {
   const details = artworkMap.current.get(id);
-  const imgUrl = details.images.web.url;
+  const { url } = details.images.web;
   return (
     <ModalWrapper>
-      <Image src={imgUrl} alt="picture" />
+      <Image src={url} alt={details.title} />
       <InfoContainer>
         <ArtDetails details={details} />
       </InfoContainer>
@@ -19,30 +19,44 @@ export default function ModalContent({ id, artworkMap }) {
 }
 
 const ModalWrapper = styled.div`
-  display: flex;
+  width: 70vw;
+  display: inline-flex;
   flex-direction: column;
-  max-height: 80vh;
-  ${mediaQueries('md')`
+  height: 100%;
+  ${mediaQueries('sm')`
+    width: auto;
+    max-width: 100%;
     flex-direction: row;
+    justify-content: flex-start;
   `};
 `;
+/* max-height: 90vh; */
 
 const Image = styled.img`
   display: none;
-  ${mediaQueries('md')`
+  margin-bottom: 1rem;
+  ${mediaQueries('sm')`
     display: block;
-    margin: auto;
-    max-height: 60vh;
-    max-width: 60vw;
+    margin-bottom: 0;
+    margin-right: 1rem;
+    height: 100%;
   `};
 `;
+// max-width: 60vw;
+// max-width: calc(100% - 31rem - 120px);
+
+/* margin: auto; */
 
 const InfoContainer = styled.div`
-  min-width: 30%;
-  ${mediaQueries('md')`
-    padding-left: 20px;
+  overflow: scroll;
+  ${mediaQueries('sm')`
+    width: 20rem;
+    min-width: 20rem;
   `};
 `;
+  // min-width: 30%;
+// column-fill: auto;
+// column-width: 20rem;
 
 ModalContent.propTypes = {
   id: number.isRequired,
