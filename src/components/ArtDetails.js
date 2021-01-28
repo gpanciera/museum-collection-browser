@@ -34,7 +34,9 @@ export default function ArtDetails({
       { fun_fact ? (
         <>
           <Subhead>Fun Fact</Subhead>
-          <FunFact>{fun_fact}</FunFact>
+          <FunFact
+            dangerouslySetInnerHTML={sanitizeMarkup(fun_fact)}
+          />
         </>
       ) : null}
       <Subhead>Details</Subhead>

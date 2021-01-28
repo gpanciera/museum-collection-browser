@@ -51,9 +51,10 @@ a:visited {
   color: inherit;
 }
 
-/* @media screen and (min-width: 400px) {
-  html {
-    font-size: 28px;
+/* @media (min-width: 600px) {
+  .modal {
+    width: 100%;
+    padding: '0';
   }
 } */
 /* @media screen and (min-width: 1000px) {
