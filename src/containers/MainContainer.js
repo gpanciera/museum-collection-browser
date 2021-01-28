@@ -141,15 +141,16 @@ export default MainContainer;
 
 const modalStyle = {
   content: {
-    // top: '10vh',
-    // bottom: 'auto',
     backgroundColor: 'rgb(233,233,233)',
     borderStyle: 'none',
     zIndex: '2',
     width: 'fit-content',
     maxWidth: '95%',
-    margin: '0 auto',
+    minHeight: 'max-content',
+    maxHeight: '95%',
+    margin: 'auto',
     padding: '20px',
+    // className: 'modal',
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.85)',
