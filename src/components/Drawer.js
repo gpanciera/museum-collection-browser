@@ -28,14 +28,14 @@ function Drawer({ itemList, clickHandler, drawerName, dense = false }) {
   return (
     <GridWrapper dense={dense}>
       { itemList && itemList.map((value) => (
-        <div>
-        <Button
-          key={`btn${value}`}
-          className={dense ? classes.btnDense : classes.btn}
-          onClick={() => clickHandler(drawerName, value)}
-        >
-          {value}
-        </Button>
+        <div key={`div${value}`}>
+          <Button
+            key={`btn${value}`}
+            className={dense ? classes.btnDense : classes.btn}
+            onClick={() => clickHandler(drawerName, value)}
+          >
+            {value}
+          </Button>
         </div>
       ))}
     </GridWrapper>
@@ -64,4 +64,3 @@ const GridWrapper = styled.ul`
 //   ? 'repeat(auto-fill, minmax(180px, 1fr))'
 //   : 'repeat(auto-fill, minmax(275px, 1fr))')
 // };
-

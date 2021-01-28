@@ -29,13 +29,13 @@ const StyledTextBlock = styled.article`
   max-width: 1000px;
   font-size: 0.9rem;
   font-weight: 300;
-  line-height: 1.4rem;
-  ${'' /* color: rgb(100,100,100); */}
+  line-height: 1.2rem;
   color: #838383;
   ${mediaQueries('md')`
     margin: 1.5rem 0 0.5rem 2.5rem;
-    font-size: 1rem;
     padding: 0;
+    font-size: 0.95rem;
+    letter-spacing: 0.8px;
   `};
 `;
 

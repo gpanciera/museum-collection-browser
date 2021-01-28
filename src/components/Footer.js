@@ -41,6 +41,7 @@ const FooterContainer = styled.footer`
   flex-direction: column;
   justify-content: flex-end;
   padding-bottom: 2rem;
+  background-color: #F5F5F6;
   ${mediaQueries('md')`
     height: 4rem;
     padding-bottom: 0.5rem;
