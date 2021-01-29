@@ -18,6 +18,8 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react/jsx-filename-extension': 'off',
     'react/jsx-boolean-value': 'off',
+    'arrow-body-style': 'off',
+    'arrow-parens': 'off',
     // curly: 'off',
     // 'consistent-return': 'off',
     // 'func-names': 'off',

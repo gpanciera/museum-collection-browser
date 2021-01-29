@@ -1,5 +1,4 @@
 /* eslint-disable indent */
-/* eslint-disable arrow-parens */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import { func, arrayOf, string, bool } from 'prop-types';
