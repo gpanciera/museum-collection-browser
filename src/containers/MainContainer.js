@@ -33,7 +33,7 @@ const MainContainer = () => {
   const [modalStatus, setModalStatus] = useState({ isOpen: false, artworkId: -1 });
   const [optimalVars, fixedLayoutParams, setFixedLayoutParams] = useOptimizeLayout();
 
-  const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + OPTIONS);
+  const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + DEV_OPTIONS);
 
   // is triggering from layout params sketchy? it WILL be a new object every time so maybe ok
   useEffect(() => {
@@ -61,8 +61,8 @@ const MainContainer = () => {
       const filterStr = FILTER_QUERY_TABLE.has(selectedMainFilter)
         ? FILTER_QUERY_TABLE.get(selectedMainFilter)
         : FILTER_QUERY_TABLE.get(DEFAULT_FILTER);
-      const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
-      // const combinedSearchStr = `${filterStr}${searchString}`; // dev
+      // const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
+      const combinedSearchStr = `${filterStr}${searchString}`; // dev
       const offset = ((RESULTS_PER_PAGE * curPage) - RESULTS_PER_PAGE).toString();
       let query = `${ENDPOINT + OPTIONS}&skip=${offset}${combinedSearchStr}`;
       if (deptFilter && deptFilter.length > 0) {

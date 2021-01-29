@@ -5,19 +5,22 @@ import useWindowSize from './useWindowSize';
 import { ROW_LAYOUT_OH, COL_LAYOUT_OH } from '../other/constants';
 
 /*
-  Takes viewport size and two items, one w fixed dim and one adjustable but w a fixed ratio
-  and calculates optimal orientation of the two items, plus optimal dimensions for adjustable item
+  useOptimizeLayout
+  Works with a viewport size and two items (one w fixed dimensions and one with adjustable dimensions but a fixed ratio). Calculates optimal orientation of the two items (ie row or column layout), plus the optimal dimensions for the adjustable item
 
-  Return
-  adjDim: {x: number, y: number} – optimal dimensions for adjustable item
-  rowLayout: bool – optimal orientation for adjustable and fixed item
-    (true if row layout optimal, false if column layout is optimal)
+  Return Values
+  optimalVars - js object containing two properties
+    imgDims: {x: number, y: number} – optimal dimensions for adjustable item
+    isRowLayout: bool – optimal orientation for adjustable and fixed item
+      (true if row layout optimal, false if column layout is optimal)
+
+  fixedLayoutParams – js object containing two properties
+    id: number - any # associated with this layout (can be used to trigger behaviors elsewhere)
+    adjAR: number – aspect ratio (width / height) for adjustable item
+
+  setFixedLayoutParams - setter for above params
 */
 
-// EXAMPLES
-// winSize - { w: 1270, h: 1273 }
-// fixedDims - { w: 500, h: 500 }
-// adjAR - 0.84728342
 function calcOptimalVars(winSize, adjAR) {
   const colViewAvail = { w: winSize.w - COL_LAYOUT_OH.w, h: winSize.h - COL_LAYOUT_OH.h };
   const rowViewAvail = { w: winSize.w - ROW_LAYOUT_OH.w, h: winSize.h - ROW_LAYOUT_OH.h };
