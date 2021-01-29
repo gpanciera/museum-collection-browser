@@ -5,7 +5,7 @@ import useWindowSize from './useWindowSize';
 import { ROW_LAYOUT_OH, COL_LAYOUT_OH } from '../other/constants';
 
 /*
-  useOptimizeLayout
+  useOptimizeLayout Hook by Greg Panciera
   Works with a viewport size and two items (one w fixed dimensions and one with adjustable dimensions but a fixed ratio). Calculates optimal orientation of the two items (ie row or column layout), plus the optimal dimensions for the adjustable item
 
   Return Values

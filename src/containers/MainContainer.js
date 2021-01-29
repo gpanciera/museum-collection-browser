@@ -18,7 +18,6 @@ import mediaQueries from '../styles/mediaQueries';
 import queryReducer from '../reducers/queryReducer';
 import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, FILTER_QUERY_TABLE, DEFAULT_FILTER, INIT_QUERY_STATE, MODAL_CONTENT_PADDING_REM, remToPx } from '../other/constants';
 import { calcModalSize } from '../other/helpers';
-// import useWindowSize from '../hooks/useWindowSize';
 import useOptimizeLayout from '../hooks/useOptimizeLayout';
 
 // WAI-ARIA standard to hide other content from screenreaders when a modal is open
@@ -33,7 +32,7 @@ const MainContainer = () => {
   const [modalStatus, setModalStatus] = useState({ isOpen: false, artworkId: -1 });
   const [optimalVars, fixedLayoutParams, setFixedLayoutParams] = useOptimizeLayout();
 
-  const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + DEV_OPTIONS);
+  const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + OPTIONS);
 
   // is triggering from layout params sketchy? it WILL be a new object every time so maybe ok
   useEffect(() => {
@@ -61,8 +60,8 @@ const MainContainer = () => {
       const filterStr = FILTER_QUERY_TABLE.has(selectedMainFilter)
         ? FILTER_QUERY_TABLE.get(selectedMainFilter)
         : FILTER_QUERY_TABLE.get(DEFAULT_FILTER);
-      // const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
-      const combinedSearchStr = `${filterStr}${searchString}`; // dev
+      const combinedSearchStr = searchString.length > 0 ? `${filterStr}${searchString}` : '';// prod
+      // const combinedSearchStr = `${filterStr}${searchString}`; // dev
       const offset = ((RESULTS_PER_PAGE * curPage) - RESULTS_PER_PAGE).toString();
       let query = `${ENDPOINT + OPTIONS}&skip=${offset}${combinedSearchStr}`;
       if (deptFilter && deptFilter.length > 0) {
@@ -114,7 +113,6 @@ const MainContainer = () => {
             width: `${targetModalDims.w}px`,
             height: `${targetModalDims.h}px`,
             margin: 'auto',
-            // height: 'auto',
           },
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.85)',
