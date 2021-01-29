@@ -4,9 +4,7 @@ import axios from 'axios';
 import regeneratorRuntime from 'regenerator-runtime';
 import dataFetchReducer from '../reducers/dataFetchReducer';
 
-// From React docs: "React guarantees that useState's setState function identity is stable
-// and won’t change on re-renders. This is why it’s safe to omit from the useEffect or
-// useCallback dependency list.
+// useDataApi hook by Greg Panciera
 const useDataApi = (initialUrl, initialData) => {
   const [url, setUrl] = useState(initialUrl);
   const [state, dispatch] = useReducer(dataFetchReducer, {

@@ -18,7 +18,9 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     marginTop: 6,
     height: '2.2rem',
-    padding: theme.spacing(1.5),
+    padding: '1 0.7rem 0 0.7rem',
+    alignContent: 'center',
+    justifyContent: 'center',
     border: '1px solid #CBCBCB',
   },
   chips: {

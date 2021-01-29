@@ -18,7 +18,6 @@ import mediaQueries from '../styles/mediaQueries';
 import queryReducer from '../reducers/queryReducer';
 import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, FILTER_QUERY_TABLE, DEFAULT_FILTER, INIT_QUERY_STATE, MODAL_CONTENT_PADDING_REM, remToPx } from '../other/constants';
 import { calcModalSize } from '../other/helpers';
-// import useWindowSize from '../hooks/useWindowSize';
 import useOptimizeLayout from '../hooks/useOptimizeLayout';
 
 // WAI-ARIA standard to hide other content from screenreaders when a modal is open
@@ -114,7 +113,6 @@ const MainContainer = () => {
             width: `${targetModalDims.w}px`,
             height: `${targetModalDims.h}px`,
             margin: 'auto',
-            // height: 'auto',
           },
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.85)',

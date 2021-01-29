@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { useRef, useEffect } from 'react';
 
+// useEventListener hook by Gabe Ragland at https://usehooks.com/
 export default function useEventListener(eventName, handler, element = window) {
   // Create a ref that stores handler
   const savedHandler = useRef();

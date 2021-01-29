@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { number } from 'prop-types';
 import ArtDetails from './ArtDetails';
 // import mediaQueries from '../styles/mediaQueries';
+import { DETAILS_SIZE_REM } from '../other/constants';
 
 export default function ModalContent({ id, artworkMap, imgWidth = 0, imgHeight = 0, rowLayoutOptimal = true }) {
   if (!artworkMap.current.has(id)) return null;
@@ -20,7 +21,12 @@ export default function ModalContent({ id, artworkMap, imgWidth = 0, imgHeight =
         imgWidth={imgWidth}
         rowLayoutOptimal={rowLayoutOptimal}
       />
-      <InfoContainer aspect={aspect}>
+      <InfoContainer
+        imgHeight={imgHeight}
+        imgWidth={imgWidth}
+        rowLayoutOptimal={rowLayoutOptimal}
+        aspect={aspect}
+      >
         <ArtDetails details={details} />
       </InfoContainer>
     </ModalWrapper>
@@ -40,12 +46,21 @@ const Image = styled.img`
 
 const InfoContainer = styled.div`
   flex: 0 0 20rem;
-  /* overflow: scroll; */
+  overflow: scroll;
   ${props => {
     if (props.rowLayoutOptimal) {
-      return ('width: 20rem; min-width: 20rem; max-width: 20rem;');
+      return (`
+        width: 20rem; 
+        min-width: 20rem; 
+        max-width: 20rem;
+        height: ${props.imgHeight};
+      `);
     }
-    return ('column-width: 18rem; column-fill: balance-all;');
+    return (`
+      column-width: 18rem; 
+      column-fill: balance-all;
+      width: ${props.imgWidth};
+    `);
   }}
 `;
 
