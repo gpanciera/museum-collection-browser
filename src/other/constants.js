@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable quote-props */
 /* eslint-disable no-multi-spaces */
 export const ENDPOINT = 'https://openaccess-api.clevelandart.org/api/artworks/';
@@ -5,6 +6,37 @@ export const OPTIONS = '?has_image=1&limit=20';
 export const DEV_OPTIONS = '?has_image=1&limit=20&q=';
 export const RESULTS_PER_PAGE = 20;
 export const TAGS_TO_DISPLAY = 20;
+
+export const remToPx = (rem) => {
+  const fontSize = getComputedStyle(document.documentElement).fontSize;
+  const result = rem * parseFloat(fontSize);
+  return result;
+};
+
+export const MODAL_CONTENT_PADDING_REM = 1.25;
+export const DETAILS_SIZE_REM = 20;
+export const MODAL_DIV_MARG_REM = 1;
+export const MODAL_INSET_PX = 40;
+
+export const ROW_LAYOUT_OH = {
+  w: remToPx(DETAILS_SIZE_REM)
+      + (remToPx(MODAL_CONTENT_PADDING_REM) * 2)
+      + remToPx(MODAL_DIV_MARG_REM)
+      + (MODAL_INSET_PX * 2),
+  h: (MODAL_CONTENT_PADDING_REM * 2)
+      + remToPx(MODAL_DIV_MARG_REM)
+      + (MODAL_INSET_PX * 2),
+};
+
+export const COL_LAYOUT_OH = {
+  w: (remToPx(MODAL_CONTENT_PADDING_REM) * 2)
+      + remToPx(MODAL_DIV_MARG_REM)
+      + (MODAL_INSET_PX * 2),
+  h: remToPx(DETAILS_SIZE_REM)
+      + (remToPx(MODAL_CONTENT_PADDING_REM) * 2)
+      + remToPx(MODAL_DIV_MARG_REM)
+      + (MODAL_INSET_PX * 2),
+};
 
 export const DEFAULT_FILTER = 'All Results';
 

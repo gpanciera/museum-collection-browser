@@ -1,9 +1,10 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-multi-spaces */
 /* eslint-disable max-len */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-restricted-syntax */
-import React, { useState, useEffect, useRef, useReducer } from 'react';
+import React, { useState, useEffect, useRef, useReducer, useMemo } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import { Pagination } from '@material-ui/lab';
@@ -15,21 +16,31 @@ import ControlContainer from './ControlContainer';
 import useDataApi from '../hooks/useDataApi';
 import mediaQueries from '../styles/mediaQueries';
 import queryReducer from '../reducers/queryReducer';
-import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, FILTER_QUERY_TABLE, DEFAULT_FILTER, INIT_QUERY_STATE } from '../constants/constants';
+import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, FILTER_QUERY_TABLE, DEFAULT_FILTER, INIT_QUERY_STATE, MODAL_CONTENT_PADDING_REM, remToPx } from '../other/constants';
+import { calcModalSize } from '../other/helpers';
+// import useWindowSize from '../hooks/useWindowSize';
+import useOptimizeLayout from '../hooks/useOptimizeLayout';
 
 // WAI-ARIA standard to hide other content from screenreaders when a modal is open
 Modal.setAppElement('#root');
 
-// Note from useReducer and useState docs: "React guarantees that dispatch and setState
-// function identity is stable and won’t change on re-renders. This is why it’s safe to omit
-// from the useEffect or useCallback dependency list."
 const MainContainer = () => {
+  const isFirstRender = useRef(true);
+
   const [queryElems, dispatchQueryUpdate] = useReducer(queryReducer, INIT_QUERY_STATE);
   const artworkMap = useRef(new Map());
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const idForModal = useRef(-1);
-  const isFirstRender = useRef(true);
+
+  const [modalStatus, setModalStatus] = useState({ isOpen: false, artworkId: -1 });
+  const [optimalVars, fixedLayoutParams, setFixedLayoutParams] = useOptimizeLayout();
+
   const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + OPTIONS);
+
+  // is triggering from layout params sketchy? it WILL be a new object every time so maybe ok
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      setModalStatus({ isOpen: true, artworkId: fixedLayoutParams.id });
+    }
+  }, [fixedLayoutParams]);
 
   // ****** When results change add any new content to artworMap
   useEffect(() => {
@@ -65,30 +76,59 @@ const MainContainer = () => {
   }, [queryElems]);
 
   const handleModalOpen = (id) => {
-    idForModal.current = id;
-    setIsModalOpen(true);
+    const artwork = artworkMap.current.get(id);
+    const width = artwork.images.web.width || 0;
+    const height = artwork.images.web.height || 0;
+    setFixedLayoutParams({ id, adjAR: width / height });
   };
 
   const handleModalClose = () => {
-    setIsModalOpen(false);
+    setModalStatus({ isOpen: false, artworkId: -1 });
   };
 
   const handlePageChange = (e, num) => {
     dispatchQueryUpdate({ type: 'UPDATE_PAGE', payload: num });
   };
 
+  let targetModalDims = { w: 0, h: 0 };
+  if (optimalVars !== null) {
+    const { imgDims, isRowLayout } = optimalVars;
+    const padding = remToPx(MODAL_CONTENT_PADDING_REM);
+    targetModalDims = calcModalSize(imgDims, isRowLayout);
+    targetModalDims.w -= padding * 2;
+    targetModalDims.h -= padding * 2;
+  }
+
   return (
     <div className="non-footer-content">
       <NavBar />
       <Modal
-        isOpen={isModalOpen}
+        isOpen={modalStatus.isOpen}
         onRequestClose={handleModalClose}
-        style={modalStyle}
+        style={{
+          content: {
+            backgroundColor: 'rgb(233,233,233)',
+            borderStyle: 'none',
+            zIndex: '2',
+            padding: `${MODAL_CONTENT_PADDING_REM}rem`,
+            width: `${targetModalDims.w}px`,
+            height: `${targetModalDims.h}px`,
+            margin: 'auto',
+            // height: 'auto',
+          },
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            zIndex: '1',
+          },
+        }}
         contentLabel="modal label"
       >
         <ModalContent
-          id={idForModal.current}
+          id={modalStatus.artworkId}
           artworkMap={artworkMap}
+          imgWidth={optimalVars && optimalVars.imgDims.w}
+          imgHeight={optimalVars && optimalVars.imgDims.h}
+          rowLayoutOptimal={optimalVars && optimalVars.isRowLayout}
         />
       </Modal>
       <Header />
@@ -139,24 +179,24 @@ const MainContainer = () => {
 };
 export default MainContainer;
 
-const modalStyle = {
-  content: {
-    backgroundColor: 'rgb(233,233,233)',
-    borderStyle: 'none',
-    zIndex: '2',
-    width: 'fit-content',
-    maxWidth: '95%',
-    minHeight: 'max-content',
-    maxHeight: '95%',
-    margin: 'auto',
-    padding: '20px',
-    // className: 'modal',
-  },
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.85)',
-    zIndex: '1',
-  },
-};
+// const modalStyle = {
+//   content: {
+//     backgroundColor: 'rgb(233,233,233)',
+//     borderStyle: 'none',
+//     zIndex: '2',
+//     padding: `${MODAL_CONTENT_PADDING_PX}px`,
+//   },
+//   overlay: {
+//     backgroundColor: 'rgba(0, 0, 0, 0.85)',
+//     zIndex: '1',
+//   },
+// };
+// width: 'fit-content',
+// maxWidth: '95%',
+// minHeight: 'max-content',
+// maxHeight: '95%',
+// margin: 'auto',
+// className: 'modal',
 
 const ResultCountWrapper = styled.div`
   margin-left: 1rem;

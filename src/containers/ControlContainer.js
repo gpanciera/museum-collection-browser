@@ -7,7 +7,7 @@ import DOMPurify from 'dompurify';
 import mediaQueries from '../styles/mediaQueries';
 import FilterPanel from '../components/FilterPanel';
 import Drawer from '../components/Drawer';
-import { DEPTS_DISPLAY_LIST, TYPES_DISPLAY_LIST } from '../constants/constants';
+import { DEPTS_DISPLAY_LIST, TYPES_DISPLAY_LIST } from '../other/constants';
 
 function ControlContainer({
   dispatchQueryUpdate,

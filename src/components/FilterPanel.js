@@ -7,7 +7,7 @@ import { ButtonGroup, Button, Chip } from '@material-ui/core';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { makeStyles } from '@material-ui/core/styles';
-import { MAIN_FILTER_DISPLAY_LIST } from '../constants/constants';
+import { MAIN_FILTER_DISPLAY_LIST } from '../other/constants';
 import mediaQueries from '../styles/mediaQueries';
 
 const useStyles = makeStyles((theme) => ({

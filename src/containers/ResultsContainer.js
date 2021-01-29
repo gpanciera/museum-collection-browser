@@ -1,4 +1,3 @@
-/* eslint-disable arrow-body-style */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import { arrayOf, number, shape, string, func, bool } from 'prop-types';

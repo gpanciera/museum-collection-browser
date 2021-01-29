@@ -1,4 +1,4 @@
-import { MAIN_FILTER_DISPLAY_LIST, INIT_QUERY_STATE } from '../constants/constants';
+import { MAIN_FILTER_DISPLAY_LIST, INIT_QUERY_STATE } from '../other/constants';
 
 export default function queryReducer(prevState, action) {
   // console.log('queryReducer ~ action', action);
