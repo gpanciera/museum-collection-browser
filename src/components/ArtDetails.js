@@ -17,7 +17,7 @@ export default function ArtDetails({
   details: {
     accession_number, department, id, title, tombstone, fun_fact, digital_description, wall_description, measurements, creators,
   } }) {
-  let filteredTombstone = tombstone.replace(title, '').trimStart();
+  let filteredTombstone = tombstone.replace(title, '').trim();
   filteredTombstone = filteredTombstone.replace(/(^,)|(,$)/g, '');
   return (
     <>
