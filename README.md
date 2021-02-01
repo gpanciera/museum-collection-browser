@@ -1,6 +1,6 @@
 # Museum Collection Interface
 
-Front-end app to search, sort and view details for a selection of items from The Cleveland Museum of Art's Collection
+App to search and explore details for items from The Cleveland Museum of Art's Collection. Live demo here: http://museum-collection-browser.herokuapp.com/
 
 ### Installing
 
@@ -9,14 +9,13 @@ Front-end app to search, sort and view details for a selection of items from The
 ### Instructions
 
 - npm run dev
-- View on localhost:8080
+- View on localhost:3000
 
 ## Author
 
 - Greg Panciera
-- All images and database content, property of The Cleveland Museum of Art
 
 ## Screenshots
 
-![Screenshot Categorized](./screen-shot-categorized.jpg)
-![Screenshot Details View](./screen-shot-details.jpg)
+![Screenshot Categorized](./museum-screenshot-v3-details)
+![Screenshot Details View](./museum-screenshot-v3.jpg)
