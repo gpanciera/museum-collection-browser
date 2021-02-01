@@ -28,6 +28,7 @@ export default function queryReducer(prevState, action) {
       if (action.payload.type === 'Department') {
         return {
           ...prevState,
+          curPage: 1,
           deptFilter: action.payload.value,
           isResetable: true,
         };
@@ -35,6 +36,7 @@ export default function queryReducer(prevState, action) {
       if (action.payload.type === 'Type') {
         return {
           ...prevState,
+          curPage: 1,
           typeFilter: action.payload.value,
           isResetable: true,
         };

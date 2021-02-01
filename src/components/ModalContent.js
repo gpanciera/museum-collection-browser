@@ -4,8 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { number } from 'prop-types';
 import ArtDetails from './ArtDetails';
-// import mediaQueries from '../styles/mediaQueries';
-import { DETAILS_SIZE_REM } from '../other/constants';
+import { ROW_LAYOUT_DETAILS_WIDTH_REM, COL_LAYOUT_DETAILS_HEIGHT_REM } from '../other/constants';
 
 export default function ModalContent({ id, artworkMap, imgWidth = 0, imgHeight = 0, rowLayoutOptimal = true }) {
   if (!artworkMap.current.has(id)) return null;
@@ -18,7 +17,6 @@ export default function ModalContent({ id, artworkMap, imgWidth = 0, imgHeight =
         src={url}
         alt={details.title}
         style={{ width: imgWidth, height: imgHeight }}
-        imgWidth={imgWidth}
         rowLayoutOptimal={rowLayoutOptimal}
       />
       <InfoContainer
@@ -42,26 +40,37 @@ const Image = styled.img`
   display: block;
   flex: none;
   margin: ${props => (props.rowLayoutOptimal ? '0 1rem 0 0' : '0 0 1rem 0')};
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const InfoContainer = styled.div`
-  flex: 0 0 20rem;
-  overflow: scroll;
+  overflow: auto;
   ${props => {
     if (props.rowLayoutOptimal) {
       return (`
-        width: 20rem; 
-        min-width: 20rem; 
-        max-width: 20rem;
+        flex: 0 0 ${ROW_LAYOUT_DETAILS_WIDTH_REM}rem;
+        width: ${ROW_LAYOUT_DETAILS_WIDTH_REM}rem; 
+        min-width: ${ROW_LAYOUT_DETAILS_WIDTH_REM}rem; 
+        max-width: ${ROW_LAYOUT_DETAILS_WIDTH_REM}rem;
         height: ${props.imgHeight};
       `);
     }
     return (`
+      flex: 0 0 ${COL_LAYOUT_DETAILS_HEIGHT_REM}rem;
       column-width: 18rem; 
       column-fill: balance-all;
       width: ${props.imgWidth};
     `);
   }}
+  @media (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 ModalContent.propTypes = {
@@ -77,12 +86,12 @@ ModalContent.propTypes = {
 // `;
 
 // const Image = styled.img`
-//   display: none;
-//   @media (min-width: 600px) {
-//     display: block;
-//     ${props => ((props.aspect < 1) ? 'height: 85vh;' : 'width: 100%;')}
-//     margin: ${props => ((props.aspect < 1) ? '0 1em 0 0' : '0 0 1em 0')};
-//   }
+// display: none;
+// @media (min-width: 600px) {
+//   display: block;
+//   ${props => ((props.aspect < 1) ? 'height: 85vh;' : 'width: 100%;')}
+//   margin: ${props => ((props.aspect < 1) ? '0 1em 0 0' : '0 0 1em 0')};
+// }
 // `;
 
 // const InfoContainer = styled.div`
