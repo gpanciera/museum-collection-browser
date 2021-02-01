@@ -4,8 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { number } from 'prop-types';
 import ArtDetails from './ArtDetails';
-// import mediaQueries from '../styles/mediaQueries';
-import { DETAILS_SIZE_REM } from '../other/constants';
+import { ROW_LAYOUT_DETAILS_WIDTH_REM, COL_LAYOUT_DETAILS_HEIGHT_REM } from '../other/constants';
 
 export default function ModalContent({ id, artworkMap, imgWidth = 0, imgHeight = 0, rowLayoutOptimal = true }) {
   if (!artworkMap.current.has(id)) return null;
@@ -45,18 +44,19 @@ const Image = styled.img`
 `;
 
 const InfoContainer = styled.div`
-  flex: 0 0 20rem;
   overflow: scroll;
   ${props => {
     if (props.rowLayoutOptimal) {
       return (`
-        width: 20rem; 
-        min-width: 20rem; 
-        max-width: 20rem;
+        flex: 0 0 ${ROW_LAYOUT_DETAILS_WIDTH_REM}rem;
+        width: ${ROW_LAYOUT_DETAILS_WIDTH_REM}rem; 
+        min-width: ${ROW_LAYOUT_DETAILS_WIDTH_REM}rem; 
+        max-width: ${ROW_LAYOUT_DETAILS_WIDTH_REM}rem;
         height: ${props.imgHeight};
       `);
     }
     return (`
+      flex: 0 0 ${COL_LAYOUT_DETAILS_HEIGHT_REM}rem;
       column-width: 18rem; 
       column-fill: balance-all;
       width: ${props.imgWidth};

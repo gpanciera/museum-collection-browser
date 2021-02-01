@@ -6,7 +6,7 @@ export const calcModalSize = (optimalImgDim = { w: 0, h: 0 }, rowLayoutOptimal =
   let h = 0;
   if (rowLayoutOptimal) {
     w += optimalImgDim.w + ROW_LAYOUT_OH.w - (MODAL_INSET_PX);
-    h += optimalImgDim.h + ROW_LAYOUT_OH.h - remToPx(MODAL_DIV_MARG_REM);
+    h += optimalImgDim.h + ROW_LAYOUT_OH.h;
   }
   else {
     w += optimalImgDim.w + COL_LAYOUT_OH.w - (MODAL_INSET_PX);

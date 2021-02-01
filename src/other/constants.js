@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable quote-props */
 /* eslint-disable no-multi-spaces */
@@ -14,28 +15,27 @@ export const remToPx = (rem) => {
 };
 
 export const MODAL_CONTENT_PADDING_REM = 1.25;
-export const DETAILS_SIZE_REM = 20;
+export const ROW_LAYOUT_DETAILS_WIDTH_REM = 20;
+export const COL_LAYOUT_DETAILS_HEIGHT_REM = 16;
 export const MODAL_DIV_MARG_REM = 1;
 export const MODAL_INSET_PX = 40;
 
 export const ROW_LAYOUT_OH = {
-  w: remToPx(DETAILS_SIZE_REM)
+  w: (MODAL_INSET_PX * 2)
       + (remToPx(MODAL_CONTENT_PADDING_REM) * 2)
       + remToPx(MODAL_DIV_MARG_REM)
-      + (MODAL_INSET_PX * 2),
-  h: (MODAL_CONTENT_PADDING_REM * 2)
-      + remToPx(MODAL_DIV_MARG_REM)
-      + (MODAL_INSET_PX * 2),
+      + remToPx(ROW_LAYOUT_DETAILS_WIDTH_REM),
+  h: (MODAL_INSET_PX * 2)
+      + (MODAL_CONTENT_PADDING_REM * 2),
 };
 
 export const COL_LAYOUT_OH = {
-  w: (remToPx(MODAL_CONTENT_PADDING_REM) * 2)
-      + remToPx(MODAL_DIV_MARG_REM)
-      + (MODAL_INSET_PX * 2),
-  h: remToPx(DETAILS_SIZE_REM)
+  w: (MODAL_INSET_PX * 2)
+      + (remToPx(MODAL_CONTENT_PADDING_REM) * 2),
+  h: (MODAL_INSET_PX * 2)
       + (remToPx(MODAL_CONTENT_PADDING_REM) * 2)
       + remToPx(MODAL_DIV_MARG_REM)
-      + (MODAL_INSET_PX * 2),
+      + remToPx(COL_LAYOUT_DETAILS_HEIGHT_REM),
 };
 
 export const DEFAULT_FILTER = 'All Results';
