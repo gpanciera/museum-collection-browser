@@ -1,6 +1,6 @@
 # Museum Collection Interface
 
-App to search and explore details for items from The Cleveland Museum of Art's Collection. Live demo here: http://museum-collection-browser.herokuapp.com/
+App to search and explore details from The Cleveland Museum of Art's public API. Live demo here: http://museum-collection-browser.herokuapp.com/. All image-sizing and layout within the details modal are calculated on the fly in javascript to best fit the current viewport size (no external libraries involved). It currently works great for desktop and tablet sizing, but needs more work for mobile...
 
 ### Installing
 
