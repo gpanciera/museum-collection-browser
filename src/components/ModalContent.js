@@ -17,7 +17,6 @@ export default function ModalContent({ id, artworkMap, imgWidth = 0, imgHeight =
         src={url}
         alt={details.title}
         style={{ width: imgWidth, height: imgHeight }}
-        imgWidth={imgWidth}
         rowLayoutOptimal={rowLayoutOptimal}
       />
       <InfoContainer
@@ -41,10 +40,13 @@ const Image = styled.img`
   display: block;
   flex: none;
   margin: ${props => (props.rowLayoutOptimal ? '0 1rem 0 0' : '0 0 1rem 0')};
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const InfoContainer = styled.div`
-  overflow: scroll;
+  overflow: auto;
   ${props => {
     if (props.rowLayoutOptimal) {
       return (`
@@ -62,6 +64,13 @@ const InfoContainer = styled.div`
       width: ${props.imgWidth};
     `);
   }}
+  @media (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 ModalContent.propTypes = {
@@ -77,12 +86,12 @@ ModalContent.propTypes = {
 // `;
 
 // const Image = styled.img`
-//   display: none;
-//   @media (min-width: 600px) {
-//     display: block;
-//     ${props => ((props.aspect < 1) ? 'height: 85vh;' : 'width: 100%;')}
-//     margin: ${props => ((props.aspect < 1) ? '0 1em 0 0' : '0 0 1em 0')};
-//   }
+// display: none;
+// @media (min-width: 600px) {
+//   display: block;
+//   ${props => ((props.aspect < 1) ? 'height: 85vh;' : 'width: 100%;')}
+//   margin: ${props => ((props.aspect < 1) ? '0 1em 0 0' : '0 0 1em 0')};
+// }
 // `;
 
 // const InfoContainer = styled.div`

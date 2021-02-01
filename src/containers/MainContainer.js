@@ -19,6 +19,7 @@ import queryReducer from '../reducers/queryReducer';
 import { ENDPOINT, DEV_OPTIONS, OPTIONS, RESULTS_PER_PAGE, FILTER_QUERY_TABLE, DEFAULT_FILTER, INIT_QUERY_STATE, MODAL_CONTENT_PADDING_REM, remToPx } from '../other/constants';
 import { calcModalSize } from '../other/helpers';
 import useOptimizeLayout from '../hooks/useOptimizeLayout';
+import useMediaQuery from '../hooks/useMediaQuery';
 
 // WAI-ARIA standard to hide other content from screenreaders when a modal is open
 Modal.setAppElement('#root');
@@ -31,6 +32,9 @@ const MainContainer = () => {
 
   const [modalStatus, setModalStatus] = useState({ isOpen: false, artworkId: -1 });
   const [optimalVars, fixedLayoutParams, setFixedLayoutParams] = useOptimizeLayout();
+  // const modalShowImage = useMediaQuery(['(max-width: 600px)'], [false], true);
+  const modalShowImage = true;        // todo: replace w media query
+  let targetModalDims = { w: 0, h: 0 };
 
   const [{ results, numResults, isLoading, isError }, runAPIFetch] = useDataApi(ENDPOINT + DEV_OPTIONS);
 
@@ -89,8 +93,16 @@ const MainContainer = () => {
     dispatchQueryUpdate({ type: 'UPDATE_PAGE', payload: num });
   };
 
-  let targetModalDims = { w: 0, h: 0 };
-  if (optimalVars !== null) {
+  // useEffect(() => {
+  //   if (modalShowImage && optimalVars !== null) {
+  //     const { imgDims, isRowLayout } = optimalVars;
+  //     const padding = remToPx(MODAL_CONTENT_PADDING_REM);
+  //     targetModalDims = calcModalSize(imgDims, isRowLayout);
+  //     targetModalDims.w -= padding * 2;
+  //     targetModalDims.h -= padding * 2;
+  //   }
+  // }, [modalShowImage]);
+  if (modalShowImage && optimalVars !== null) {
     const { imgDims, isRowLayout } = optimalVars;
     const padding = remToPx(MODAL_CONTENT_PADDING_REM);
     targetModalDims = calcModalSize(imgDims, isRowLayout);
@@ -110,8 +122,12 @@ const MainContainer = () => {
             borderStyle: 'none',
             zIndex: '2',
             padding: `${MODAL_CONTENT_PADDING_REM}rem`,
-            width: `${targetModalDims.w}px`,
-            height: `${targetModalDims.h}px`,
+            width: modalShowImage
+              ? `${targetModalDims.w}px`
+              : `calc (100% - ${MODAL_CONTENT_PADDING_REM}rem)`,
+            height: modalShowImage
+              ? `${targetModalDims.h}px`
+              : 'auto',
             margin: 'auto',
           },
           overlay: {

@@ -31,7 +31,6 @@ function calcOptimalVars(winSize, adjAR) {
     rowOption1: { w: rowViewAvail.w, h: rowViewAvail.w / adjAR },
     rowOption2: { w: rowViewAvail.h * adjAR, h: rowViewAvail.h },
   };
-  console.log('🚀 ~ file: useOptimizeLayout.js ~ line 34 ~ calcOptimalVars ~ options', options);
 
   let bestOption = 'rowOption1';
   let bestArea = -Infinity;
@@ -68,7 +67,6 @@ function calcOptimalVars(winSize, adjAR) {
     }
   }
 
-  console.log('🚀 ~ file: useOptimizeLayout.js ~ line 66 ~ calcOptimalVars ~ bestOption', bestOption);
   const result = {
     imgDims: { w: options[bestOption].w, h: options[bestOption].h },
     isRowLayout: isRowBest,

@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { ROW_LAYOUT_OH, COL_LAYOUT_OH, MODAL_INSET_PX, MODAL_DIV_MARG_REM, remToPx } from './constants';
+import { ROW_LAYOUT_OH, COL_LAYOUT_OH, MODAL_INSET_PX } from './constants';
 
 export const calcModalSize = (optimalImgDim = { w: 0, h: 0 }, rowLayoutOptimal = true) => {
   let w = 0;
